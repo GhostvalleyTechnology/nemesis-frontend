@@ -1,60 +1,46 @@
-<script lang="ts">
+<script>
 	import "svelte-material-ui/bare.css";
-	
-	import Home from "./routes/Home.svelte";
-	import Clients from "./routes/Clients.svelte";
-
-	import { Router, links, Route } from "svelte-routing";
-	import Drawer, {
-	AppContent,
-	Content,
-	Header,
-	Title,
-	Subtitle,
-  } from '@smui/drawer';
-  import List, { Item, Text } from '@smui/list';
-
-  let drawerOpen = true;
-  let active = 'Home';
-
-  function setActive(value: string) {
-	active = value;
-  }
+	import Main from "./Main.svelte";
+	import { writable } from 'svelte/store';
+	const userInfo = writable({});
+	import Keycloak from "http://localhost:8095/auth/js/keycloak.min.js"
+	let kc = new Keycloak();
+	let logged_in = null;
+	let todos = [];
+	kc.init({ onLoad: "check-sso" }).then((auth) => {
+		logged_in = auth;
+		if (auth) {
+			logged_in = true;
+			kc.loadUserInfo().then((user) => {
+				user.token = kc.idToken
+				userInfo.set(user)
+			});
+		}
+	});
 </script>
 
-<main>
-	<div use:links>
-		<Router>
-		  <Drawer variant="dismissible" bind:open={drawerOpen}>
-			<Header>
-			  <Title>Domí</Title>
-			  <Subtitle>Domí organises, manages and informs!</Subtitle>
-			</Header>
-			<Content>
-			  <List>
-				<Item href="/" on:click={() => setActive('Home')} activated={active === 'Home'}>
-				  <Text>Home</Text>
-				</Item>
-				<Item href="clients" on:click={() => setActive('Clients')} activated={active === 'Clients'}>
-				  <Text>Clients</Text>
-				</Item>
-			  </List>
-			</Content>
-		  </Drawer>
+<h1>Svelte keycloak</h1>
 
-		  <AppContent>
-			<div class="content">
-				<Route path="/" component="{Home}"/>
-				<Route path="clients" component="{Clients}"/>
-			</div>
-		  </AppContent>
+{#if logged_in && $userInfo.preferred_username}
 
-		</Router>
-	  </div>
-</main>
+	<pre>{JSON.stringify($userInfo, null,2)}</pre>
+	You are logged in as {$userInfo.preferred_username}
 
-<style>
-	.content {
-		padding: 1rem;
-	}
-</style>
+	<button
+		on:click={() => {
+			kc.logout();
+		}}>Logout</button
+	>
+
+	<Main/>
+
+{/if}
+
+{#if logged_in == false}
+	You are not logged in
+	<button
+		on:click={() => {
+			kc.login();
+		}}>Login</button
+	>
+{/if}
