@@ -1,46 +1,38 @@
 <script>
+	import LibLoader from "./components/LibLoader.svelte";
 	import "svelte-material-ui/bare.css";
 	import Main from "./Main.svelte";
-	import { writable } from 'svelte/store';
+	import { writable } from "svelte/store";
+
 	const userInfo = writable({});
-	import Keycloak from "http://localhost:8095/auth/js/keycloak.min.js"
-	let kc = new Keycloak();
 	let logged_in = null;
-	let todos = [];
-	kc.init({ onLoad: "check-sso" }).then((auth) => {
-		logged_in = auth;
-		if (auth) {
-			logged_in = true;
-			kc.loadUserInfo().then((user) => {
-				user.token = kc.idToken
-				userInfo.set(user)
-			});
-		}
-	});
+	let kc = null;
+	function onLoaded() {
+		kc = new Keycloak();
+		kc.init({ onLoad: "check-sso" }).then((auth) => {
+			logged_in = auth;
+			if (auth) {
+				logged_in = true;
+				kc.loadUserInfo().then((user) => {
+					user.token = kc.idToken;
+					userInfo.set(user);
+				});
+			} else {
+				kc.login();
+			}
+		});
+	}
+	function logout() {
+		kc.logout();
+	}
 </script>
 
-<h1>Svelte keycloak</h1>
+<LibLoader
+	src="http://localhost:8095/auth/js/keycloak.min.js"
+	libraryDetectionObject="Keycloak"
+	on:loaded={onLoaded}
+/>
 
-{#if logged_in && $userInfo.preferred_username}
-
-	<pre>{JSON.stringify($userInfo, null,2)}</pre>
-	You are logged in as {$userInfo.preferred_username}
-
-	<button
-		on:click={() => {
-			kc.logout();
-		}}>Logout</button
-	>
-
-	<Main/>
-
-{/if}
-
-{#if logged_in == false}
-	You are not logged in
-	<button
-		on:click={() => {
-			kc.login();
-		}}>Login</button
-	>
+{#if logged_in}
+	<Main displayname={$userInfo.given_name} on:logout={logout} />
 {/if}
