@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Home from "./routes/Home.svelte";
 	import Clients from "./routes/Clients.svelte";
+	import Client from "./routes/Client.svelte";
 	import { createEventDispatcher } from "svelte";
 	import { Router, links, Route } from "svelte-routing";
 	import Drawer, {
@@ -46,7 +47,7 @@
 							<Text>Home</Text>
 						</Item>
 						<Item
-							href="clients"
+							href="/clients"
 							on:click={() => setActive("clients")}
 							activated={active === "clients"}
 						>
@@ -72,7 +73,8 @@
 			<AppContent>
 				<div class="content">
 					<Route path="/" component={Home} />
-					<Route path="clients" component={Clients} />
+					<Route path="/clients" component={Clients} />
+					<Route path="client/:id" component={Client} />
 				</div>
 			</AppContent>
 		</Router>

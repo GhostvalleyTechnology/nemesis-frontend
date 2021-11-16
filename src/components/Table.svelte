@@ -45,7 +45,7 @@
     </Row>
   </Head>
   <Body>
-    {#each items as item (item.id)}
+    {#each filtered as item (item.id)}
       <Row on:click={() => navigate("client/"+item.id)}>
         <Cell numeric>{item.id}</Cell>
         <Cell>{item.name}</Cell>
@@ -91,6 +91,8 @@
       .then((response) => response.json())
       .then((json) => (items = json));
   }
+
+  $: filtered = items.filter((s) => s.name.includes(filterValue));
 
   function handleSort() {
     items.sort((a, b) => {

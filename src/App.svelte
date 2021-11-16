@@ -8,7 +8,7 @@
 	let logged_in = null;
 	let kc = null;
 	function onLoaded() {
-		kc = new Keycloak();
+		kc = new Keycloak('/keycloak.json');
 		kc.init({ onLoad: "check-sso" }).then((auth) => {
 			logged_in = auth;
 			if (auth) {
