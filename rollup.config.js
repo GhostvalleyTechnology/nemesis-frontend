@@ -9,7 +9,7 @@ import css from 'rollup-plugin-css-only';
 import {config} from 'dotenv';
 import replace from '@rollup/plugin-replace';
 
-config()
+config({ path: __dirname+'/.env' })
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -43,11 +43,9 @@ export default {
 	},
 	plugins: [
 		replace({
-			__myapp: JSON.stringify({
-				env: {
-					KEYCLOAK_URL: process.env.KEYCLOAK_URL,
-				}
-			})
+			env_KEYCLOAK_URL: process.env.KEYCLOAK_URL,
+			env_OFFLINE_MODE: process.env.OFFLINE_MODE,
+			env_QUARKUS_URL: process.env.QUARKUS_URL,
 		}),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),

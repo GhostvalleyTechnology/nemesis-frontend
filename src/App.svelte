@@ -3,10 +3,10 @@
 	import "svelte-material-ui/bare.css";
 	import Main from "./Main.svelte";
 	import { userId, userName } from "./stores";
-	
+	import { KEYCLOAK_URL, OFFLINE_MODE } from "./env";
+
 	let logged_in = null;
 	let kc = null;
-	let localMode = true;
 	function onLoaded() {
 		//@ts-ignore
 		kc = new Keycloak('/keycloak.json');
@@ -28,12 +28,12 @@
 	}
 </script>
 
-{#if localMode}
+{#if OFFLINE_MODE}
 	<Main on:logout={() => {}} />
 {:else}
 
 	<LibLoader
-	src="http://localhost:8095/auth/js/keycloak.min.js"
+	src="{KEYCLOAK_URL}"
 	libraryDetectionObject="Keycloak"
 	on:loaded={onLoaded}
 	/>
