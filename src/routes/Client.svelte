@@ -1,29 +1,94 @@
 <script lang="ts">
+    import LayoutGrid, { Cell } from '@smui/layout-grid';
     import Textfield from '@smui/textfield';
-    import Icon from '@smui/textfield/icon';
+    import Paper from '@smui/paper';
+    import Button, { Label, Icon } from '@smui/button';
     import { Client } from '../classes/Client';
+    import Radio from '@smui/radio';
+    import FormField from '@smui/form-field';
     export let id:number;
-    $: client = Client.byId(id); 
+    $: client = Client.byId(id);
+    let gender = ""; 
 </script>
 
-<h1>allo! {client.id} {client.firstName}</h1>
+<div class="form-container">
+<Paper elevation={6}>
+    <LayoutGrid>
+        <Cell span={6}>
+            <Textfield style="width: 100%;" bind:value={client.firstName} label="First Name"/>
+        </Cell>
+        <Cell span={6}>
+            <Textfield style="width: 100%;" bind:value={client.lastName} label="Last Name"/>
+        </Cell>
+        <Cell span={12}>
+            <Textfield style="width: 100%;" bind:value={client.email} label="E-Mail"/>
+        </Cell>
+        <Cell span={12}>
+            <div class="gender-container">
+                
+                <FormField>
+                    <Radio bind:group={gender} value="M" touch />
+                    <span slot="label">male</span>
+                </FormField>
+                <FormField>
+                    <Radio bind:group={gender} value="W" touch />
+                    <span slot="label">female</span>
+                </FormField>
+                <FormField>
+                    <Radio bind:group={gender} value="X" touch />
+                    <span slot="label">any</span>
+                </FormField>
+            </div>
+        </Cell>
+        <Cell span={6}>
+            <Textfield style="width: 100%;" bind:value={client.occupation} label="Occupation"/>
+        </Cell>
+        <Cell span={3}>
+            <Textfield style="width: 100%;" bind:value={client.title} label="Title"/>
+        </Cell>
+        <Cell span={3}>
+            <Textfield style="width: 100%;" bind:value={client.academicDegree} label="Degree"/>
+        </Cell>
 
-<!--
-        client.id = id;
-        client.gender = Gender.m;
-        client.firstName = "Kevin";
-        client.lastName = "Schmid";
-        client.title = "Ing.";
-        client.academicDegree = "BSc.";
-        client.occupation = "Software Engineer";
-        client.email = "schmid.kevin.manuel@gmail.com";
-        client.phone = "03149/2164";
-        client.mobile = "0043 660 41 77 516";
-        client.country = Country.AT;
-        client.zipCode = "8010";
-        client.city = "Graz";
-        client.address = "Monsbergergasse 5/10";
--->
+        <Cell span={6}>
+            <Textfield style="width: 100%;" bind:value={client.phone} label="Phone"/>
+        </Cell>
+        <Cell span={6}>
+            <Textfield style="width: 100%;" bind:value={client.mobile} label="Mobile"/>
+        </Cell>
+        <Cell span={12}>
+            <Textfield style="width: 100%;" bind:value={client.address} label="Address"/>
+        </Cell>
 
-<Textfield bind:value={client.firstName} label="First Name"/>
-<Textfield bind:value={client.lastName} label="Last Name"/>
+        <Cell span={4}>
+            <Textfield style="width: 100%;" bind:value={client.country.displayName} label="Country"/>
+        </Cell>
+        <Cell span={4}>
+            <Textfield style="width: 100%;" bind:value={client.zipCode} label="Zip Code"/>
+        </Cell>
+        <Cell span={4}>
+            <Textfield style="width: 100%;" bind:value={client.city} label="City"/>
+        </Cell>
+
+    </LayoutGrid>
+    <div class="button-container">
+        <Button on:click={() => alert("saved!")} touch variant="unelevated">
+            <Icon class="material-icons">save</Icon>
+            <Label>Save</Label>
+        </Button>
+    </div>
+</Paper>
+</div>
+<style>
+    .form-container {
+        max-width: 1000px;
+        margin: auto;
+    }
+    .gender-container {
+        
+    }
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>

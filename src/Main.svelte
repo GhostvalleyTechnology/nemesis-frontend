@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { userName } from "./stores";
 	import Home from "./routes/Home.svelte";
 	import Clients from "./routes/Clients.svelte";
 	import Client from "./routes/Client.svelte";
@@ -19,7 +20,8 @@
 	function logout() {
 		dispatch("logout");
 	}
-	export let displayname: string;
+	let displayname: string;
+	userName.subscribe(name => {displayname = name});
 
 	function setActive(value: string) {
 		active = value;
@@ -32,7 +34,7 @@
 			<Drawer variant="dismissible" bind:open={drawerOpen}>
 				<Header>
 					<Title>Hello {displayname}</Title>
-					<Subtitle>Domí organises, manages and informs!</Subtitle>
+					<Subtitle>Hier könnte Ihre Werbung stehen!</Subtitle>
 				</Header>
 				<Content>
 					<List>

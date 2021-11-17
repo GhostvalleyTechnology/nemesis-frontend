@@ -1,21 +1,22 @@
-<script>
+<script lang="ts">
 	import LibLoader from "./components/LibLoader.svelte";
 	import "svelte-material-ui/bare.css";
 	import Main from "./Main.svelte";
-	import { writable } from "svelte/store";
-
-	const userInfo = writable({});
+	import { userId, userName } from "./stores";
+	
 	let logged_in = null;
 	let kc = null;
+	let localMode = true;
 	function onLoaded() {
+		//@ts-ignore
 		kc = new Keycloak('/keycloak.json');
 		kc.init({ onLoad: "check-sso" }).then((auth) => {
 			logged_in = auth;
 			if (auth) {
-				logged_in = true;
-				kc.loadUserInfo().then((user) => {
-					user.token = kc.idToken;
-					userInfo.set(user);
+				kc.loadUserInfo().then((userInfo) => {
+					logged_in = true;
+					userName.set(userInfo.given_name);
+					userId.set(userInfo.email);
 				});
 			} else {
 				kc.login();
@@ -27,12 +28,20 @@
 	}
 </script>
 
-<LibLoader
+{#if localMode}
+	<Main on:logout={() => {}} />
+{:else}
+
+	<LibLoader
 	src="http://localhost:8095/auth/js/keycloak.min.js"
 	libraryDetectionObject="Keycloak"
 	on:loaded={onLoaded}
-/>
+	/>
 
-{#if logged_in}
-	<Main displayname={$userInfo.given_name} on:logout={logout} />
+	{#if logged_in}
+	<Main on:logout={logout} />
+	{/if}
+
 {/if}
+
+

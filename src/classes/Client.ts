@@ -1,8 +1,9 @@
 import { Country } from "./Country";
 import { Gender } from "./Gender";
+import { userId } from "../stores";
 
 export class Client {
-    id: number;
+    id: number; 
     gender: Gender;
     firstName: string;
     lastName: string;
@@ -22,6 +23,7 @@ export class Client {
 
     static byId(id: number): Client {
         let client = new Client();
+        userId.subscribe(id => client.email = id)
         client.id = id;
         client.gender = Gender.m;
         client.firstName = "Kevin";
@@ -29,7 +31,6 @@ export class Client {
         client.title = "Ing.";
         client.academicDegree = "BSc.";
         client.occupation = "Software Engineer";
-        client.email = "schmid.kevin.manuel@gmail.com";
         client.phone = "03149/2164";
         client.mobile = "0043 660 41 77 516";
         client.country = Country.AT;
