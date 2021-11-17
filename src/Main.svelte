@@ -4,6 +4,7 @@
 	import Clients from "./routes/Clients.svelte";
 	import Client from "./routes/Client.svelte";
 	import { createEventDispatcher } from "svelte";
+	import IconButton from '@smui/icon-button';
 	import { Router, links, Route } from "svelte-routing";
 	import Drawer, {
 		AppContent,
@@ -73,6 +74,11 @@
 			</Drawer>
 
 			<AppContent>
+				<div>
+					<IconButton class="material-icons" on:click={() => drawerOpen = !drawerOpen} touch>
+						menu
+					</IconButton>
+				</div>
 				<div class="content">
 					<Route path="/" component={Home} />
 					<Route path="/clients" component={Clients} />
