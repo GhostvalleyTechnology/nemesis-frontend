@@ -9,7 +9,7 @@ export class Client {
     lastName: string;
     title: string;
     academicDegree: string;
-    birthday: Date;
+    birthday: string;
     occupation: string;
 
     email: string;
@@ -29,6 +29,7 @@ export class Client {
         client.firstName = "Kevin";
         client.lastName = "Schmid";
         client.title = "Ing.";
+        client.birthday = "";
         client.academicDegree = "BSc.";
         client.occupation = "Software Engineer";
         client.phone = "03149/2164";
