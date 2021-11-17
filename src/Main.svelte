@@ -23,8 +23,10 @@
 	}
 	let displayname: string;
 	userName.subscribe(name => {displayname = name});
-
 	function setActive(value: string) {
+		if(window.screen.width < 800) {
+			drawerOpen = !drawerOpen;
+		}
 		active = value;
 	}
 </script>
