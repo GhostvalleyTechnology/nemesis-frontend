@@ -4,22 +4,26 @@ import { userId } from "../stores";
 
 export class Client {
     id: number; 
-    gender: Gender;
-    firstName: string;
-    lastName: string;
-    title: string;
-    academicDegree: string;
-    birthday: string;
-    occupation: string;
+    gender: Gender = Gender.x;
+    firstName: string = "";
+    lastName: string = "";
+    title: string = "";
+    academicDegree: string = "";
+    birthday: string = "01/09/1990";
+    occupation: string = "";
 
-    email: string;
-    phone: string;
-    mobile: string;
+    email: string = "";
+    phone: string = "";
+    mobile: string = "";
     
-    country: Country;
-    zipCode: string;
-    city: string;
-    address: string;
+    country: Country = Country.AT;
+    zipCode: string = "";
+    city: string = "";
+    address: string = "";
+
+    bank: string = "";
+    iban: string = "";
+    bic: string = "";
 
     static byId(id: number): Client {
         let client = new Client();
@@ -29,7 +33,6 @@ export class Client {
         client.firstName = "Kevin";
         client.lastName = "Schmid";
         client.title = "Ing.";
-        client.birthday = "";
         client.academicDegree = "BSc.";
         client.occupation = "Software Engineer";
         client.phone = "03149/2164";

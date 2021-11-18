@@ -1,20 +1,16 @@
 <script lang="ts">
     import { navigate } from "svelte-routing";
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import Textfield from '@smui/textfield';
     import Paper from '@smui/paper';
-    import Button, { Label, Icon } from '@smui/button';
-    import { Client } from '../classes/Client';
-    import Radio from '@smui/radio';
-    import FormField from '@smui/form-field';
-
+    import Fab, { Label, Icon } from '@smui/fab';
     import Tab, { Icon as TabIcon, Label as TabLabel } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
 
+    import Client_Personal from '../components/Client_Personal.svelte';
+    import Client_Legal from '../components/Client_Legal.svelte';
+
+    import { Client } from '../classes/Client';
     export let id:number;
     $: client = Client.byId(id);
-    let gender = ""; 
-
 
     let tabs = [
         {
@@ -45,88 +41,30 @@
     </TabBar>
 
     {#if active.label == 'Personal'}
+        <Client_Personal {client} />
+    {:else if active.label == 'Bank'}
+        <Client_Legal {client} />
+    {/if}
 
-    <LayoutGrid>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.firstName} label="First Name"/>
-        </Cell>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.lastName} label="Last Name"/>
-        </Cell>
-        <Cell span={12}>
-            <Textfield style="width: 100%;" bind:value={client.email} label="E-Mail"/>
-        </Cell>
-        <Cell span={6}>
-            <div class="gender-container">
-                <FormField>
-                    <Radio bind:group={gender} value="M" touch />
-                    <span slot="label">male</span>
-                </FormField>
-                <FormField>
-                    <Radio bind:group={gender} value="W" touch />
-                    <span slot="label">female</span>
-                </FormField>
-                <FormField>
-                    <Radio bind:group={gender} value="X" touch />
-                    <span slot="label">any</span>
-                </FormField>
-            </div>
-        </Cell>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.birthday} label="Birthday" type="datetime-local"/>
-        </Cell>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.occupation} label="Occupation"/>
-        </Cell>
-        <Cell span={3}>
-            <Textfield style="width: 100%;" bind:value={client.title} label="Title"/>
-        </Cell>
-        <Cell span={3}>
-            <Textfield style="width: 100%;" bind:value={client.academicDegree} label="Degree"/>
-        </Cell>
-
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.phone} label="Phone"/>
-        </Cell>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.mobile} label="Mobile"/>
-        </Cell>
-        <Cell span={12}>
-            <Textfield style="width: 100%;" bind:value={client.address} label="Address"/>
-        </Cell>
-
-        <Cell span={4}>
-            <Textfield style="width: 100%;" bind:value={client.country.displayName} label="Country"/>
-        </Cell>
-        <Cell span={4}>
-            <Textfield style="width: 100%;" bind:value={client.zipCode} label="Zip Code"/>
-        </Cell>
-        <Cell span={4}>
-            <Textfield style="width: 100%;" bind:value={client.city} label="City"/>
-        </Cell>
-
-    </LayoutGrid>
     <div class="button-container">
-        <Button on:click={() => navigate("/clients")} touch variant="unelevated">
+        <Fab color="primary" on:click={() => navigate("/clients")} extended>
             <Icon class="material-icons">save</Icon>
             <Label>Save</Label>
-        </Button>
+        </Fab>
     </div>
-
-    {/if}
+    
 </Paper>
 </div>
 <style>
     .form-container {
         max-width: 1000px;
         margin: auto;
+        margin-bottom: 2rem;
     }
-    .gender-container {
-        display: flex;
-        justify-content: space-evenly;
-    }
+
     .button-container {
         display: flex;
         justify-content: flex-end;
+        margin: 1rem;
     }
 </style>
