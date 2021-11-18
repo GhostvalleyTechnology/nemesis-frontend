@@ -34,7 +34,7 @@
 <main>
 	<div use:links>
 		<Router>
-			<Drawer variant="dismissible" bind:open={drawerOpen}>
+			<Drawer variant="modal" bind:open={drawerOpen} class="drawer">
 				<Header>
 					<Title>Hello {displayname}</Title>
 					<Subtitle>Hier könnte Ihre Werbung stehen!</Subtitle>
@@ -75,14 +75,15 @@
 				</Content>
 			</Drawer>
 
-			<AppContent>
-				<div>
+			<AppContent class="main-area">
+				<div class="drawer-button">
 					<IconButton class="material-icons" on:click={() => drawerOpen = !drawerOpen} touch>
 						menu
 					</IconButton>
 				</div>
-				<div class="content">
+				
 					<Route path="/" component={Home} />
+				<div class="content">
 					<Route path="/clients" component={Clients} />
 					<Route path="client/:id" component={Client} />
 				</div>
@@ -92,7 +93,11 @@
 </main>
 
 <style>
+	.drawer-button {
+		position: absolute;
+		z-index: 100;
+	}
 	.content {
-		padding: 1rem;
+		padding: 2rem;
 	}
 </style>

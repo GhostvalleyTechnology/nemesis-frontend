@@ -7,6 +7,7 @@
 
     import Client_Personal from '../components/Client_Personal.svelte';
     import Client_Legal from '../components/Client_Legal.svelte';
+    import Client_Documents from '../components/Client_Documents.svelte';
 
     import { Client } from '../classes/Client';
     export let id:number;
@@ -40,11 +41,15 @@
         </Tab>
     </TabBar>
 
+    <div class="tab-container">
     {#if active.label == 'Personal'}
         <Client_Personal {client} />
     {:else if active.label == 'Bank'}
         <Client_Legal {client} />
+    {:else if active.label == 'Documents'}
+        <Client_Documents {client} />
     {/if}
+</div>
 
     <div class="button-container">
         <Fab color="primary" on:click={() => navigate("/clients")} extended>
@@ -66,5 +71,9 @@
         display: flex;
         justify-content: flex-end;
         margin: 1rem;
+    }
+
+    .tab-container {
+        padding-top: 2rem;
     }
 </style>

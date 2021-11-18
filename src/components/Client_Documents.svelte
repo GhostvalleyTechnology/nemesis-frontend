@@ -3,7 +3,8 @@
     import Paper from '@smui/paper';
     import { Input } from '@smui/textfield';
     import Icon from '@smui/textfield/icon';
-    import Fab from '@smui/fab';
+    $: filterValue = "";
+  
     import DataTable, {
       Head,
       Body,
@@ -13,26 +14,27 @@
       SortValue,
     } from '@smui/data-table';
     import IconButton from '@smui/icon-button';
-    import { Client } from '../classes/Client'; 
   
-
-    let sort: keyof Client = 'id';
+    type User = {
+      id: number;
+      name: string;
+      username: string;
+      email: string;
+      website: string;
+    };
+    let items: User[] = [];
+    let sort: keyof User = 'id';
     let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
   
-    let items = Client.list();
-    /*
     if (typeof fetch !== 'undefined') {
       fetch(
         'https://gist.githubusercontent.com/hperrin/e24a4ebd9afdf2a8c283338ae5160a62/raw/dcbf8e6382db49b0dcab70b22f56b1cc444f26d4/users.json'
       )
         .then((response) => response.json())
         .then((json) => (items = json));
-    } 
-
-    */
+    }
   
-    $: filterValue = "";
-    $: filtered = items.filter((s) => s.fullName.includes(filterValue) || s.email.includes(filterValue) || s.zipCode.includes(filterValue) || s.city.includes(filterValue));
+    $: filtered = items.filter((s) => s.name.includes(filterValue));
   
     function handleSort() {
       items.sort((a, b) => {
@@ -47,6 +49,9 @@
       items = items;
     }
   
+    import type { Client } from '../classes/Client';
+    export let client: Client;
+
   </script>
 
 <div class="solo-container">
@@ -58,11 +63,6 @@
         class="solo-input"
       />
     </Paper>
-  </div>
-    <div class="float">
-  <Fab color="primary" on:click={() => navigate("client/new")}>
-    <Icon class="material-icons">add</Icon>
-  </Fab>
   </div>
   
   <DataTable
@@ -90,33 +90,31 @@
           <IconButton class="material-icons">arrow_upward</IconButton>
           <Label>ID</Label>
         </Cell>
-        <Cell columnId="fullName" style="width: 100%;">
+        <Cell columnId="name" style="width: 100%;">
           <Label>Name</Label>
           <!-- For non-numeric columns, icon comes second. -->
+          <IconButton class="material-icons">arrow_upward</IconButton>
+        </Cell>
+        <Cell columnId="username">
+          <Label>Username</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
         <Cell columnId="email">
           <Label>Email</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="zipCode">
-          <Label>Zip Code</Label>
-          <IconButton class="material-icons">arrow_upward</IconButton>
-        </Cell>
-        <Cell columnId="city">
-          <Label>City</Label>
-          <IconButton class="material-icons">arrow_upward</IconButton>
-        </Cell>
+        <!-- You can turn off sorting for a column. -->
+        <Cell sortable={false}>Website</Cell>
       </Row>
     </Head>
     <Body>
       {#each filtered as item (item.id)}
         <Row on:click={() => navigate("client/"+item.id)}>
           <Cell numeric>{item.id}</Cell>
-          <Cell>{item.fullName}</Cell>
+          <Cell>{item.name}</Cell>
+          <Cell>{item.username}</Cell>
           <Cell>{item.email}</Cell>
-          <Cell>{item.zipCode}</Cell>
-          <Cell>{item.city}</Cell>
+          <Cell>{item.website}</Cell>
         </Row>
       {/each}
     </Body>
@@ -126,8 +124,7 @@
     .float {
       position: fixed;
       bottom: 2rem;
-      right: 3rem;
-      z-index: 1;
+      right: 2rem;
     }
     .solo-container {
       display: flex;

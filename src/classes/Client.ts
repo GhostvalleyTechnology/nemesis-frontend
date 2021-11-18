@@ -7,6 +7,7 @@ export class Client {
     gender: Gender = Gender.x;
     firstName: string = "";
     lastName: string = "";
+    fullName: string = "";
     title: string = "";
     academicDegree: string = "";
     birthday: string = "01/09/1990";
@@ -27,20 +28,25 @@ export class Client {
 
     static byId(id: number): Client {
         let client = new Client();
-        userId.subscribe(id => client.email = id)
         client.id = id;
         client.gender = Gender.m;
-        client.firstName = "Kevin";
-        client.lastName = "Schmid";
+        client.firstName = "First " + id;
+        client.lastName = "Lastname" + id;
+        client.fullName = client.lastName + " " + client.firstName;
+        client.email = id + "mail@maily.com";
         client.title = "Ing.";
         client.academicDegree = "BSc.";
         client.occupation = "Software Engineer";
-        client.phone = "03149/2164";
-        client.mobile = "0043 660 41 77 516";
+        client.phone = "01111111111" + id;
+        client.mobile = "000000000000" + id;
         client.country = Country.AT;
-        client.zipCode = "8010";
-        client.city = "Graz";
-        client.address = "Monsbergergasse 5/10";
+        client.zipCode = "0000";
+        client.city = "City" + id;
+        client.address = "Randomstreet "+ id;
         return client;
+    }
+
+    static list(): Client[] {
+        return [...Array(30).keys()].map(index => (Client.byId(index)));
     }
 }

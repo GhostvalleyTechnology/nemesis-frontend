@@ -9,7 +9,7 @@
     let gender = ""; 
 </script>
 
-    <LayoutGrid>
+    <LayoutGrid style="padding-bottom: 3rem;">
         <Cell span={6}>
             <Textfield style="width: 100%;" bind:value={client.firstName} label="First Name"/>
         </Cell>
@@ -47,9 +47,9 @@
         <Cell span={3}>
             <Textfield style="width: 100%;" bind:value={client.academicDegree} label="Degree"/>
         </Cell>
-
-        <div class="spacer"/>
-        
+    </LayoutGrid>
+    
+    <LayoutGrid style="padding-bottom: 3rem;">
         <Cell span={12}>
             <Textfield style="width: 100%;" bind:value={client.address} label="Address"/>
         </Cell>
@@ -68,9 +68,9 @@
         <Cell span={6}>
             <Textfield style="width: 100%;" bind:value={client.mobile} label="Mobile"/>
         </Cell>
+    </LayoutGrid>
 
-        <div class="spacer"/>
-
+    <LayoutGrid style="padding-bottom: 3rem;">
         <Cell span={6}>
             <Textfield style="width: 100%;" bind:value={client.bank} label="Bank"/>
         </Cell>
@@ -86,9 +86,5 @@
     .gender-container {
         display: flex;
         justify-content: space-evenly;
-    }
-    .spacer {
-        height: 2rem;
-        grid-column-end: span 12;
     }
 </style>
