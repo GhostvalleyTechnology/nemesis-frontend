@@ -43,8 +43,8 @@ export default {
 	},
 	plugins: [
 		replace({
+			env_RUN_MODE: process.env.RUN_MODE,
 			env_KEYCLOAK_URL: process.env.KEYCLOAK_URL,
-			env_OFFLINE_MODE: process.env.OFFLINE_MODE,
 			env_QUARKUS_URL: process.env.QUARKUS_URL,
 		}),
 		svelte({

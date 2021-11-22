@@ -2,8 +2,8 @@
 	import LibLoader from "./components/LibLoader.svelte";
 	import "svelte-material-ui/bare.css";
 	import Main from "./Main.svelte";
-	import { userId, userName } from "./stores";
-	import { KEYCLOAK_URL, OFFLINE_MODE } from "./env";
+	import { userId, userName, userToken } from "./stores";
+	import { KEYCLOAK_URL, RUN_MODE } from "./env";
 
 	let logged_in = null;
 	let kc = null;
@@ -17,6 +17,11 @@
 					logged_in = true;
 					userName.set(userInfo.given_name);
 					userId.set(userInfo.email);
+					userToken.set(kc.idToken);
+
+					fetch('http://localhost:8080/api/client/user', {headers: {'Authorization': 'Bearer ' + kc.idToken,},})
+            .then((response) => response.text())
+            .then((json) => (alert(json)));
 				});
 			} else {
 				kc.login();
@@ -26,9 +31,11 @@
 	function logout() {
 		kc.logout();
 	}
+	//@ts-ignore
+	let isOffline = RUN_MODE == 'OFFLINE';
 </script>
 
-{#if OFFLINE_MODE}
+{#if isOffline}
 	<Main on:logout={() => {}} />
 {:else}
 

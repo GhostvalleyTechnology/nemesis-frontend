@@ -1,4 +1,37 @@
+<script lang="ts">
+    import { userToken } from '../stores';
+    let currentToken = '';
+    userToken.subscribe(token => {
+
+        fetch('http://localhost:8080/api/client/user', {headers: {'Authorization': 'Bearer ' + token,},})
+            .then((response) => response.text())
+            .then((json) => (userCall = json));
+
+    });
+    let openCall;
+    let userCall;
+    let adminCall;
+    if (typeof fetch !== 'undefined') {
+      fetch(
+        'http://localhost:8080/api/client/open', {headers: {'Authorization': 'Bearer ' + currentToken,},}
+      )
+        .then((response) => response.text())
+        .then((json) => (openCall = json));
+    
+    fetch(
+        'http://localhost:8080/api/client/admin', {headers: {'Authorization': 'Bearer ' + currentToken,},}
+      )
+        .then((response) => response.text())
+        .then((json) => (adminCall = json));
+    }
+</script>
+
 <div class="context">
+
+    <pre>{openCall}</pre>
+    <pre>{userCall}</pre>
+    <pre>{adminCall}</pre>
+
 </div>
 
 
@@ -18,18 +51,17 @@
 </div >
 
 <style>
-    *{
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+*{
     margin: 0px;
     padding: 0px;
 }
-
- 
 
 .context {
     width: 100%;
     position: absolute;
     top:50vh;
-    
 }
 
 
@@ -153,4 +185,7 @@
     }
 
 }
+
+
+
 </style>

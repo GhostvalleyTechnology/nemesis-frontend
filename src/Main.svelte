@@ -98,6 +98,6 @@
 		z-index: 100;
 	}
 	.content {
-		padding: 2rem;
+		padding: 3rem 2rem;
 	}
 </style>
