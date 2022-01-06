@@ -3,8 +3,6 @@
     import Paper from '@smui/paper';
     import { Input } from '@smui/textfield';
     import Icon from '@smui/textfield/icon';
-    $: filterValue = "";
-  
     import DataTable, {
       Head,
       Body,
@@ -15,29 +13,23 @@
     } from '@smui/data-table';
     import IconButton from '@smui/icon-button';
   
-    type User = {
-      id: number;
-      name: string;
-      username: string;
-      email: string;
-      website: string;
-    };
-    let items: User[] = [];
-    let sort: keyof User = 'id';
+    import type { Client } from '../classes/Client';
+    import { Document } from '../classes/Document';
+    export let client: Client;
+    $: filterValue = "";
+    let documents = Document.fromClient(client.id);
+
+    let sort: keyof Document = 'name';
     let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
   
-    if (typeof fetch !== 'undefined') {
-      fetch(
-        'https://gist.githubusercontent.com/hperrin/e24a4ebd9afdf2a8c283338ae5160a62/raw/dcbf8e6382db49b0dcab70b22f56b1cc444f26d4/users.json'
-      )
-        .then((response) => response.json())
-        .then((json) => (items = json));
-    }
-  
-    $: filtered = items.filter((s) => s.name.includes(filterValue));
+    $: filtered = documents.filter((s) => 
+      s.name.includes(filterValue) || 
+      s.type.includes(filterValue) || 
+      s.date.includes(filterValue) ||
+      s.contractor.includes(filterValue));
   
     function handleSort() {
-      items.sort((a, b) => {
+      documents.sort((a, b) => {
         const [aVal, bVal] = [a[sort], b[sort]][
           sortDirection === 'ascending' ? 'slice' : 'reverse'
         ]();
@@ -46,11 +38,8 @@
         }
         return Number(aVal) - Number(bVal);
       });
-      items = items;
+      documents = documents;
     }
-  
-    import type { Client } from '../classes/Client';
-    export let client: Client;
 
   </script>
 
@@ -85,36 +74,44 @@
           "sortAscendingAriaLabel" and
           "sortDescendingAriaLabel" props on the DataTable.
         -->
-        <Cell numeric columnId="id">
-          <!-- For numeric columns, icon comes first. -->
-          <IconButton class="material-icons">arrow_upward</IconButton>
-          <Label>ID</Label>
-        </Cell>
         <Cell columnId="name" style="width: 100%;">
           <Label>Name</Label>
           <!-- For non-numeric columns, icon comes second. -->
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="username">
-          <Label>Username</Label>
+        <Cell columnId="contractor" style="width: 100%;">
+          <Label>Contractor</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="email">
-          <Label>Email</Label>
+        <Cell columnId="type" style="width: 100%;">
+          <Label>Type</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <!-- You can turn off sorting for a column. -->
-        <Cell sortable={false}>Website</Cell>
+        <Cell columnId="signed" style="width: 100%;">
+          <Label>Signed</Label>
+          <IconButton class="material-icons">arrow_upward</IconButton>
+        </Cell>
+        <Cell columnId="date">
+          <Label>Date</Label>
+          <IconButton class="material-icons">arrow_upward</IconButton>
+        </Cell>
       </Row>
     </Head>
     <Body>
       {#each filtered as item (item.id)}
-        <Row on:click={() => navigate("client/"+item.id)}>
-          <Cell numeric>{item.id}</Cell>
+        <Row on:click={() => navigate("document/"+item.id)}>
           <Cell>{item.name}</Cell>
-          <Cell>{item.username}</Cell>
-          <Cell>{item.email}</Cell>
-          <Cell>{item.website}</Cell>
+          <Cell>{item.contractor}</Cell>
+          <Cell>{item.type}</Cell>
+          <Cell><Icon class="material-icons">
+            {#if item.signed}
+            task_alt
+            {:else}
+            radio_button_unchecked
+            {/if}
+          </Icon></Cell>
+          
+          <Cell>{item.date}</Cell>
         </Row>
       {/each}
     </Body>

@@ -1,74 +1,42 @@
-<script lang="ts">
-    import { userToken } from '../stores';
-    let currentToken = '';
-    userToken.subscribe(token => {
-
-        fetch('http://localhost:8080/api/client/user', {headers: {'Authorization': 'Bearer ' + token,},})
-            .then((response) => response.text())
-            .then((json) => (userCall = json));
-
-    });
-    let openCall;
-    let userCall;
-    let adminCall;
-    if (typeof fetch !== 'undefined') {
-      fetch(
-        'http://localhost:8080/api/client/open', {headers: {'Authorization': 'Bearer ' + currentToken,},}
-      )
-        .then((response) => response.text())
-        .then((json) => (openCall = json));
-    
-    fetch(
-        'http://localhost:8080/api/client/admin', {headers: {'Authorization': 'Bearer ' + currentToken,},}
-      )
-        .then((response) => response.text())
-        .then((json) => (adminCall = json));
-    }
-</script>
-
-<div class="context">
-
-    <pre>{openCall}</pre>
-    <pre>{userCall}</pre>
-    <pre>{adminCall}</pre>
-
-</div>
-
-
-<div class="area" >
-        <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-        </ul>
+<div class="area background">
+    <div class="content">
+        <img class="logo" src="../logo.png" alt="LiberoLife Logo" />
+    </div>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </div >
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+<style lang="scss">
 
 *{
     margin: 0px;
     padding: 0px;
 }
 
-.context {
-    width: 100%;
-    position: absolute;
-    top:50vh;
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
+.logo {
+    max-width: 15vw;
+}
 
 .area{
-    background: rgba(0, 0, 255, 0.12);  
     width: 100%;
-    height:100vh;
+    height: 100vh;
 }
 
 .circles{
@@ -86,7 +54,7 @@
     list-style: none;
     width: 20px;
     height: 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 236, 77, 0.1);
     animation: animate 55s linear infinite;
     bottom: -150px;
     

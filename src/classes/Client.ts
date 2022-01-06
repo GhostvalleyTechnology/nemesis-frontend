@@ -1,6 +1,5 @@
 import { Country } from "./Country";
 import { Gender } from "./Gender";
-import { userId } from "../stores";
 
 export class Client {
     id: number; 
@@ -10,7 +9,8 @@ export class Client {
     fullName: string = "";
     title: string = "";
     academicDegree: string = "";
-    birthday: string = "01/09/1990";
+    birthday: string = "";
+    birthdayPlace: string = "";
     occupation: string = "";
 
     email: string = "";

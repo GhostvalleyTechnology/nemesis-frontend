@@ -1,0 +1,56 @@
+@use 'sass:color';
+@use 'constants';
+@use '@material/theme/color-palette';
+
+@use '@material/theme/index' as theme with (
+  $primary: constants.$primary,
+  $secondary: constants.$secondary,
+  $surface: constants.$light-background,
+  $background: constants.$light-background,
+  $error: color-palette.$red-900
+);
+
+html,
+body {
+  background-color: #fff;
+  color: theme.$on-surface;
+  margin: 0;
+}
+
+a {
+  color: #40b3ff;
+}
+a:visited {
+  color: color.scale(#40b3ff, $lightness: -35%);
+}
+
+.background {
+  background-color: #fff;
+}
+
+// drawer
+.mdc-drawer__title {
+  font-size: 2.6em;
+}
+
+.mdc-drawer__header {
+  text-align: center;
+  padding-bottom: 5rem !important;
+  padding-top: 2rem !important;
+  background: constants.$light-background;
+  background: linear-gradient(180deg, #fff 0%, #fff 50%, constants.$light-background 100%); 
+}
+
+// admin-mode styling
+.admin-header {
+  background: constants.$light-background;
+  background: linear-gradient(180deg, #fff 0%, #fff 50%, #f05545 100%); 
+}
+
+.admin-content {
+  background: #f05545; 
+}
+
+footer {
+  color: rgba(25, 25, 5);
+}

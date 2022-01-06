@@ -1,0 +1,57 @@
+@use 'sass:color';
+@use '../constants';
+@use '@material/theme/color-palette';
+
+// Svelte Colors! (Dark Theme)
+@use '@material/theme/index' as theme with (
+  $primary: constants.$primary,
+  $secondary: constants.$secondary,
+  $surface: constants.$dark-background,
+  $background: constants.$dark-background,
+  $error: color-palette.$red-700
+);
+
+html,
+body {
+  background-color: constants.$secondary-dark;
+  color: theme.$on-surface;
+  margin: 0;
+}
+
+a {
+  color: #40b3ff;
+}
+a:visited {
+  color: color.scale(#40b3ff, $lightness: -35%);
+}
+
+.background {
+  background-color: constants.$dark-background;
+}
+
+// drawer
+.mdc-drawer__title {
+  font-size: 2.6em;
+}
+
+.mdc-drawer__header {
+  text-align: center;
+  padding-bottom: 5rem !important;
+  padding-top: 2rem !important;
+  background: constants.$secondary-dark;
+  background: linear-gradient(180deg, constants.$secondary-dark 0%, constants.$secondary-dark 50%, constants.$dark-background 100%); 
+}
+
+// admin-mode styling
+.admin-header {
+  background: constants.$light-background;
+  background: linear-gradient(180deg, constants.$secondary-dark 0%, constants.$secondary-dark 50%, #7f0000 100%); 
+}
+
+.admin-content {
+  background: #7f0000; 
+}
+
+footer {
+  color: lavender;
+}

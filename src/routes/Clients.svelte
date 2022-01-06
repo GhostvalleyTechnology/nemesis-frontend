@@ -64,24 +64,12 @@
   >
     <Head>
       <Row>
-        <!--
-          Note: whatever you supply to "columnId" is
-          appended with "-status-label" and used as an ID
-          for the hidden label that describes the sort
-          status to screen readers.
-  
-          You can localize those labels with the
-          "sortAscendingAriaLabel" and
-          "sortDescendingAriaLabel" props on the DataTable.
-        -->
         <Cell numeric columnId="id">
-          <!-- For numeric columns, icon comes first. -->
           <IconButton class="material-icons">arrow_upward</IconButton>
           <Label>ID</Label>
         </Cell>
         <Cell columnId="fullName" style="width: 100%;">
           <Label>Name</Label>
-          <!-- For non-numeric columns, icon comes second. -->
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
         <Cell columnId="email">
@@ -139,10 +127,10 @@
     }
     * :global(.solo-input) {
       flex-grow: 1;
-      color: var(--mdc-theme-on-surface, #000);
+      color: var(--mdc-theme-on-surface, #fff);
     }
     * :global(.solo-input::placeholder) {
-      color: var(--mdc-theme-on-surface, #000);
+      color: var(--mdc-theme-on-surface, #fff);
       opacity: 0.6;
     }
     * :global(.solo-fab) {

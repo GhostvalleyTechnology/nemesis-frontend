@@ -28,6 +28,9 @@
         },
     ];
   let active = tabs[0];
+  function uploadDocument() {
+    alert("upload");
+  }
 
 </script>
 
@@ -52,10 +55,17 @@
 </div>
 
     <div class="button-container">
+        {#if active.label == 'Personal' || active.label == 'Bank'}
         <Fab color="primary" on:click={() => navigate("/clients")} extended>
             <Icon class="material-icons">save</Icon>
             <Label>Save</Label>
         </Fab>
+        {:else if active.label == 'Documents'}
+        <Fab color="primary" on:click={() => navigate("/documents/add/"+client.id)} extended>
+            <Icon class="material-icons">add</Icon>
+            <Label>Add</Label>
+        </Fab>
+        {/if}
     </div>
     
 </Paper>
@@ -64,7 +74,6 @@
     .form-container {
         max-width: 1000px;
         margin: auto;
-        margin-bottom: 2rem;
     }
 
     .button-container {

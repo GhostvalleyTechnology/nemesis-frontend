@@ -31,12 +31,12 @@
                 </FormField>
                 <FormField>
                     <Radio bind:group={gender} value="X" touch />
-                    <span slot="label">any</span>
+                    <span slot="label">divers</span>
                 </FormField>
             </div>
         </Cell>
         <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.birthday} label="Birthday" type="datetime-local"/>
+            <Textfield style="width: 100%;" bind:value={client.birthday} label="Birthday" type="date"/>
         </Cell>
         <Cell span={6}>
             <Textfield style="width: 100%;" bind:value={client.occupation} label="Occupation"/>
@@ -67,18 +67,6 @@
         </Cell>
         <Cell span={6}>
             <Textfield style="width: 100%;" bind:value={client.mobile} label="Mobile"/>
-        </Cell>
-    </LayoutGrid>
-
-    <LayoutGrid style="padding-bottom: 3rem;">
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.bank} label="Bank"/>
-        </Cell>
-        <Cell span={6}>
-            <Textfield style="width: 100%;" bind:value={client.bic} label="BIC"/>
-        </Cell>
-        <Cell span={12}>
-            <Textfield style="width: 100%;" bind:value={client.iban} label="IBAN"/>
         </Cell>
     </LayoutGrid>
 

@@ -42,11 +42,6 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
-		replace({
-			env_RUN_MODE: process.env.RUN_MODE,
-			env_KEYCLOAK_URL: process.env.KEYCLOAK_URL,
-			env_QUARKUS_URL: process.env.QUARKUS_URL,
-		}),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
