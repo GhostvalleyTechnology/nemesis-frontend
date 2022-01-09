@@ -1,5 +1,6 @@
 import { Country } from "./Country";
 import { Gender } from "./Gender";
+import { MaritalStatus } from "./MaritalStatus";
 
 export class Client {
     id: number; 
@@ -9,9 +10,16 @@ export class Client {
     fullName: string = "";
     title: string = "";
     academicDegree: string = "";
-    birthday: string = "";
+    birthday: string = '1990-01-01T00:00:00';
     birthdayPlace: string = "";
+    nationality: string = "";
     occupation: string = "";
+    socialInsuranceInstitution: string = "";
+    militaryServiceDone: boolean = false;
+    smoker: boolean = false;
+    pets: string = "";
+    maritalStatus: MaritalStatus = MaritalStatus.single;
+    children: Child[] = [];
 
     email: string = "";
     phone: string = "";
@@ -49,4 +57,9 @@ export class Client {
     static list(): Client[] {
         return [...Array(30).keys()].map(index => (Client.byId(index)));
     }
+}
+
+export class Child {
+    name: string = "";
+    birthday: string = "";
 }

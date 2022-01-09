@@ -16,6 +16,7 @@
 	} from "@smui/drawer";
 	import List, { Item, Graphic, Separator, Text } from "@smui/list";
 	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
+	import { admin } from "./stores";
 
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
@@ -31,8 +32,9 @@
 		active = value;
 	}
 	let isAdminMode = false;
+	admin.subscribe( value => { isAdminMode = value; });
 	function toggleAdminMode() {
-		isAdminMode =! isAdminMode;
+		admin.set(!isAdminMode);
 	}
 </script>
 

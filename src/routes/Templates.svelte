@@ -15,6 +15,7 @@
   import IconButton from '@smui/icon-button';
   import type { Template } from '../classes/Template'; 
   import { getTemplates } from '../classes/Template';
+  import AdminGuard from '../components/AdminGuard.svelte';
 
   let sort: keyof Template = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
@@ -48,11 +49,13 @@
     />
   </Paper>
 </div>
+<AdminGuard>
   <div class="float">
 <Fab color="primary" on:click={() => navigate("template/new")}>
   <Icon class="material-icons">add</Icon>
 </Fab>
 </div>
+</AdminGuard>
 
 <DataTable
   sortable
@@ -68,12 +71,29 @@
         <Label>Name</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
+      <AdminGuard>
+        <Cell columnId="adminOnly">
+          <Label>Visible for Employees</Label>
+          <IconButton class="material-icons">arrow_upward</IconButton>
+        </Cell>
+      </AdminGuard>
     </Row>
   </Head>
   <Body>
     {#each filtered as item (item.name)}
       <Row on:click={() => navigate(item.path)}>
         <Cell>{item.name}</Cell>
+        <AdminGuard>
+          <Cell>
+            <Icon class="material-icons">
+              {#if item.adminOnly}
+              radio_button_unchecked
+              {:else}
+              task_alt
+              {/if}
+            </Icon>
+          </Cell>
+        </AdminGuard>
       </Row>
     {/each}
   </Body>

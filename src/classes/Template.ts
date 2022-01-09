@@ -15,4 +15,8 @@ export function getTemplates(): Template[] {
         adminOnly: false
     }
     return [needsAssessment];
-} 
+}
+
+export function toggleVisibility(template: Template) {
+    template.adminOnly != template.adminOnly;
+}
