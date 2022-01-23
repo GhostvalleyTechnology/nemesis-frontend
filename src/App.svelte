@@ -1,9 +1,14 @@
 <script lang="ts">
 	import "svelte-material-ui/bare.css";
+	// all possible routes
 	import Home from "./routes/Home.svelte";
 	import Clients from "./routes/Clients.svelte";
-	import Templates from "./routes/Templates.svelte";
 	import Client from "./routes/Client.svelte";
+	import Templates from "./routes/Templates.svelte";
+	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
+	import Employees from "./routes/Employees.svelte";
+	import Employee from "./routes/Employee.svelte";
+
 	import { createEventDispatcher } from "svelte";
 	import IconButton from "@smui/icon-button";
 	import { Router, links, Route } from "svelte-routing";
@@ -15,7 +20,7 @@
 		Subtitle,
 	} from "@smui/drawer";
 	import List, { Item, Graphic, Separator, Text } from "@smui/list";
-	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
+	
 	import { admin } from "./stores";
 
 	let drawerOpen = true;
@@ -79,6 +84,13 @@
 							<Graphic class="material-icons" aria-hidden="true">military_tech</Graphic>
 							<Text>Admin Mode</Text>
 						</Item>
+						{#if isAdminMode}
+						<Item href="/employees" on:click={() => setActive("employees")} activated={active === "employees"}>
+							<Graphic class="material-icons" aria-hidden="true">badge</Graphic>
+							<Text>Employees</Text>
+						</Item>
+						{/if}
+						
 						<Item href="javascript:void(0)" on:click={() => logout()}>
 							<Graphic class="material-icons" aria-hidden="true">logout</Graphic>
 							<Text>Logout</Text>
@@ -100,6 +112,8 @@
 					<Route path="client/:id" component={Client} />
 					<Route path="/templates" component={Templates} />
 					<Route path="/needs_assessment" component={NeedsAssessment} />
+					<Route path="/employees" component={Employees} />
+					<Route path="employee/:id" component={Employee} />
 				</div>
 				
 				
