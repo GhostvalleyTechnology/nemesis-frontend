@@ -11,11 +11,9 @@
       Cell,
       Label,
     } from '@smui/data-table';
-    import { Employee } from "../service/models/employee"
-    import { EmployeeService } from "../api"
+    import { EmployeeService, Employee } from "../gen"
     var items: Employee[] = [];
-    EmployeeService().list().then(data => items = data)
-    
+    EmployeeService.list().then(data => items = data)
 
     $: filterValue = "";
     $: filtered = items.filter((s) => s.name.includes(filterValue) || s.email.includes(filterValue));

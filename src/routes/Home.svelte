@@ -1,3 +1,7 @@
+<script lang="ts">
+
+</script>
+
 <div class="area background">
     <div class="content">
         <img class="logo" src="../logo.png" alt="LiberoLife Logo" />

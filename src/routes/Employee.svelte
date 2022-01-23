@@ -1,13 +1,16 @@
 <script lang="ts">
     import { navigate } from "svelte-routing";
+    import LayoutGrid, { Cell } from '@smui/layout-grid';
+    import Textfield from '@smui/textfield';
     import Paper from '@smui/paper';
     import Fab, { Label, Icon } from '@smui/fab';
-    import Tab, { Icon as TabIcon, Label as TabLabel } from '@smui/tab';
-    import TabBar from '@smui/tab-bar';
+    import { EmployeeService, Employee } from "../gen";
 
-    import { Employee } from '../classes/Employee';
-    export let id:number;
-    $: employee = Employee.byId(id);
+    export let id: number|string;
+    let employee: Employee;
+    if(Number.isInteger(id)) {
+        EmployeeService.get(id as number).then(data => employee = data);
+    }
 
     function save() {
         if(id == 0) {
@@ -21,7 +24,14 @@
 
 <div class="form-container">
 <Paper elevation={6}>
-
+    <LayoutGrid style="padding-bottom: 3rem;">
+        <Cell span={12}>
+            <Textfield style="width: 100%;" bind:value={employee.name} label="Name"/>
+        </Cell>
+        <Cell span={12}>
+            <Textfield style="width: 100%;" bind:value={employee.email} label="E-Mail"/>
+        </Cell>
+    </LayoutGrid>
     <div class="button-container">
         <Fab color="primary" on:click={() => save()} extended>
             <Icon class="material-icons">save</Icon>

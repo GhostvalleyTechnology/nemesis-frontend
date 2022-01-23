@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { OpenAPI } from "./gen"
+	OpenAPI.BASE = "http://localhost:8080"
 	import "svelte-material-ui/bare.css";
 	// all possible routes
 	import Home from "./routes/Home.svelte";

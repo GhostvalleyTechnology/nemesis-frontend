@@ -1,0 +1,946 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "nemesis-backend API",
+    "version" : "1.0-SNAPSHOT"
+  },
+  "paths" : {
+    "/api/admin/daily" : {
+      "post" : {
+        "tags" : [ "Admin Service" ],
+        "operationId" : "dailyTasks",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client-contract/add" : {
+      "post" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  },
+                  "fileName" : {
+                    "type" : "string"
+                  },
+                  "clientId" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  },
+                  "legacy" : {
+                    "type" : "boolean"
+                  },
+                  "contractNumber" : {
+                    "type" : "string"
+                  },
+                  "paymentValue" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  },
+                  "paymentFrequency" : {
+                    "$ref" : "#/components/schemas/PaymentFrequency"
+                  },
+                  "contractorId" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  }
+                }
+              },
+              "encoding" : {
+                "fileName" : {
+                  "contentType" : "text/plain"
+                },
+                "paymentValue" : {
+                  "contentType" : "text/plain"
+                },
+                "file" : {
+                  "contentType" : "application/octet-stream"
+                },
+                "clientId" : {
+                  "contentType" : "text/plain"
+                },
+                "legacy" : {
+                  "contentType" : "text/plain"
+                },
+                "contractorId" : {
+                  "contentType" : "text/plain"
+                },
+                "contractNumber" : {
+                  "contentType" : "text/plain"
+                },
+                "paymentFrequency" : {
+                  "contentType" : "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client-contract/get/{contractId}" : {
+      "get" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client/add" : {
+      "post" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client/delete" : {
+      "post" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "delete",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client/get/{id}" : {
+      "get" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/client/list" : {
+      "get" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/client/list-all" : {
+      "get" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "listAll",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/client/update" : {
+      "post" : {
+        "tags" : [ "Client Service" ],
+        "operationId" : "update",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/employee/add" : {
+      "post" : {
+        "tags" : [ "Employee Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/employee/get/{id}" : {
+      "get" : {
+        "tags" : [ "Employee Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employee/list" : {
+      "get" : {
+        "tags" : [ "Employee Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employee/update" : {
+      "post" : {
+        "tags" : [ "Employee Service" ],
+        "operationId" : "update",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/hello" : {
+      "get" : {
+        "tags" : [ "Example Resource" ],
+        "operationId" : "hello",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hello/mail" : {
+      "get" : {
+        "tags" : [ "Example Resource" ],
+        "operationId" : "sendEmail",
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    },
+    "/api/me" : {
+      "get" : {
+        "tags" : [ "User Service" ],
+        "operationId" : "get",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/partner/add" : {
+      "post" : {
+        "tags" : [ "Partner Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Partner"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/partner/list" : {
+      "get" : {
+        "tags" : [ "Partner Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Partner"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/partner/update" : {
+      "post" : {
+        "tags" : [ "Partner Service" ],
+        "operationId" : "update",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Partner"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/template/add" : {
+      "post" : {
+        "tags" : [ "Template Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  },
+                  "fileName" : {
+                    "type" : "string"
+                  },
+                  "adminOnly" : {
+                    "type" : "boolean"
+                  }
+                }
+              },
+              "encoding" : {
+                "adminOnly" : {
+                  "contentType" : "text/plain"
+                },
+                "fileName" : {
+                  "contentType" : "text/plain"
+                },
+                "file" : {
+                  "contentType" : "application/octet-stream"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/template/get/{templateId}" : {
+      "get" : {
+        "tags" : [ "Template Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "templateId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/template/list" : {
+      "get" : {
+        "tags" : [ "Template Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Template"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Client" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "gender" : {
+            "$ref" : "#/components/schemas/Gender"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "mobile" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "academicDegree" : {
+            "type" : "string"
+          },
+          "birthday" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "birthPlace" : {
+            "type" : "string"
+          },
+          "nationality" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "socialInsuranceInstitution" : {
+            "type" : "string"
+          },
+          "occupation" : {
+            "type" : "string"
+          },
+          "country" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "zipCode" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "supervisor" : {
+            "$ref" : "#/components/schemas/Employee"
+          },
+          "deleted" : {
+            "type" : "boolean"
+          },
+          "militaryServiceDone" : {
+            "type" : "boolean"
+          },
+          "smoker" : {
+            "type" : "boolean"
+          },
+          "pets" : {
+            "type" : "boolean"
+          },
+          "petsRemarks" : {
+            "type" : "string"
+          },
+          "maritalStatus" : {
+            "$ref" : "#/components/schemas/MaritalStatus"
+          },
+          "partner" : {
+            "$ref" : "#/components/schemas/GenericPerson"
+          },
+          "children" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GenericPerson"
+            }
+          },
+          "clientContracts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClientContract"
+            }
+          },
+          "proofOfIdentities" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProofOfIdentity"
+            }
+          },
+          "bank" : {
+            "type" : "string"
+          },
+          "iban" : {
+            "type" : "string"
+          },
+          "bic" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ClientContract" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "fileId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "legacy" : {
+            "type" : "boolean"
+          },
+          "contractNumber" : {
+            "type" : "string"
+          },
+          "paymentValue" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "paymentFrequency" : {
+            "$ref" : "#/components/schemas/PaymentFrequency"
+          },
+          "contractor" : {
+            "$ref" : "#/components/schemas/Partner"
+          }
+        }
+      },
+      "Country" : {
+        "enum" : [ "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS", "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CW", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK", "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", "SX", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW" ],
+        "type" : "string"
+      },
+      "Employee" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "admin" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Gender" : {
+        "enum" : [ "f", "m", "x" ],
+        "type" : "string"
+      },
+      "GenericPerson" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "gender" : {
+            "$ref" : "#/components/schemas/Gender"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "mobile" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "academicDegree" : {
+            "type" : "string"
+          },
+          "birthday" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "birthPlace" : {
+            "type" : "string"
+          },
+          "nationality" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "socialInsuranceInstitution" : {
+            "type" : "string"
+          },
+          "occupation" : {
+            "type" : "string"
+          },
+          "country" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "zipCode" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MaritalStatus" : {
+        "enum" : [ "divorced", "married", "single" ],
+        "type" : "string"
+      },
+      "Partner" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "website" : {
+            "type" : "string"
+          },
+          "bank" : {
+            "type" : "string"
+          },
+          "iban" : {
+            "type" : "string"
+          },
+          "bic" : {
+            "type" : "string"
+          },
+          "contacts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerContact"
+            }
+          },
+          "logins" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerLogin"
+            }
+          },
+          "services" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerServiceType"
+            }
+          }
+        }
+      },
+      "PartnerContact" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PartnerLogin" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "link" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "adminOnly" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "PartnerServiceType" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "service" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentFrequency" : {
+        "enum" : [ "monthly", "quarterly", "yearly" ],
+        "type" : "string"
+      },
+      "ProofOfIdentity" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "fileId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/ProofOfIdentityType"
+          }
+        }
+      },
+      "ProofOfIdentityType" : {
+        "enum" : [ "driversLicence", "identityCard", "passport" ],
+        "type" : "string"
+      },
+      "Template" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "fileId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "adminOnly" : {
+            "type" : "boolean"
+          }
+        }
+      }
+    }
+  }
+}
