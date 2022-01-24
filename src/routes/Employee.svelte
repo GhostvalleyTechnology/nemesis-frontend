@@ -2,34 +2,45 @@
     import { navigate } from "svelte-routing";
     import LayoutGrid, { Cell } from '@smui/layout-grid';
     import Textfield from '@smui/textfield';
+    import Checkbox from '@smui/checkbox';
+    import FormField from '@smui/form-field';
     import Paper from '@smui/paper';
     import Fab, { Label, Icon } from '@smui/fab';
     import { EmployeeService, Employee } from "../gen";
 
-    export let id: number|string;
-    let employee: Employee;
-    if(Number.isInteger(id)) {
-        EmployeeService.get(id as number).then(data => employee = data);
+    export let id: string;
+    let employee: Employee = {name: "", email: "", admin: false};
+    if(isNumeric(id)) {
+        EmployeeService.get(+id).then(data => employee = data);
     }
 
     function save() {
-        if(id == 0) {
-            alert(window.location.origin);
+        if(isNumeric(id)) {
+            EmployeeService.update(employee).then(() => navigate("/employees"));
         } else {
-            alert(window.location.origin);
+            EmployeeService.add(employee).then(() => navigate("/employees"));
         }
-        navigate("/employees");
+    }
+
+    function isNumeric(value: string) {
+        return /^\d+$/.test(value);
     }
 </script>
-
 <div class="form-container">
 <Paper elevation={6}>
+    <h1>Employee</h1>
     <LayoutGrid style="padding-bottom: 3rem;">
         <Cell span={12}>
             <Textfield style="width: 100%;" bind:value={employee.name} label="Name"/>
         </Cell>
         <Cell span={12}>
             <Textfield style="width: 100%;" bind:value={employee.email} label="E-Mail"/>
+        </Cell>
+        <Cell span={12} align="middle">
+            <FormField>
+                <Checkbox bind:checked={employee.admin} touch />
+                <span slot="label">Admin</span>
+            </FormField>
         </Cell>
     </LayoutGrid>
     <div class="button-container">
@@ -41,7 +52,13 @@
     
 </Paper>
 </div>
-<style>
+<style lang="scss">
+    @use '@material/typography/index' as typography;
+    h1 {
+        @include typography.typography('headline3');
+        text-align: center;
+    }
+
     .form-container {
         max-width: 1000px;
         margin: auto;

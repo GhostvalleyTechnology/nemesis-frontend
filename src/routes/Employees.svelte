@@ -31,7 +31,7 @@
     </Paper>
   </div>
     <div class="float">
-  <Fab color="primary" on:click={() => navigate("employee/0")}>
+  <Fab color="primary" on:click={() => navigate("employee/new")}>
     <Icon class="material-icons">add</Icon>
   </Fab>
   </div>
