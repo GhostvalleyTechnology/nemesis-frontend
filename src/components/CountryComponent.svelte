@@ -1,24 +1,24 @@
 <script lang="ts">
     import Autocomplete from '@smui-extra/autocomplete';
-    import * as countryData from '../country.json'
+    import Textfield from '@smui/textfield';
+    import { CountryData, getCountryData } from '../country'
     import { Country } from '../gen';
 
-    export let selected: Country;
+    export let country: Country;
 
-    type Item = {
-        name: string; 
-        code: string;
+    let options: CountryData[] = getCountryData();
+    let value: CountryData = options.find(item => country == Country[item.code])
+    $: if(value && value.code as Country) {
+        country = value.code as Country;
     }
-
-    let options: Item[] = countryData;
-    let value = options.find(item => item.code = selected)
+    let textValue = value.name;
     
 </script>
-
 <Autocomplete
     {options}
-    getOptionLabel={(option) =>
-      option ? `${option.name}` : ''}
+    getOptionLabel={(option) => option ? `${option.name}` : ''}
     bind:value
-    label="Country"
-/>
+    bind:text={textValue}
+>
+    <Textfield label="Country" bind:value={textValue} />
+</Autocomplete>

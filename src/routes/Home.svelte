@@ -1,8 +1,10 @@
 <script lang="ts">
+    import SocialInsuranceInstitutionComponent from "../components/SocialInsuranceInstitutionComponent.svelte";
+    let socialInsuranceInstitution = "BVAEB";
 
 </script>
-
-<div class="area background">
+<SocialInsuranceInstitutionComponent {socialInsuranceInstitution}/>
+<div class="area background" style="display: none;">
     <div class="content">
         <img class="logo" src="../logo.png" alt="LiberoLife Logo" />
     </div>

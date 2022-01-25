@@ -1,4 +1,10 @@
-[
+export type CountryData = {
+  name: string;
+  code: string;
+}
+
+export function getCountryData(): CountryData[] {
+return [
  {
    "name": "Afghanistan",
    "code": "AF"
@@ -999,4 +1005,5 @@
    "name": "Zypern",
    "code": "CY"
  }
-]
+];
+}
