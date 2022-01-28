@@ -13,15 +13,16 @@
       SortValue,
     } from '@smui/data-table';
     import IconButton from '@smui/icon-button';
-    import { Client } from '../classes/Client'; 
+    import { Client, ClientService } from "../gen";
   
 
     let sort: keyof Client = 'id';
     let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
-  
-    let items = Client.list();
+      let items: Client[] = [];
+      ClientService.list().then(clients => items = clients);
+    
     $: filterValue = "";
-    $: filtered = items.filter((s) => s.fullName.includes(filterValue) || s.email.includes(filterValue) || s.zipCode.includes(filterValue) || s.city.includes(filterValue));
+    $: filtered = items.filter((s) => s.firstName.includes(filterValue) || s.lastName.includes(filterValue) || s.email.includes(filterValue) || s.zipCode.includes(filterValue) || s.city.includes(filterValue));
   
     function handleSort() {
       items.sort((a, b) => {
@@ -59,7 +60,7 @@
     bind:sort
     bind:sortDirection
     on:MDCDataTable:sorted={handleSort}
-    table$aria-label="User list"
+    table$aria-label="Client list"
     style="width: 100%;"
   >
     <Head>
@@ -90,7 +91,7 @@
       {#each filtered as item (item.id)}
         <Row on:click={() => navigate("client/"+item.id)}>
           <Cell numeric>{item.id}</Cell>
-          <Cell>{item.fullName}</Cell>
+          <Cell>{item.firstName} {item.lastName}</Cell>
           <Cell>{item.email}</Cell>
           <Cell>{item.zipCode}</Cell>
           <Cell>{item.city}</Cell>

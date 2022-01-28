@@ -1,12 +1,11 @@
 <script lang="ts">
-    import SocialInsuranceInstitutionComponent from "../components/SocialInsuranceInstitutionComponent.svelte";
-    let socialInsuranceInstitution = "BVAEB";
-
+    export let name = "";
 </script>
-<SocialInsuranceInstitutionComponent {socialInsuranceInstitution}/>
-<div class="area background" style="display: none;">
+
+<div class="area background">
     <div class="content">
         <img class="logo" src="../logo.png" alt="LiberoLife Logo" />
+        <h1>Hello {name}!</h1>
     </div>
     <ul class="circles">
         <li></li>
@@ -23,14 +22,20 @@
 </div >
 
 <style lang="scss">
-
+    @use '@material/typography/index' as typography;
+    h1 {
+        @include typography.typography('headline3');
+        text-align: center;
+        display: block;
+        align-self: start;
+    }
 *{
     margin: 0px;
     padding: 0px;
 }
 
 .content {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     height: 100%;

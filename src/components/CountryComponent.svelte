@@ -5,13 +5,16 @@
     import { Country } from '../gen';
 
     export let country: Country;
+    export let label = "Country";
+    export let style = "";
 
     let options: CountryData[] = getCountryData();
     let value: CountryData = options.find(item => country == Country[item.code])
+    let textValue = "";
     $: if(value && value.code as Country) {
         country = value.code as Country;
+        textValue = value.name;
     }
-    let textValue = value.name;
     
 </script>
 <Autocomplete
@@ -20,5 +23,5 @@
     bind:value
     bind:text={textValue}
 >
-    <Textfield label="Country" bind:value={textValue} />
+    <Textfield {label} {style} bind:value={textValue} />
 </Autocomplete>

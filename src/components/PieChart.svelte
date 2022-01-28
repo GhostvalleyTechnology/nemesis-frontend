@@ -1,9 +1,10 @@
 <script>
-    import { spring } from "svelte/motion";
+    import { spring, tweened } from "svelte/motion";
 
     export let percent = 0;
     export let size = 200;
-    const store = spring(0, { stiffness: 0.3, damping: 0.3 });
+    const store = tweened(0, {duration: 500});
+    // const store = spring(0, { stiffness: 0.2, damping: 0.4 });
     const bgColor = "#fbba00";
     const fgColor = "#2e7d32";
 

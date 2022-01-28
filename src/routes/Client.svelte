@@ -9,9 +9,14 @@
     import Client_Legal from '../components/Client_Legal.svelte';
     import Client_Documents from '../components/Client_Documents.svelte';
 
-    import { Client } from '../classes/Client';
-    export let id:number;
-    $: client = Client.byId(id);
+    import { Client, ClientService } from '../gen';
+    import isNumeric from '../isNumeric'
+    export let id: string;
+    let client: Client = {};
+    let newClient = !isNumeric(id);
+    if(!newClient) {
+        ClientService.get(+id).then(response => client = response);
+    } 
 
     let tabs = [
         {
@@ -30,6 +35,13 @@
   let active = tabs[0];
   function uploadDocument() {
     alert("upload");
+  }
+  function save() {
+      if(newClient) {
+        ClientService.add(client);
+      } else {
+        ClientService.update(client);
+      }
   }
 
 </script>
@@ -56,7 +68,7 @@
 
     <div class="button-container">
         {#if active.label == 'Personal' || active.label == 'Bank'}
-        <Fab color="primary" on:click={() => navigate("/clients")} extended>
+        <Fab color="primary" on:click={() => save()} extended>
             <Icon class="material-icons">save</Icon>
             <Label>Save</Label>
         </Fab>

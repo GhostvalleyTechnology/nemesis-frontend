@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { OpenAPI } from "./gen"
+	import { OpenAPI, UserService } from "./gen"
 	OpenAPI.BASE = "http://localhost:8080"
 	import "svelte-material-ui/bare.css";
 	// all possible routes
@@ -38,6 +38,13 @@
 		}
 		active = value;
 	}
+	let adminPrivileges = false;
+	
+	let name = "";
+	UserService.get().then(employee => {
+		adminPrivileges = employee.admin;
+		name = employee.name;
+	})
 	let isAdminMode = false;
 	admin.subscribe( value => { isAdminMode = value; });
 	function toggleAdminMode() {
@@ -108,7 +115,9 @@
 					<IconButton class="material-icons" on:click={() => (drawerOpen = !drawerOpen)}>menu</IconButton>
 				</div>
 
-				<Route path="/" component={Home} />
+				<Route path="/">
+					<Home {name} />
+				</Route>
 				<div class="{active !== "" ? 'content' : ''}">
 					<Route path="/clients" component={Clients} />
 					<Route path="client/:id" component={Client} />

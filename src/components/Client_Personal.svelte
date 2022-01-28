@@ -3,7 +3,8 @@
     import Textfield from '@smui/textfield';
     import Radio from '@smui/radio';
     import FormField from '@smui/form-field';
-    import type { Client } from '../classes/Client';
+    import { Client } from '../gen';
+import CountryComponent from './CountryComponent.svelte';
 
     export let client: Client;
     let gender = ""; 
@@ -54,7 +55,7 @@
             <Textfield style="width: 100%;" bind:value={client.address} label="Address"/>
         </Cell>
         <Cell span={4}>
-            <Textfield style="width: 100%;" bind:value={client.country.displayName} label="Country"/>
+            <CountryComponent style="width: 100%;" country={client.country} label="Country" />
         </Cell>
         <Cell span={4}>
             <Textfield style="width: 100%;" bind:value={client.zipCode} label="Zip Code"/>
