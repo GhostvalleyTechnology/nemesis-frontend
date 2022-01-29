@@ -23,5 +23,5 @@
     bind:value
     bind:text={textValue}
 >
-    <Textfield label="Contractor" bind:value={textValue} />
+    <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} label="Contractor" bind:value={textValue} />
 </Autocomplete>

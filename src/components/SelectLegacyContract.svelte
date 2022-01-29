@@ -1,15 +1,14 @@
 <script lang="ts">
     import { ClientContract } from '../gen'
     import { Cell } from '@smui/layout-grid';
-    import Textfield from '@smui/textfield';
     import ContractorSelection from './ContractorSelection.svelte';
     import PaymentFrequencyComponent from './PaymentFrequencyComponent.svelte';
+    import EuroTextfield from './EuroTextfield.svelte';
 
     export let contract: ClientContract;
-
 </script>
 <Cell span={4}>
-    <Textfield bind:value={contract.paymentValue} label="Number" type="number" />
+    <EuroTextfield bind:integer={contract.paymentValue} />
 </Cell>
 <Cell span={4}>
     <PaymentFrequencyComponent bind:paymentFrequency={contract.paymentFrequency}/>
