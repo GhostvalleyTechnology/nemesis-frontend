@@ -12,7 +12,7 @@
     const fgColor = "#2e7d32";
 
     $: store.set(percent);
-    $: viewBox = `0 0 ${size} ${size}`;
+    $: viewBox = `0 -5 ${size+5} ${size+10}`;
     $: radius = size / 2;
     $: halfCircumference = Math.PI * radius;
     $: pieSize = halfCircumference * ($store / 100);
@@ -21,7 +21,7 @@
 
 <div class="container" style="--width: {size}; {containerStyle}">
     <div class="title {titleClass}">{title}</div>
-    <svg width={size} height={size} {viewBox}>
+    <svg width={size+5} height={size+5} {viewBox}>
         <circle r={radius} cx={radius} cy={radius} stroke="black" stroke-width="5" fill="none" />
         <circle r={radius} cx={radius} cy={radius} fill={bgColor} />
         <circle

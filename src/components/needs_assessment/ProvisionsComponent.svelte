@@ -16,9 +16,9 @@
         saveEducation: { desired: false },
         otherInvestmentGoal: { desired: false },
         alreadyInvested: { desired: false},
-        paymentOnce: {},
-        paymentMonthly: {},
-        paymentYearly: {},
+        paymentOnce: { desired: false },
+        paymentMonthly: { desired: false },
+        paymentYearly: { desired: false },
     };
     let cars: CarType[] = [];
 

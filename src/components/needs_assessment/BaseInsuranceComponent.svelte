@@ -72,6 +72,6 @@
     }
     .contract {
         grid-area: contract;
-        padding: 50px;
+        padding: 50px 50px 100px 50px;
     }
 </style>

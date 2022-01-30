@@ -20,7 +20,10 @@ type LegalType = {
 
 const newNeedsAssessment: NeedsAssessmentType = {
   client: {
-    partner: {}
+    partner: {},
+    pets: false,
+    smoker: false,
+    militaryServiceDone: false
   },
   experiences: [
     {name: $l.needsAssessment.experiences.lifeInsurance},
@@ -34,10 +37,18 @@ const newNeedsAssessment: NeedsAssessmentType = {
     {name: $l.needsAssessment.experiences.certificates}
   ],
   powerOfAttorny: {
-
+    date: today()
   },
   legalNotice: {
-    
+    date: today()
   }
 }
+
+function today(): string {
+  let yourDate = new Date();
+  const offset = yourDate.getTimezoneOffset();
+  yourDate = new Date(yourDate.getTime() - (offset*60*1000));
+  return yourDate.toISOString().split('T')[0];
+}
+
 export default newNeedsAssessment;

@@ -26,15 +26,19 @@
     }
 </script>
 
-<div class="insurance-item">
-    <StylizedCheckbox bind:value={hasInsurance} {label}/>
-    {#if hasInsurance}
-    <div transition:slide|local>
-        <SelectLegacyContract bind:contract={contract}/>
-    </div>
-    {/if}
+<div class="container">
+    <StylizedCheckbox bind:value={hasInsurance} {label}>
+        <div class="content">
+            <SelectLegacyContract bind:contract={contract}/>
+        </div>
+    </StylizedCheckbox>
 </div>
 
 <style lang="scss">
-    
+    .container {
+        width: 100%;
+    }
+    .content {
+        padding: 50px 50px 100px 50px;
+    }
 </style>

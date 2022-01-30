@@ -8,15 +8,22 @@
 
     export let goal: InvestmentGoal;
     export let label = '';
+    export let textfieldLabel = $l.remarks;
 </script>
 
 <FormField>
     <Checkbox bind:checked={goal.desired} touch />
     <span slot="label">{label}</span>
 </FormField>
-{#if goal.desired}
-<div transition:slide|local>
+{#if goal.desired && goal.desired == true}
+<div transition:slide|local class="remarks-container">
 <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" 
-    bind:value={goal.remarks} label={$l.remarks}/>
+    bind:value={goal.remarks} label={textfieldLabel}/>
 </div>
 {/if}
+
+<style lang="scss">
+    .remarks-container {
+        padding-bottom: 30px;
+    }
+</style>

@@ -1,24 +1,45 @@
 <script lang="ts">
+    import { slide } from 'svelte/transition';
     import IconButton, { Icon } from '@smui/icon-button';
     export let value: boolean;
     export let label: string = "";
+    export let labelStyle: string = "body1";
 </script>
 <div class="container">
-<IconButton toggle bind:pressed={value}>
-    <Icon class="material-icons">check_box_outline_blank</Icon>
-    <Icon class="material-icons" on>check_box</Icon>
-</IconButton>
-<div class="label">{label}</div>
+    <div class="button">
+        <IconButton toggle bind:pressed={value}>
+            <Icon class="material-icons">check_box_outline_blank</Icon>
+            <Icon class="material-icons" on>check_box</Icon>
+        </IconButton>
+    </div>
+    <div class="label {labelStyle}" on:click={() => value = !value}>{label}</div>
+    {#if value}
+        <div transition:slide|local style='grid-area: main;'>
+            <slot class="content"/>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
-    @use '@material/typography/index' as typography;
     .label {
-        @include typography.typography('body1');
+        grid-area: h-right;
+        align-self: center;
+        justify-self: start;
     }
     .container {
-        display: flex;
-        align-items: center;
-        column-gap: 5px;
+        display: grid;
+        width: 100%;
+        grid-template-columns: auto 1fr;
+        column-gap: 10px;
+        grid-template-areas: 
+            "h-left h-right"
+            "main main";
+    }
+    .button {
+        grid-area: h-left;
+        align-self: center;
+    }
+    .content {
+        padding: 50px;
     }
 </style>

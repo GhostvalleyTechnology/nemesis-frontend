@@ -1,27 +1,24 @@
 <script lang="ts">
+    import l from '../localisation';
     import Autocomplete from '@smui-extra/autocomplete';
-    import Textfield from '@smui/textfield';
-    import { CountryData, getCountryData } from '../country'
+    import { getCountryData } from '../country'
     import { Country } from '../gen';
 
     export let country: Country;
-    export let label = "Country";
-    export let style = "";
+    export let label = $l.personal.country;
+    export let style = '';
 
-    let options: CountryData[] = getCountryData();
-    let value: CountryData = options.find(item => country == Country[item.code])
-    let textValue = "";
-    $: if(value && value.code as Country) {
-        country = value.code as Country;
-        textValue = value.name;
+    let countryData = getCountryData();
+    let maybeInit = countryData.find(item => country == Country[item.code]);
+
+    let options = countryData.map(item => item.name);
+    let value = maybeInit ? maybeInit.name : '';
+    $: if(value) {
+        let maybeFound = countryData.find(item => value == item.name);
+        if(maybeFound) {
+            country = maybeFound.code as Country;
+        }
     }
     
 </script>
-<Autocomplete
-    {options}
-    getOptionLabel={(option) => option ? `${option.name}` : ''}
-    bind:value
-    bind:text={textValue}
->
-    <Textfield {label} {style} bind:value={textValue} />
-</Autocomplete>
+<Autocomplete bind:value={value} {options} {style} {label} textfield$style={style}/>

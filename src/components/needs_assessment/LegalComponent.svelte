@@ -7,13 +7,24 @@
   $: identification = assessment.client.firstName + ' ' + assessment.client.lastName;
 </script>
 
-<h2>{$l.needsAssessment.signing.powerOfAttornyTitle}</h2>
+<h3>{$l.needsAssessment.signing.powerOfAttornyTitle}</h3>
 <p>{@html format($l.needsAssessment.signing.powerOfAttornyText, identification)}</p>
-<Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.powerOfAttorny.date} label={$l.needsAssessment.signing.date} type="date"/>
-<Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.powerOfAttorny.place} label={$l.needsAssessment.signing.place}/>
+<div class='group'>
+  <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.powerOfAttorny.date} label={$l.needsAssessment.signing.date} type="date"/>
+  <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.powerOfAttorny.place} label={$l.needsAssessment.signing.place}/>
+</div>
 <Sign bind:signature={assessment.powerOfAttorny.signature}/>
-<h2>{$l.needsAssessment.signing.noticeTitle}</h2>
+<h3>{$l.needsAssessment.signing.noticeTitle}</h3>
 <p>{@html $l.needsAssessment.signing.noticeText}</p>
-<Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.legalNotice.date} label={$l.needsAssessment.signing.date} type="date"/>
-<Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.legalNotice.place} label={$l.needsAssessment.signing.place}/>
+<div class='group'>
+  <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.legalNotice.date} label={$l.needsAssessment.signing.date} type="date"/>
+  <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={assessment.legalNotice.place} label={$l.needsAssessment.signing.place}/>
+</div>
 <Sign bind:signature={assessment.legalNotice.signature}/>
+
+<style lang="scss">
+  .group {
+    display: flex;
+    gap: 20px;
+  }
+</style>

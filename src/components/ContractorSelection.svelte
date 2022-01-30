@@ -1,29 +1,28 @@
 <script lang="ts">
     import l from '../localisation';
     import Autocomplete from '@smui-extra/autocomplete';
-    import Textfield from '@smui/textfield';
     import { Partner, PartnerService } from '../gen'
 
     export let partner: Partner;
     export let style = '';
-    var options: Partner[] = []
-    PartnerService.list().then(result => {
-        options = result;
-        options.unshift({name: ''});
-    })
+    let partnerList: Partner[] = []
+    let value = '';
+    let options: string[] = [];
 
-    let value: Partner = options.find(item => item == partner)
-    let textValue = '';
+    PartnerService.list().then(result => {
+        console.log(JSON.stringify(result))
+        partnerList = result;
+        partnerList.unshift({name: ''});
+        if(partner && partner.id) {
+            value = partnerList.find(item => item.id = partner.id).name;
+        }
+        options = partnerList.map(item => item.name);
+    })
     $: if(value) {
-        partner = value;
-        textValue = value.name;
+        let maybeFound = partnerList.find(item => value == item.name);
+        if(maybeFound) {
+            partner = maybeFound;
+        }
     }
 </script>
-<Autocomplete
-    {options} {style}
-    getOptionLabel={(option) => option ? `${option.name}` : ''}
-    bind:value
-    bind:text={textValue}
->
-    <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} label={$l.payment.contractor} bind:value={textValue} {style}/>
-</Autocomplete>
+<Autocomplete bind:value={value} bind:options={options} {style} label={$l.payment.contractor} textfield$style={style}/>

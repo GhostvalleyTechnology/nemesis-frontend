@@ -4,11 +4,12 @@
     import Textfield from '@smui/textfield';
     import Radio from '@smui/radio';
     import FormField from '@smui/form-field';
-    import { GenericPerson } from '../../gen';
+    import { Client, GenericPerson } from '../../gen';
     import CountryComponent from '../CountryComponent.svelte';
     import SocialInsuranceInstitutionComponent from '../SocialInsuranceInstitutionComponent.svelte';
 
-    export let person: GenericPerson;
+    export let person: GenericPerson | Client;
+    export let childMode = false;
 </script>
 
 <LayoutGrid style="padding-bottom: 3rem;">
@@ -18,9 +19,11 @@
     <Cell span={6}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.lastName} label={$l.personal.lastName}/>
     </Cell>
-    <Cell span={12}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.email} label={$l.personal.email}/>
-    </Cell>
+    {#if !childMode}
+        <Cell span={12}>
+            <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.email} label={$l.personal.email}/>
+        </Cell>
+    {/if}
     <Cell span={6}>
         <div class="radio-container">
             <FormField>
@@ -40,6 +43,7 @@
     <Cell span={6}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.birthday} label={$l.personal.birthday} type="date"/>
     </Cell>
+    {#if !childMode}
     <Cell span={6}>
         <CountryComponent style="width: 100%;" country={person.nationality} label={$l.personal.nationality}/>
     </Cell>
@@ -58,6 +62,7 @@
     <Cell span={6}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.academicDegree} label={$l.personal.degree}/>
     </Cell>
+    {/if}
 </LayoutGrid>
 
 <style lang="scss">

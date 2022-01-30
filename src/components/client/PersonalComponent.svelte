@@ -29,53 +29,9 @@
     }
 </script>
 
+<GenericPersonComponent bind:person={client}/>
+
 <LayoutGrid style="padding-bottom: 3rem;">
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.firstName} label={$l.personal.firstName}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.lastName} label={$l.personal.lastName}/>
-    </Cell>
-    <Cell span={12}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.email} label={$l.personal.email}/>
-    </Cell>
-    <Cell span={6}>
-        <div class="radio-container">
-            <FormField>
-                <Radio bind:group={client.gender} value="m" touch />
-                <span slot="label">{$l.personal.gender.male}</span>
-            </FormField>
-            <FormField>
-                <Radio bind:group={client.gender} value="f" touch />
-                <span slot="label">{$l.personal.gender.female}</span>
-            </FormField>
-            <FormField>
-                <Radio bind:group={client.gender} value="x" touch />
-                <span slot="label">{$l.personal.gender.divers}</span>
-            </FormField>
-        </div>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthday} label={$l.personal.birthday} type="date"/>
-    </Cell>
-    <Cell span={6}>
-        <CountryComponent style="width: 100%;" country={client.nationality} label={$l.personal.nationality}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthPlace} label={$l.personal.birthPlace}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.occupation} label={$l.personal.occupation}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.socialInsuranceInstitution} label={$l.personal.socialInsuranceInstitution}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.title} label={$l.personal.title}/>
-    </Cell>
-    <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.academicDegree} label={$l.personal.degree}/>
-    </Cell>
     <Cell span={12} align="middle">
         <FormField>
             <Checkbox bind:checked={client.militaryServiceDone} touch />
@@ -94,7 +50,7 @@
             <span slot="label">{$l.personal.pets}</span>
         </FormField>
     </Cell>
-    {#if client.pets}
+    {#if client.pets && client.pets == true}
     <Cell span={9}><div transition:slide|local>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.petsRemarks} label={$l.personal.petsRemarks}/></div>
     </Cell>
@@ -117,23 +73,23 @@
     </Cell>
     {#if client.maritalStatus == MaritalStatus.MARRIED}
     <Cell span={12}><div transition:slide>
-        <GenericPersonComponent person={client.partner}/></div>
+        <GenericPersonComponent bind:person={client.partner}/></div>
     </Cell>
     {/if}
 
     {#each client.children || [] as child}
     <Cell span={1} align="middle"><div transition:slide>
-        <Button color="secondary" on:click={() => removeChild(child)}>
-            <Icon class="material-icons">remove_circle_outline</Icon>
+        <Button on:click={() => removeChild(child)}>
+            <Icon class="material-icons">close</Icon>
         </Button>
     </div></Cell>
     <Cell span={11}><div transition:slide>
-        <GenericPersonComponent person={child}/>
+        <GenericPersonComponent bind:person={child} childMode={true}/>
     </div></Cell>
     {/each}
     <Cell span={12}>
-        <Button color="secondary" on:click={() => addChild()}>
-            <Icon class="material-icons">add_circle_outline</Icon>
+        <Button on:click={() => addChild()}>
+            <Icon class="material-icons">add</Icon>
             <Label>{$l.personal.addChild}</Label>
         </Button>
     </Cell>

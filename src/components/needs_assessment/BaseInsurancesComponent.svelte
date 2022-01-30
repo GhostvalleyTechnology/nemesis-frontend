@@ -17,7 +17,7 @@
 
 <div class="insurance-container">
     <div class="insurance-pie">
-        <PieChart size={300} {percent} title={$l.needsAssessment.insurances.chartTitle} titleClass="mdc-typography--headline4" containerStyle="position: sticky; top: 5px;"/>
+        <PieChart size={300} {percent} title={$l.needsAssessment.insurances.chartTitle} titleClass="mdc-typography--headline5" containerStyle="position: sticky; top: 5px;"/>
     </div>
     <BaseInsuranceComponent bind:client={client} bind:hasInsurance={accidentInsurance} label={$l.needsAssessment.insurances.accidentInsurance.name} helpSubtitle={$l.needsAssessment.insurances.accidentInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.accidentInsurance.helpText} />
     <BaseInsuranceComponent bind:client={client} bind:hasInsurance={disabilityInsurance} label={$l.needsAssessment.insurances.disabilityInsurance.name} helpSubtitle={$l.needsAssessment.insurances.disabilityInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.disabilityInsurance.helpText} />
@@ -25,6 +25,16 @@
     <BaseInsuranceComponent bind:client={client} bind:hasInsurance={legalProtectionInsurance} label={$l.needsAssessment.insurances.legalProtectionInsurance.name} helpSubtitle={$l.needsAssessment.insurances.legalProtectionInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.legalProtectionInsurance.helpText} />
 </div>
 
+<!--
+
+Besteht eine Eigenheim/HHV/HP? -> Ja/Nein. Zusatzfeld HHV mit Quadratmeter/Tiere.
+
+Zusatzfeld Eigenheim: verbaute Fläche Quadratmeter/ Stockwerke/ Dach Art/ Keller/ Pool/Photovoltaikanlage mit Fläche oder Modulzahl. besondere Sachwerte zB Elektro Rasenmäher oder Tresor 
+
+HP, besteht eine Berufshaftpflicht? ja/nein wenn „ja“ dann Gesellschaft und Prämie
+
+
+-->
 
 <style lang="scss">
     .insurance-container {
