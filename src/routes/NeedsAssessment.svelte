@@ -1,44 +1,47 @@
 <script lang="ts">
-    import { Client } from '../gen';
+    import l from '../localisation'
     import PersonalComponent from '../components/client/PersonalComponent.svelte';
     import BaseInsurancesComponent from '../components/needs_assessment/BaseInsurancesComponent.svelte';
     import ExperienceComponent from '../components/needs_assessment/ExperienceComponent.svelte';
-    import { ExperienceType } from '../components/needs_assessment/ExperienceType';
+    import ProvisionsComponent from '../components/needs_assessment/ProvisionsComponent.svelte';
+    import OpenCloseToggle from '../components/OpenCloseToggle.svelte';
+    import newNeedsAssessment from '../components/needs_assessment/NeedsAssessmentType';
+import LegalComponent from '../components/needs_assessment/LegalComponent.svelte';
 
-    let client: Client = {}
-    let experiences: ExperienceType[] = [
-        {name:"Lebensversicherung"},
-        {name:"Investmentfonds"},
-        {name:"Anleihen"},
-        {name:"Aktien"},
-        {name:"Optionen/Futures/Hedgefonds"},
-        {name:"Finanzierungen"},
-        {name:"Garantiefonds"},
-        {name:"Immobilien/Immobilienfonds/-aktien"},
-        {name:"Zertifikate"}];
+    let assessment = newNeedsAssessment;
     
-
 </script>
 <div class="form-container">
-    <h1>Needs Assessment</h1>
-    <h2>Personal</h2>
-    <PersonalComponent bind:client={client}/>
-    <h2>Insurance</h2>
-    <BaseInsurancesComponent bind:client={client} />
-    <h2>Experiences</h2>
-    {#each experiences as experience}
-        <ExperienceComponent {experience}/>
-    {/each}
     
+    <h1>{$l.needsAssessment.title}</h1>
+    <OpenCloseToggle label={$l.needsAssessment.subtitles.personal} labelStyle="mdc-typography--headline3">
+        <PersonalComponent bind:client={assessment.client}/>
+    </OpenCloseToggle>
+
+    <OpenCloseToggle label={$l.needsAssessment.subtitles.insurance} labelStyle="mdc-typography--headline3">
+        <BaseInsurancesComponent bind:client={assessment.client} />
+    </OpenCloseToggle>
+
+    <OpenCloseToggle label={$l.needsAssessment.subtitles.provision} labelStyle="mdc-typography--headline3">
+        <ProvisionsComponent bind:client={assessment.client} />
+    </OpenCloseToggle>
+
+    <OpenCloseToggle label={$l.needsAssessment.subtitles.experiences} labelStyle="mdc-typography--headline3">
+        {#each assessment.experiences as experience}
+            <ExperienceComponent {experience}/>
+        {/each}
+    </OpenCloseToggle>
+    <OpenCloseToggle label={$l.needsAssessment.subtitles.legal} labelStyle="mdc-typography--headline3">
+        <LegalComponent bind:assessment={assessment}/>
+    </OpenCloseToggle>
 </div>
 
 <style lang="scss">
-    @use '@material/typography/index' as typography;
-    h1 {
-        @include typography.typography('headline3');
-        text-align: center;
-    }
-    h2 {
-        @include typography.typography('headline4');
+    .form-container {
+        max-width: 1000px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
     }
 </style>

@@ -2,6 +2,7 @@
 	import { OpenAPI, UserService } from "./gen"
 	OpenAPI.BASE = "http://localhost:8080"
 	import "svelte-material-ui/bare.css";
+	import l, {de, en} from "./localisation";
 	// all possible routes
 	import Home from "./routes/Home.svelte";
 	import Clients from "./routes/Clients.svelte";
@@ -10,9 +11,9 @@
 	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
 	import Employees from "./routes/Employees.svelte";
 	import Employee from "./routes/Employee.svelte";
-
+	import Button, { Label } from '@smui/button';
 	import { createEventDispatcher } from "svelte";
-	import IconButton from "@smui/icon-button";
+	import IconButton, { Icon } from "@smui/icon-button";
 	import { Router, links, Route } from "svelte-routing";
 	import Drawer, {
 		AppContent,
@@ -29,7 +30,22 @@
 	let active = window.location.pathname.substring(1);
 	const dispatch = createEventDispatcher();
 	function logout() {
-		dispatch("logout");
+		alert("logout");
+	}
+
+	let language: string = getLanguageButtonText();
+	function toggleLanguage() {
+		if ($l == de) {
+			l.set(en);
+			language = "de";
+		} else {
+			l.set(de);
+			language = "en";
+		}
+		language = getLanguageButtonText();
+	}
+	function getLanguageButtonText(): string {
+		return ($l == de) ? "en" : "de";
 	}
 
 	function setActive(value: string) {
@@ -50,7 +66,22 @@
 	function toggleAdminMode() {
 		admin.set(!isAdminMode);
 	}
+
+	let touchStartX: number;
+	let propablyWantsToMenu = false;
+	function touchStart(x: number) {
+		console.log('%d of max %d', x, screen.width);
+		propablyWantsToMenu = x < (screen.width / 4) || x > (screen.width - (screen.width / 4));
+		touchStartX = x;
+	}
+	function touchEnd(touchEndX: number) {
+		if (!propablyWantsToMenu) return;
+		if (touchEndX < (touchStartX-20)) drawerOpen = !drawerOpen;
+  		if (touchEndX > (touchStartX+20)) drawerOpen = !drawerOpen;
+	}
 </script>
+
+<svelte:window on:touchstart={(e) => touchStart(e.changedTouches[0].screenX)} on:touchend={(e) => touchEnd(e.changedTouches[0].screenX)}/>
 
 <main>
 	<div use:links>
@@ -59,54 +90,57 @@
 				<Header>
 					<img src="../logo.png" alt="Logo" width="60px" />
 					<Title><span class="font-medium">Libero</span><span class="font-extralight">Life</span></Title>
-					<Subtitle><span class="font-regular">Kopf frei bei Finanzfragen</span></Subtitle>
+					<Subtitle><span class="font-regular">{$l.slogan}</span></Subtitle>
 				</Header>
 				<Content>
 					<List>
 						<Item href="/" on:click={() => setActive("")} activated={active === ""}>
 							<Graphic class="material-icons" aria-hidden="true">home</Graphic>
-							<Text>Home</Text>
+							<Text>{$l.menu.home}</Text>
 						</Item>
 						<Item href="/clients" on:click={() => setActive("clients")} activated={active === "clients"}>
 							<Graphic class="material-icons" aria-hidden="true">people</Graphic>
-							<Text>Clients</Text>
+							<Text>{$l.menu.clients}</Text>
 						</Item>
 						<Item href="/templates" on:click={() => setActive("templates")} activated={active === "templates"}>
 							<Graphic class="material-icons" aria-hidden="true">file_copy</Graphic>
-							<Text>Templates</Text>
+							<Text>{$l.menu.templates}</Text>
 						</Item>
 						<Item href="/partner" on:click={() => setActive("partner")} activated={active === "partner"}>
 							<Graphic class="material-icons" aria-hidden="true">apartment</Graphic>
-							<Text>Partner</Text>
+							<Text>{$l.menu.partner}</Text>
 						</Item>
 						<Item href="/contracts" on:click={() => setActive("contracts")} activated={active === "contracts"}>
 							<Graphic class="material-icons" aria-hidden="true">task</Graphic>
-							<Text>Contracts</Text>
+							<Text>{$l.menu.contracts}</Text>
 						</Item>
 						<Item href="/notes" on:click={() => setActive("notes")} activated={active === "notes"}>
 							<Graphic class="material-icons" aria-hidden="true">assignment</Graphic>
-							<Text>Notes</Text>
+							<Text>{$l.menu.notes}</Text>
 						</Item>
 						
 						<Separator />
 						<Item href="javascript:void(0)" on:click={() => toggleAdminMode()} class="{isAdminMode ? 'admin-content' : ''}">
 							<Graphic class="material-icons" aria-hidden="true">military_tech</Graphic>
-							<Text>Admin Mode</Text>
+							<Text>{$l.menu.admin_mode}</Text>
 						</Item>
 						{#if isAdminMode}
 						<Item href="/employees" on:click={() => setActive("employees")} activated={active === "employees"}>
 							<Graphic class="material-icons" aria-hidden="true">badge</Graphic>
-							<Text>Employees</Text>
+							<Text>{$l.menu.employees}</Text>
 						</Item>
 						{/if}
-						
 						<Item href="javascript:void(0)" on:click={() => logout()}>
 							<Graphic class="material-icons" aria-hidden="true">logout</Graphic>
-							<Text>Logout</Text>
+							<Text>{$l.menu.logout}</Text>
 						</Item>
 					</List>
 
-					<footer>created by quellkunst.com</footer>
+					<Button on:click={() => toggleLanguage()} style="position: absolute; bottom: 5px; left: 5px;">
+						<Label>{language}</Label>
+					</Button>
+
+					<footer>{$l.menu.footer}</footer>
 				</Content>
 			</Drawer>
 

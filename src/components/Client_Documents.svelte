@@ -118,11 +118,6 @@
   </DataTable>
   
   <style>
-    .float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-    }
     .solo-container {
       display: flex;
       justify-content: center;

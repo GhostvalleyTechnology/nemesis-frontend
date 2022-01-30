@@ -1,11 +1,12 @@
 <script lang="ts">
+    import l, {format} from '../localisation';
     export let name = "";
 </script>
 
 <div class="area background">
     <div class="content">
         <img class="logo" src="../logo.png" alt="LiberoLife Logo" />
-        <h1>Hello {name}!</h1>
+        <h1>{format($l.home.greeting, name)}</h1>
     </div>
     <ul class="circles">
         <li></li>

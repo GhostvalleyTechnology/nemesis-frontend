@@ -1,4 +1,5 @@
 <script lang="ts">
+    import l from '../../localisation';
     import { Client } from "../../gen";
     import PieChart from "../PieChart.svelte";
     import BaseInsuranceComponent from './BaseInsuranceComponent.svelte';
@@ -15,14 +16,13 @@
 </script>
 
 <div class="insurance-container">
-    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={accidentInsurance} label="Accident Insurance" helpSubtitle="Max Muster stolpert über die Stiege!" helpText="Beim Sturz Verletzt er sich schwer und beschädigt die Verglasung des Stiegenhauses!" />
-    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={disabilityInsurance} label="Disability Insurance" helpSubtitle="Max Muster stolpert über die Stiege!" helpText="Aufgrund der Verletzungen muss Max ins Spital geflogen werden! Nach einiger Zeit stellt sich heraus, das Max aufgrund seiner Verletzungen den seinem Beruf nicht mehr ausüben kann!" />
-    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={homeInsurance} label="Home Insurance" helpSubtitle="Max Muster stolpert über die Stiege!" helpText="Als draufgabe bekommt Max noch eine saftige Rechnung des Gebäudebesitzter's, aufgrund der Beschädigten Scheibe!" />
-    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={legalProtectionInsurance} label="Legal Protection Insurance" helpSubtitle="Max Muster stolpert über die Stiege!" helpText="Max möchte das nicht auf sich sitzen lassen, und das von einem Rechtsanwalt Prüfen lassen" />
-
     <div class="insurance-pie">
-        <PieChart size={200} {percent} />
+        <PieChart size={300} {percent} title={$l.needsAssessment.insurances.chartTitle} titleClass="mdc-typography--headline4" containerStyle="position: sticky; top: 5px;"/>
     </div>
+    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={accidentInsurance} label={$l.needsAssessment.insurances.accidentInsurance.name} helpSubtitle={$l.needsAssessment.insurances.accidentInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.accidentInsurance.helpText} />
+    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={disabilityInsurance} label={$l.needsAssessment.insurances.disabilityInsurance.name} helpSubtitle={$l.needsAssessment.insurances.disabilityInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.disabilityInsurance.helpText} />
+    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={homeInsurance} label={$l.needsAssessment.insurances.homeInsurance.name} helpSubtitle={$l.needsAssessment.insurances.homeInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.homeInsurance.helpText} />
+    <BaseInsuranceComponent bind:client={client} bind:hasInsurance={legalProtectionInsurance} label={$l.needsAssessment.insurances.legalProtectionInsurance.name} helpSubtitle={$l.needsAssessment.insurances.legalProtectionInsurance.helpSubtitle} helpText={$l.needsAssessment.insurances.legalProtectionInsurance.helpText} />
 </div>
 
 
@@ -30,6 +30,8 @@
     .insurance-container {
         display: grid;
         grid-template-columns: 1fr auto;
+        row-gap: 20px;
+        column-gap: 80px;
         grid-template-areas: 
             "r1 pie"
             "r2 pie"

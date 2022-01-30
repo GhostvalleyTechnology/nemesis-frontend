@@ -1,4 +1,5 @@
 <script lang="ts">
+    import l from '../../localisation';
     import { slide } from 'svelte/transition';
     import Radio from '@smui/radio';
     import FormField from '@smui/form-field';
@@ -15,16 +16,16 @@
     <h3>{experience.name}</h3>
     <FormField>
         <Radio bind:group={radioSelection} value="true" touch />
-        <span slot="label">Yes, I do have experience</span>
+        <span slot="label">{$l.needsAssessment.experiences.yesExperience}</span>
     </FormField>
     <FormField>
         <Radio bind:group={radioSelection} value="false" touch />
-        <span slot="label">No experience, desired anyway</span>
+        <span slot="label">{$l.needsAssessment.experiences.noExperience}</span>
     </FormField>
 </div>
 {#if experience.hasExperience == true}
 <div transition:slide|local>
-    <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} bind:value={experience.since} label="Since"/>
+    <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} bind:value={experience.since} label={$l.needsAssessment.experiences.since}/>
     <FormField>
         <Radio bind:group={experience.level} value="1" touch />
         <span slot="label">1</span>

@@ -1,7 +1,8 @@
 <script lang="ts">
+    import l from '../localisation';
     import Textfield from '@smui/textfield';
-    export let label = "Value";
-    export let style = "";
+    export let label = $l.euroTextfieldLabel;
+    export let style = '';
     export let integer: number;
     let value = integer ? integer.toString() : "";
 

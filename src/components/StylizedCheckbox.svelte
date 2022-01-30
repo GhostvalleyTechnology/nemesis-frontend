@@ -5,8 +5,8 @@
 </script>
 <div class="container">
 <IconButton toggle bind:pressed={value}>
-    <Icon class="material-icons">radio_button_unchecked</Icon>
-    <Icon class="material-icons" on>task_alt</Icon>
+    <Icon class="material-icons">check_box_outline_blank</Icon>
+    <Icon class="material-icons" on>check_box</Icon>
 </IconButton>
 <div class="label">{label}</div>
 </div>

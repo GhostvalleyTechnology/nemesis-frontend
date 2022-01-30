@@ -32,15 +32,19 @@
 </script>
 
 <div class="insurance-item">
-    <StylizedCheckbox bind:value={hasInsurance} {label}/>
-    <HelpToggleButton bind:value={helpToggle}/>
+    <div class="label">
+        <StylizedCheckbox bind:value={hasInsurance} {label}/>
+    </div>
+    <div class="toggle">
+        <HelpToggleButton bind:value={helpToggle}/>
+    </div>
     {#if helpToggle}
-    <div transition:slide|local>
+    <div transition:slide|local class="help">
         <NeedsAssessmentCard subtitle={helpSubtitle} text={helpText} />
     </div>
     {/if}
     {#if hasInsurance}
-    <div transition:slide|local>
+    <div transition:slide|local class="contract">
         <SelectLegacyContract bind:contract={contract}/>
     </div>
     {/if}
@@ -48,7 +52,26 @@
 
 <style lang="scss">
     .insurance-item {
+        width: 100%;
         display: grid;
         grid-template-columns: 60% 40%;
+        grid-template-areas: 
+            "label toggle"
+            "help help"
+            "contract contract"
+    }
+    .label {
+        grid-area: label;
+    }
+    .toggle {
+        grid-area: toggle;
+        justify-self: end;
+    }
+    .help {
+        grid-area: help;
+    }
+    .contract {
+        grid-area: contract;
+        padding: 50px;
     }
 </style>

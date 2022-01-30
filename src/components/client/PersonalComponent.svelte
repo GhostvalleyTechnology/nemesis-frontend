@@ -1,4 +1,5 @@
 <script lang="ts">
+    import l from '../../localisation';
     import { slide } from 'svelte/transition';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
     import Textfield from '@smui/textfield';
@@ -10,7 +11,7 @@
     import GenericPersonComponent from './GenericPersonComponent.svelte';
     import CountryComponent from '../CountryComponent.svelte';
 
-    export let client: Client = {};
+    export let client: Client;
 
     function addChild() {
         if(!client.children) {
@@ -30,87 +31,87 @@
 
 <LayoutGrid style="padding-bottom: 3rem;">
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.firstName} label="First Name"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.firstName} label={$l.personal.firstName}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.lastName} label="Last Name"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.lastName} label={$l.personal.lastName}/>
     </Cell>
     <Cell span={12}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.email} label="E-Mail"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.email} label={$l.personal.email}/>
     </Cell>
     <Cell span={6}>
         <div class="radio-container">
             <FormField>
                 <Radio bind:group={client.gender} value="m" touch />
-                <span slot="label">male</span>
+                <span slot="label">{$l.personal.gender.male}</span>
             </FormField>
             <FormField>
                 <Radio bind:group={client.gender} value="f" touch />
-                <span slot="label">female</span>
+                <span slot="label">{$l.personal.gender.female}</span>
             </FormField>
             <FormField>
                 <Radio bind:group={client.gender} value="x" touch />
-                <span slot="label">divers</span>
+                <span slot="label">{$l.personal.gender.divers}</span>
             </FormField>
         </div>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthday} label="Birthday" type="date"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthday} label={$l.personal.birthday} type="date"/>
     </Cell>
     <Cell span={6}>
-        <CountryComponent style="width: 100%;" country={client.nationality} label="Nationality"/>
+        <CountryComponent style="width: 100%;" country={client.nationality} label={$l.personal.nationality}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthPlace} label="Birth Place"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.birthPlace} label={$l.personal.birthPlace}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.occupation} label="Occupation"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.occupation} label={$l.personal.occupation}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.socialInsuranceInstitution} label="Social Insurance Institution"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.socialInsuranceInstitution} label={$l.personal.socialInsuranceInstitution}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.title} label="Title"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.title} label={$l.personal.title}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.academicDegree} label="Degree"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.academicDegree} label={$l.personal.degree}/>
     </Cell>
     <Cell span={12} align="middle">
         <FormField>
             <Checkbox bind:checked={client.militaryServiceDone} touch />
-            <span slot="label">Military / Social Service Done?</span>
+            <span slot="label">{$l.personal.militaryServiceDone}</span>
         </FormField>
     </Cell>
     <Cell span={12} align="middle">
         <FormField>
             <Checkbox bind:checked={client.smoker} touch />
-            <span slot="label">Smoker?</span>
+            <span slot="label">{$l.personal.smoker}</span>
         </FormField>
     </Cell>
     <Cell span={3} align="middle">
         <FormField>
             <Checkbox bind:checked={client.pets} touch />
-            <span slot="label">Pets?</span>
+            <span slot="label">{$l.personal.pets}</span>
         </FormField>
     </Cell>
     {#if client.pets}
     <Cell span={9}><div transition:slide|local>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.petsRemarks} label="Remarks about your pets"/></div>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.petsRemarks} label={$l.personal.petsRemarks}/></div>
     </Cell>
     {/if}
     <Cell span={12}>
         <div class="radio-container">
             <FormField>
                 <Radio bind:group={client.maritalStatus} value="single" touch />
-                <span slot="label">single</span>
+                <span slot="label">{$l.personal.maritalStatus.single}</span>
             </FormField>
             <FormField>
                 <Radio bind:group={client.maritalStatus} value="married" touch />
-                <span slot="label">married</span>
+                <span slot="label">{$l.personal.maritalStatus.married}</span>
             </FormField>
             <FormField>
                 <Radio bind:group={client.maritalStatus} value="divorced" touch />
-                <span slot="label">divorced</span>
+                <span slot="label">{$l.personal.maritalStatus.divorced}</span>
             </FormField>
         </div>
     </Cell>
@@ -133,29 +134,29 @@
     <Cell span={12}>
         <Button color="secondary" on:click={() => addChild()}>
             <Icon class="material-icons">add_circle_outline</Icon>
-            <Label>Add child</Label>
+            <Label>{$l.personal.addChild}</Label>
         </Button>
     </Cell>
 </LayoutGrid>
 
 <LayoutGrid style="padding-bottom: 3rem;">
     <Cell span={12}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.address} label="Address"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.address} label={$l.personal.address}/>
     </Cell>
     <Cell span={4}>
-        <CountryComponent style="width: 100%;" country={client.country} label="Country"/>
+        <CountryComponent style="width: 100%;" country={client.country} label={$l.personal.country}/>
     </Cell>
     <Cell span={4}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.zipCode} label="Zip Code"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.zipCode} label={$l.personal.zipCode}/>
     </Cell>
     <Cell span={4}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.city} label="City"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.city} label={$l.personal.city}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.phone} label="Phone"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.phone} label={$l.personal.phone}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.mobile} label="Mobile"/>
+        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.mobile} label={$l.personal.mobile}/>
     </Cell>
 </LayoutGrid>
 
