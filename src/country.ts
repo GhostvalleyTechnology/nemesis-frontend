@@ -1,6 +1,20 @@
+import { Country } from './gen';
+
 export type CountryData = {
   name: string;
   code: string;
+}
+
+export function mapCountryToName(country?: Country): string {
+  if(!country) {
+    return null;
+  }
+  let data = getCountryData();
+  let maybe = data.find(item => country == Country[item.code]);
+  if(maybe) {
+    return maybe.name;
+  }
+  return null;
 }
 
 export function getCountryData(): CountryData[] {

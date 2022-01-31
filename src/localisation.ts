@@ -12,6 +12,8 @@ export type Localisation = {
     home: Home;
     remarks: string;
     payment: GeneralPayment;
+    yes: string;
+    no: string;
 }
 
 type GeneralPayment = {
@@ -182,6 +184,7 @@ type CarType = {
 }
 
 type Gender = {
+    label: string;
     male: string;
     female: string;
     divers: string;
@@ -218,6 +221,7 @@ export const en: Localisation = {
         phone: 'Phone number',
         mobile: 'Mobile number',
         gender: {
+            label: 'Gender',
             male: 'Male',
             female: 'Female',
             divers: 'Divers'
@@ -366,8 +370,9 @@ export const en: Localisation = {
         monthly: 'Monthly',
         quarterly: 'Quarterly',
         yearly: 'Yearly'
-    }
-    
+    },
+    yes: 'yes',
+    no: 'no'
 }
 
 export const de: Localisation = {
@@ -395,6 +400,7 @@ export const de: Localisation = {
         phone: 'Telefonnummer',
         mobile: 'Mobilnummer',
         gender: {
+            label: 'Geschlecht',
             male: 'männlich',
             female: 'weiblich',
             divers: 'divers'
@@ -543,7 +549,9 @@ export const de: Localisation = {
         monthly: 'Monatlich',
         quarterly: 'Quartalsweise',
         yearly: 'Jährlich'
-    }
+    },
+    yes: 'ja',
+    no: 'nein'
 }
 export const l = writable(de);
 export default l;

@@ -7,7 +7,7 @@
     export let style = '';
     let partnerList: Partner[] = []
     let value = '';
-    let options: string[] = [];
+    let options: string[];
 
     PartnerService.list().then(result => {
         console.log(JSON.stringify(result))

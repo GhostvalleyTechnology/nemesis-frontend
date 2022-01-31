@@ -45,7 +45,7 @@
     </Cell>
     {#if !childMode}
     <Cell span={6}>
-        <CountryComponent style="width: 100%;" country={person.nationality} label={$l.personal.nationality}/>
+        <CountryComponent style="width: 100%;" bind:country={person.nationality} label={$l.personal.nationality}/>
     </Cell>
     <Cell span={6}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.birthPlace} label={$l.personal.birthPlace}/>
@@ -54,7 +54,7 @@
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.occupation} label={$l.personal.occupation}/>
     </Cell>
     <Cell span={6}>
-        <SocialInsuranceInstitutionComponent style="width: 100%;" socialInsuranceInstitution={person.socialInsuranceInstitution}/>
+        <SocialInsuranceInstitutionComponent style="width: 100%;" bind:socialInsuranceInstitution={person.socialInsuranceInstitution}/>
     </Cell>
     <Cell span={6}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.title} label={$l.personal.title}/>
