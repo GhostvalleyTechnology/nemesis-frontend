@@ -12,6 +12,7 @@ export type Localisation = {
     home: Home;
     remarks: string;
     payment: GeneralPayment;
+    search: string;
     yes: string;
     no: string;
 }
@@ -413,7 +414,8 @@ export const en: Localisation = {
         yearly: 'Yearly'
     },
     yes: 'yes',
-    no: 'no'
+    no: 'no',
+    search: 'Search'
 }
 
 export const de: Localisation = {
@@ -610,7 +612,8 @@ export const de: Localisation = {
         yearly: 'Jährlich'
     },
     yes: 'ja',
-    no: 'nein'
+    no: 'nein',
+    search: 'Suche'
 }
 export const l = writable(de);
 export default l;

@@ -1,9 +1,6 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
-  import Paper from '@smui/paper';
-  import { Input } from '@smui/textfield';
   import Icon from '@smui/textfield/icon';
-  import Fab from '@smui/fab';
   import DataTable, {
     Head,
     Body,
@@ -13,14 +10,16 @@
     SortValue,
   } from '@smui/data-table';
   import IconButton from '@smui/icon-button';
-  import type { Template } from '../classes/Template'; 
-  import { getTemplates } from '../classes/Template';
+  import { TemplateFacade, list as listTemplates, TemplateType, openFile } from '../components/template/TemplateFacade';
   import AdminGuard from '../components/AdminGuard.svelte';
+  import Searchbar from "../components/Searchbar.svelte";
+  import FloatingActionButton from "../components/FloatingActionButton.svelte";
 
-  let sort: keyof Template = 'name';
+  let sort: keyof TemplateFacade = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
 
-  let items = getTemplates();
+  let items: TemplateFacade[] = [];
+  listTemplates().then(result => {items = result; handleSort()});
   $: filterValue = "";
   $: filtered = items.filter((s) => s.name.includes(filterValue));
 
@@ -37,24 +36,18 @@
     items = items;
   }
 
+  function openTemplate(item: TemplateFacade) {
+    if(item.type == TemplateType.page) {
+      navigate(item.path)
+    } else {
+      openFile(item);
+    }
+  }
 </script>
 
-<div class="solo-container">
-  <Paper class="solo-paper" elevation={6}>
-    <Icon class="material-icons">search</Icon>
-    <Input
-    bind:value={filterValue}
-      placeholder="Search"
-      class="solo-input"
-    />
-  </Paper>
-</div>
+<Searchbar bind:value={filterValue} />
 <AdminGuard>
-  <div class="float">
-<Fab color="primary" on:click={() => navigate("template/new")}>
-  <Icon class="material-icons">add</Icon>
-</Fab>
-</div>
+  <FloatingActionButton on:click={() => navigate("template/new")}/>
 </AdminGuard>
 
 <DataTable
@@ -81,8 +74,8 @@
   </Head>
   <Body>
     {#each filtered as item (item.name)}
-      <Row on:click={() => navigate(item.path)}>
-        <Cell>{item.name}</Cell>
+      <Row>
+        <Cell on:click={() => openTemplate(item)}>{item.name}</Cell>
         <AdminGuard>
           <Cell>
             <Icon class="material-icons">
@@ -99,41 +92,3 @@
   </Body>
 </DataTable>
 
-<style>
-  .float {
-    position: fixed;
-    bottom: 2rem;
-    right: 3rem;
-    z-index: 1;
-  }
-  .solo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  * :global(.solo-paper) {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 600px;
-    margin: 0 12px;
-    padding: 0 12px;
-    height: 48px;
-  }
-  * :global(.solo-paper > *) {
-    display: inline-block;
-    margin: 0 12px;
-  }
-  * :global(.solo-input) {
-    flex-grow: 1;
-    color: var(--mdc-theme-on-surface, #000);
-  }
-  * :global(.solo-input::placeholder) {
-    color: var(--mdc-theme-on-surface, #000);
-    opacity: 0.6;
-  }
-  * :global(.solo-fab) {
-    flex-shrink: 0;
-  }
-</style>

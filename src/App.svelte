@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { OpenAPI, UserService } from "./gen"
 	OpenAPI.BASE = "http://localhost:8080"
+	OpenAPI.HEADERS = {
+		'Accept': '*/*'
+	}
 	import "svelte-material-ui/bare.css";
 	import l, {de, en} from "./localisation";
 	// all possible routes
@@ -8,6 +11,7 @@
 	import Clients from "./routes/Clients.svelte";
 	import Client from "./routes/Client.svelte";
 	import Templates from "./routes/Templates.svelte";
+	import Template from "./routes/Template.svelte";
 	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
 	import Employees from "./routes/Employees.svelte";
 	import Employee from "./routes/Employee.svelte";
@@ -120,10 +124,12 @@
 						</Item>
 						
 						<Separator />
+						{#if adminPrivileges}
 						<Item href="javascript:void(0)" on:click={() => toggleAdminMode()} class="{isAdminMode ? 'admin-content' : ''}">
 							<Graphic class="material-icons" aria-hidden="true">military_tech</Graphic>
 							<Text>{$l.menu.admin_mode}</Text>
 						</Item>
+						{/if}
 						{#if isAdminMode}
 						<Item href="/employees" on:click={() => setActive("employees")} activated={active === "employees"}>
 							<Graphic class="material-icons" aria-hidden="true">badge</Graphic>
@@ -156,6 +162,7 @@
 					<Route path="/clients" component={Clients} />
 					<Route path="client/:id" component={Client} />
 					<Route path="/templates" component={Templates} />
+					<Route path="/template/new" component={Template} />
 					<Route path="/needs_assessment" component={NeedsAssessment} />
 					<Route path="/employees" component={Employees} />
 					<Route path="employee/:id" component={Employee} />
