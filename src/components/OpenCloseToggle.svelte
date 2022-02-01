@@ -8,8 +8,8 @@
 <div class="container">
     <div class="button">
         <IconButton toggle bind:pressed={open}>
-            <Icon class="material-icons" on>close</Icon>
-            <Icon class="material-icons">add</Icon>
+            <Icon class="material-icons" on>expand_less</Icon>
+            <Icon class="material-icons">expand_more</Icon>
         </IconButton>
     </div>
     <div class="label {labelStyle}" on:click={() => open = !open}>{label}</div>

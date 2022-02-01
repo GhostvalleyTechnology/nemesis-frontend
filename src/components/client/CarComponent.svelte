@@ -7,7 +7,7 @@
     export let car: CarType;
 </script>
 
-<LayoutGrid>
+<LayoutGrid style="width: 100%">
     <Cell span={6}>
         <Textfield bind:value={car.name} label={$l.personal.car.name} input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;"/>
     </Cell>

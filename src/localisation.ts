@@ -67,6 +67,7 @@ type NeedsAssessmentProvisions = {
     retirement: string;
     wealthBuilding: string;
     illness: string;
+    care: string;
 }
 
 type NeedsAssessmentSubtitles = {
@@ -81,8 +82,14 @@ type NeedsAssessmentInsurances = {
     chartTitle: string;
     accidentInsurance: NeedsAssessmentInsurance;
     disabilityInsurance: NeedsAssessmentInsurance;
-    homeInsurance: NeedsAssessmentInsurance;
+    homeInsurance: NeedsAssessmentInsurance & NeedsAssessmentHomeInsurance;
     legalProtectionInsurance: NeedsAssessmentInsurance;
+}
+
+type NeedsAssessmentHomeInsurance = {
+    homeOwnershipLabel: string;
+    householdInsuranceLabel: string;
+    liabilityInsuranceLabel: string; 
 }
 
 type NeedsAssessmentInsurance = {
@@ -151,6 +158,7 @@ type Personal = {
     nationality: string;
     birthPlace: string;
     maritalStatus: MaritalStatus;
+    partnerLabel: string;
     occupation: string;
     socialInsuranceInstitution: string;
     title: string;
@@ -159,8 +167,22 @@ type Personal = {
     smoker: string;
     pets: string;
     petsRemarks: string;
+    childrenLabel: string;
     addChild: string;
     car: CarType;
+    home: HomeType;
+}
+
+type HomeType = {
+    area: string;
+    builtArea: string;
+    floors: string;
+    roofType: string;
+    cellar: string;
+    pool: string;
+    photovoltaic: string;
+    photovoltaicRemarks: string;
+    specialAssets: string;
 }
 
 type CarType = {
@@ -191,6 +213,7 @@ type Gender = {
 }
 
 type MaritalStatus = {
+    label: string;
     single: string;
     married: string;
     divorced: string;
@@ -229,7 +252,9 @@ export const en: Localisation = {
         birthday: 'Birthday',
         nationality: 'Nationality',
         birthPlace: 'Place of birth',
+        partnerLabel: 'Partner',
         maritalStatus: {
+            label: 'Marital status',
             single: 'Single',
             married: 'Married',
             divorced: 'Divorced',
@@ -242,6 +267,7 @@ export const en: Localisation = {
         smoker: 'Smoker',
         pets: 'Pets',
         petsRemarks: 'Remarks regarding your pets',
+        childrenLabel: 'Children',
         addChild: 'Add child',
         car: {
             label: 'Cars',
@@ -261,6 +287,17 @@ export const en: Localisation = {
             deductible: 'Deductible',
             bonus: 'Bonus',
             paymentType: 'Payment type',
+        },
+        home: {
+            area: 'Area',
+            builtArea: 'Built area',
+            floors: 'Floors',
+            roofType: 'Roof type',
+            cellar: 'Cellar',
+            pool: 'Pool',
+            photovoltaic: 'Photovoltaic',
+            photovoltaicRemarks: 'Area or module number',
+            specialAssets: 'Special assets',
         }
     },
     needsAssessment: {
@@ -287,7 +324,10 @@ export const en: Localisation = {
             homeInsurance: {
                 name: 'Home Insurance',
                 helpSubtitle: 'Max Muster stumbles over the stairs!',
-                helpText: 'In addition, Max gets a hefty bill from the building owner\'s, because of the damaged window!'
+                helpText: 'In addition, Max gets a hefty bill from the building owner\'s, because of the damaged window!',
+                homeOwnershipLabel: 'Home ownership',
+                householdInsuranceLabel: 'Household insurance',
+                liabilityInsuranceLabel: 'Liability insurance'
             },
             legalProtectionInsurance: {
                 name: 'Legal Protection Insurance',
@@ -299,7 +339,8 @@ export const en: Localisation = {
             death: 'Endowment insurance',
             retirement: 'Retirement plan',
             wealthBuilding: 'Wealth building',
-            illness: 'Illness / Care',
+            illness: 'Illness',
+            care: 'Care'
         },
         experiences: {
             lifeInsurance: 'Life insurance',
@@ -406,7 +447,9 @@ export const de: Localisation = {
             divers: 'divers'
         },
         birthday: 'Geburtstag',
+        partnerLabel: 'Partner',
         maritalStatus: {
+            label: 'Familienstand',
             single: 'Ledig',
             married: 'Verheiratet',
             divorced: 'Geschieden'
@@ -421,6 +464,7 @@ export const de: Localisation = {
         smoker: 'Raucher',
         pets: 'Haustiere',
         petsRemarks: 'Anmerkungen über die Haustiere',
+        childrenLabel: 'Kinder',
         addChild: 'Kind hinzufügen',
         car: {
             label: 'Fahrzeuge',
@@ -440,6 +484,17 @@ export const de: Localisation = {
             deductible: 'Selbstbehalt',
             bonus: 'Prämie',
             paymentType: 'Zahlungsweise',
+        },
+        home: {
+            area: 'Fläche',
+            builtArea: 'Verbaute Fläche',
+            floors: 'Stockwerke',
+            roofType: 'Dachart',
+            cellar: 'Keller',
+            pool: 'Pool',
+            photovoltaic: 'Photovoltaik',
+            photovoltaicRemarks: 'Fläche oder Modulzahl',
+            specialAssets: 'Besondere Sachwerte',
         }
     },
     needsAssessment: {
@@ -466,7 +521,10 @@ export const de: Localisation = {
             homeInsurance: {
                 name: 'Eigenheim/Haushalt/Haftpflicht',
                 helpSubtitle: 'Max Muster stolpert über die Stiege!',
-                helpText: 'Als draufgabe bekommt Max noch eine saftige Rechnung des Gebäudebesitzter´s, aufgrund der Beschädigten Scheibe!'
+                helpText: 'Als draufgabe bekommt Max noch eine saftige Rechnung des Gebäudebesitzter´s, aufgrund der Beschädigten Scheibe!',
+                homeOwnershipLabel: 'Eigenheim',
+                householdInsuranceLabel: 'Haushaltsversicherung',
+                liabilityInsuranceLabel: 'Haftpflichtversicherung'
             },
             legalProtectionInsurance: {
                 name: 'Rechtsschutz',
@@ -478,7 +536,8 @@ export const de: Localisation = {
             death: 'Ableben',
             retirement: 'Pensionsvorsorge',
             wealthBuilding: 'Vermögensaufbau',
-            illness: 'Kranken/Pflege',
+            illness: 'Krankenversicherung',
+            care: 'Pflege'
         },
         experiences: {
             lifeInsurance: 'Lebensversicherung',

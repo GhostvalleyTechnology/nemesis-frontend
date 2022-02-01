@@ -11,22 +11,21 @@
     import Print from '../components/needs_assessment/Print.svelte';
 
     let assessment = newNeedsAssessment;
-    let edit = true;
+    let print: Print;
+
 </script>
 <div class="form-container">
-    {#if edit}
-
         <h1 class="mdc-typography--headline2">{$l.needsAssessment.title}</h1>
         <OpenCloseToggle label={$l.needsAssessment.subtitles.personal} labelStyle="mdc-typography--headline4">
             <PersonalComponent bind:client={assessment.client}/>
         </OpenCloseToggle>
 
         <OpenCloseToggle label={$l.needsAssessment.subtitles.insurance} labelStyle="mdc-typography--headline4">
-            <BaseInsurancesComponent bind:client={assessment.client} />
+            <BaseInsurancesComponent bind:assessment={assessment} />
         </OpenCloseToggle>
 
         <OpenCloseToggle label={$l.needsAssessment.subtitles.provision} labelStyle="mdc-typography--headline4">
-            <ProvisionsComponent bind:client={assessment.client} />
+            <ProvisionsComponent bind:assessment={assessment} />
         </OpenCloseToggle>
 
         <OpenCloseToggle label={$l.needsAssessment.subtitles.experiences} labelStyle="mdc-typography--headline4">
@@ -38,12 +37,12 @@
             <LegalComponent bind:assessment={assessment}/>
         </OpenCloseToggle>
 
-        <Button on:click={() => edit = !edit} variant="raised" style="margin-top: 50px">
+        <Button on:click={() => print.print()} variant="raised" style="margin-top: 50px">
             <Label>{$l.needsAssessment.finishButton}</Label>
         </Button>
-    {:else}
-        <Print bind:d={assessment}/>
-    {/if}
+
+        <Print bind:this={print} bind:d={assessment}/>
+
 </div>
 
 <style lang="scss">

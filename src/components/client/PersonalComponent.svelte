@@ -78,13 +78,13 @@
     {/if}
 
     {#each client.children || [] as child}
+    <Cell span={11}><div transition:slide>
+        <GenericPersonComponent bind:person={child} childMode={true}/>
+    </div></Cell>
     <Cell span={1} align="middle"><div transition:slide>
         <Button on:click={() => removeChild(child)}>
             <Icon class="material-icons">close</Icon>
         </Button>
-    </div></Cell>
-    <Cell span={11}><div transition:slide>
-        <GenericPersonComponent bind:person={child} childMode={true}/>
     </div></Cell>
     {/each}
     <Cell span={12}>
@@ -100,7 +100,7 @@
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.address} label={$l.personal.address}/>
     </Cell>
     <Cell span={4}>
-        <CountryComponent style="width: 100%;" country={client.country} label={$l.personal.country}/>
+        <CountryComponent style="width: 100%;" bind:country={client.country} label={$l.personal.country}/>
     </Cell>
     <Cell span={4}>
         <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={client.zipCode} label={$l.personal.zipCode}/>

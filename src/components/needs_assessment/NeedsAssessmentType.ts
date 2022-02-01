@@ -1,9 +1,14 @@
 import l, {Localisation, format} from '../../localisation'
-import { Client } from "../../gen";
+import { Client, ClientContract } from "../../gen";
 import { ExperienceType } from "./ExperienceType";
+import { WealthBuildingType } from './WealthBuildingType';
+import { CarType } from '../client/CarType';
 
 export type NeedsAssessmentType = {
   client: Client;
+  insurances: InsurancesType;
+  wealthBuilding: WealthBuildingType;
+  cars: CarType[];
   experiences: ExperienceType[];
   powerOfAttorny: LegalType;
   legalNotice: LegalType;
@@ -11,6 +16,42 @@ export type NeedsAssessmentType = {
 
 let $l: Localisation;
 l.subscribe(v => $l = v);
+
+type InsurancesType = {
+  accidentInsurance: InsuranceType & ClientContract;
+  disabilityInsurance: InsuranceType & ClientContract;
+  homeInsurance: InsuranceType & ClientContract & HomeInsuranceType;
+  legalProtectionInsurance: InsuranceType & ClientContract;
+  deathInsurance: InsuranceType & ClientContract;
+  retirementInsurance: InsuranceType & ClientContract;
+  illnessInsurance: InsuranceType & ClientContract;
+  careRemarks: string;
+}
+
+export type HomeInsuranceType = {
+  homeOwnership: boolean;
+  home: HomeOwnershipType;
+  householdArea?: string;
+  petsRemarks?: string;
+  householdInsurance: boolean;
+  liabilityInsurance: boolean;
+}
+
+type HomeOwnershipType = {
+  builtArea: string;
+  floors: string;
+  roofType: string;
+  cellar: boolean;
+  pool: boolean;
+  photovoltaic: boolean;
+  photovoltaicRemarks: string;
+  specialAssets: string;
+}
+
+export type InsuranceType = {
+  clientHas: boolean;
+  
+}
 
 type LegalType = {
   place?: string;
@@ -25,6 +66,54 @@ const newNeedsAssessment: NeedsAssessmentType = {
     smoker: false,
     militaryServiceDone: false
   },
+  insurances: {
+    accidentInsurance: {
+      clientHas: false,
+    },
+    disabilityInsurance: {
+      clientHas: false,
+    },
+    homeInsurance: {
+      clientHas: false,
+      homeOwnership: false,
+      home: {
+        builtArea: '',
+        floors: '',
+        roofType: '',
+        cellar: false,
+        pool: false,
+        photovoltaic: false,
+        photovoltaicRemarks: '',
+        specialAssets: '',
+      },
+      householdInsurance: false,
+      liabilityInsurance: false,
+    },
+    legalProtectionInsurance: {
+      clientHas: false,
+    },
+    deathInsurance: {
+      clientHas: false,
+    },
+    illnessInsurance: {
+      clientHas: false,
+    },
+    retirementInsurance: {
+      clientHas: false,
+    },
+    careRemarks: '',
+  },
+  wealthBuilding: {
+    retirementProvision: { desired: false },
+    saveBig: { desired: false },
+    saveEducation: { desired: false },
+    otherInvestmentGoal: { desired: false },
+    alreadyInvested: { desired: false},
+    paymentOnce: { desired: false },
+    paymentMonthly: { desired: false },
+    paymentYearly: { desired: false },
+  },
+  cars: [],
   experiences: [
     {name: $l.needsAssessment.experiences.lifeInsurance},
     {name: $l.needsAssessment.experiences.investmentFonds},

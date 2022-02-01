@@ -1,39 +1,22 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
-    import { Client, ClientContract } from "../../gen";
+    import { ClientContract } from "../../gen";
     import HelpToggleButton from "../HelpToggleButton.svelte";
     import NeedsAssessmentCard from "../NeedsAssessmentCard.svelte";
     import SelectLegacyContract from "../SelectLegacyContract.svelte";
     import StylizedCheckbox from "../StylizedCheckbox.svelte";
+    import { InsuranceType } from './NeedsAssessmentType';
 
     let helpToggle = false;
-    export let hasInsurance = false;
+    export let insurance: InsuranceType & ClientContract;
     export let label = "";
     export let helpSubtitle = "";
     export let helpText = "";
-    export let client: Client;
-    
-    if(!client.clientContracts) {
-        client.clientContracts = [];
-    }
-    let contract: ClientContract = {};
-
-    $: if(hasInsurance) {
-        if(!client.clientContracts) {
-            client.clientContracts = [];
-        }
-        let contracts = client.clientContracts;
-        contracts.push(contract);
-        client.clientContracts = contracts;
-    } else {
-        let contracts = client.clientContracts;
-        client.clientContracts = contracts.filter(item => item !== contract);
-    }
 </script>
 
 <div class="insurance-item">
     <div class="label">
-        <StylizedCheckbox bind:value={hasInsurance} {label}/>
+        <StylizedCheckbox bind:value={insurance.clientHas} {label}/>
     </div>
     <div class="toggle">
         <HelpToggleButton bind:value={helpToggle}/>
@@ -43,9 +26,10 @@
         <NeedsAssessmentCard subtitle={helpSubtitle} text={helpText} />
     </div>
     {/if}
-    {#if hasInsurance}
+    {#if insurance.clientHas}
     <div transition:slide|local class="contract">
-        <SelectLegacyContract bind:contract={contract}/>
+        <SelectLegacyContract bind:contract={insurance}/>
+        <slot name="additionalInput"></slot>
     </div>
     {/if}
 </div>
