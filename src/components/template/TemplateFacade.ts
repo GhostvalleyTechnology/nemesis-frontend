@@ -1,5 +1,6 @@
 import { TemplateService } from "../../gen";
 import l, { Localisation } from '../../localisation';
+import { open } from "../OpenFile";
 let $l: Localisation;
 l.subscribe(loc => $l = loc);
 
@@ -40,17 +41,6 @@ function handleResult(response: import("../../gen").TemplateDto[]): TemplateFaca
 }
 
 export function openFile(template: TemplateFacade) {
-    TemplateService.get(template.id).then(response => openPdf(response));
+    TemplateService.get(template.id).then(response => open(response));
 }
 
-function openPdf(response: string) {
-    var byteCharacters = atob(response);
-    var byteNumbers = new Array(byteCharacters.length);
-    for (var i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    var byteArray = new Uint8Array(byteNumbers);
-    var file = new Blob([byteArray], { type: 'application/pdf;base64' });
-    var fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  }

@@ -2,15 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { FileDto } from '../models/FileDto';
-import type { PaymentFrequency } from '../models/PaymentFrequency';
+import type { ProofOfIdentityDto } from '../models/ProofOfIdentityDto';
+import type { ProofOfIdentityType } from '../models/ProofOfIdentityType';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
-export class ClientContractService {
+export class ProofOfIdentityService {
 
     /**
      * @param formData 
-     * @returns any OK
+     * @returns ProofOfIdentityDto OK
      * @throws ApiError
      */
     public static add(
@@ -19,32 +20,42 @@ file?: Blob;
 fileName?: string;
 fileExtension?: string;
 clientId?: number;
-legacy?: boolean;
-contractNumber?: string;
-paymentValue?: number;
-paymentFrequency?: PaymentFrequency;
-contractorId?: number;
+type?: ProofOfIdentityType;
 },
-): CancelablePromise<any> {
+): CancelablePromise<ProofOfIdentityDto> {
         return __request({
             method: 'POST',
-            path: `/api/client-contract/add`,
+            path: `/api/proof-of-identity/add`,
             formData: formData,
             mediaType: 'multipart/form-data',
         });
     }
 
     /**
-     * @param contractId 
+     * @param id 
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static delete(
+id: number,
+): CancelablePromise<any> {
+        return __request({
+            method: 'DELETE',
+            path: `/api/proof-of-identity/delete/${id}`,
+        });
+    }
+
+    /**
+     * @param id 
      * @returns FileDto OK
      * @throws ApiError
      */
     public static get(
-contractId: number,
+id: number,
 ): CancelablePromise<FileDto> {
         return __request({
             method: 'GET',
-            path: `/api/client-contract/get/${contractId}`,
+            path: `/api/proof-of-identity/get/${id}`,
         });
     }
 

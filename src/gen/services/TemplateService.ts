@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { FileDto } from '../models/FileDto';
 import type { TemplateDto } from '../models/TemplateDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -16,6 +17,7 @@ export class TemplateService {
 formData?: {
 file?: Blob;
 fileName?: string;
+fileExtension?: string;
 adminOnly?: boolean;
 },
 ): CancelablePromise<any> {
@@ -43,12 +45,12 @@ templateId: number,
 
     /**
      * @param templateId 
-     * @returns any OK
+     * @returns FileDto OK
      * @throws ApiError
      */
     public static get(
 templateId: number,
-): CancelablePromise<any> {
+): CancelablePromise<FileDto> {
         return __request({
             method: 'GET',
             path: `/api/template/get/${templateId}`,

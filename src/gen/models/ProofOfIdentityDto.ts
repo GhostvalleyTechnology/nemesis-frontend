@@ -8,4 +8,5 @@ export type ProofOfIdentityDto = {
     id?: number;
     createdAt?: string;
     type?: ProofOfIdentityType;
+    fileName?: string;
 }

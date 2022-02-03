@@ -33,6 +33,9 @@
                   "fileName" : {
                     "type" : "string"
                   },
+                  "fileExtension" : {
+                    "type" : "string"
+                  },
                   "clientId" : {
                     "format" : "int64",
                     "type" : "integer"
@@ -72,6 +75,9 @@
                 "legacy" : {
                   "contentType" : "text/plain"
                 },
+                "fileExtension" : {
+                  "contentType" : "text/plain"
+                },
                 "contractorId" : {
                   "contentType" : "text/plain"
                 },
@@ -107,7 +113,14 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FileDto"
+                }
+              }
+            }
           }
         }
       }
@@ -525,6 +538,116 @@
         }
       }
     },
+    "/api/proof-of-identity/add" : {
+      "post" : {
+        "tags" : [ "Proof Of Identity Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  },
+                  "fileName" : {
+                    "type" : "string"
+                  },
+                  "fileExtension" : {
+                    "type" : "string"
+                  },
+                  "clientId" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  },
+                  "type" : {
+                    "$ref" : "#/components/schemas/ProofOfIdentityType"
+                  }
+                }
+              },
+              "encoding" : {
+                "fileName" : {
+                  "contentType" : "text/plain"
+                },
+                "file" : {
+                  "contentType" : "application/octet-stream"
+                },
+                "clientId" : {
+                  "contentType" : "text/plain"
+                },
+                "fileExtension" : {
+                  "contentType" : "text/plain"
+                },
+                "type" : {
+                  "contentType" : "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProofOfIdentityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/proof-of-identity/delete/{id}" : {
+      "delete" : {
+        "tags" : [ "Proof Of Identity Service" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/proof-of-identity/get/{id}" : {
+      "get" : {
+        "tags" : [ "Proof Of Identity Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FileDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/template/add" : {
       "post" : {
         "tags" : [ "Template Service" ],
@@ -542,6 +665,9 @@
                   "fileName" : {
                     "type" : "string"
                   },
+                  "fileExtension" : {
+                    "type" : "string"
+                  },
                   "adminOnly" : {
                     "type" : "boolean"
                   }
@@ -556,6 +682,9 @@
                 },
                 "file" : {
                   "contentType" : "application/octet-stream"
+                },
+                "fileExtension" : {
+                  "contentType" : "text/plain"
                 }
               }
             }
@@ -603,7 +732,14 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FileDto"
+                }
+              }
+            }
           }
         }
       }
@@ -806,6 +942,20 @@
           },
           "admin" : {
             "type" : "boolean"
+          }
+        }
+      },
+      "FileDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "extension" : {
+            "type" : "string"
+          },
+          "data" : {
+            "type" : "string"
           }
         }
       },
@@ -1027,6 +1177,9 @@
           },
           "type" : {
             "$ref" : "#/components/schemas/ProofOfIdentityType"
+          },
+          "fileName" : {
+            "type" : "string"
           }
         }
       },
