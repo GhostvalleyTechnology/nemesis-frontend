@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { ClientContract } from '../gen'
+    import { ClientContractDto } from '../gen'
     import ContractorSelection from './ContractorSelection.svelte';
     import PaymentFrequencyComponent from './PaymentFrequencyComponent.svelte';
     import EuroTextfield from './EuroTextfield.svelte';
 
-    export let contract: ClientContract;
+    export let contract: ClientContractDto;
 </script>
 <div class="container">
     <EuroTextfield bind:integer={contract.paymentValue} style="width: 100%"/>

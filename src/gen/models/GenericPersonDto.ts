@@ -5,7 +5,7 @@
 import type { Country } from './Country';
 import type { Gender } from './Gender';
 
-export type GenericPerson = {
+export type GenericPersonDto = {
     id?: number;
     createdAt?: string;
     gender?: Gender;

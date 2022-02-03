@@ -1,7 +1,6 @@
 <script lang="ts">
     import l from '../../localisation';
     import FormField from '@smui/form-field';
-    import Checkbox from '@smui/checkbox';
     import Radio from '@smui/radio';
     import { WealthBuildingType } from './WealthBuildingType';
     import InvestmentGoalComponent from './InvestmentGoalComponent.svelte';

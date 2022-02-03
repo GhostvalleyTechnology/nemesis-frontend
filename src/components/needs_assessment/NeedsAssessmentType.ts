@@ -1,11 +1,11 @@
 import l, {Localisation, format} from '../../localisation'
-import { Client, ClientContract } from "../../gen";
+import { ClientDto, ClientContractDto } from "../../gen";
 import { ExperienceType } from "./ExperienceType";
 import { WealthBuildingType } from './WealthBuildingType';
 import { CarType } from '../client/CarType';
 
 export type NeedsAssessmentType = {
-  client: Client;
+  client: ClientDto;
   insurances: InsurancesType;
   wealthBuilding: WealthBuildingType;
   cars: CarType[];
@@ -18,13 +18,13 @@ let $l: Localisation;
 l.subscribe(v => $l = v);
 
 type InsurancesType = {
-  accidentInsurance: InsuranceType & ClientContract;
-  disabilityInsurance: InsuranceType & ClientContract;
-  homeInsurance: InsuranceType & ClientContract & HomeInsuranceType;
-  legalProtectionInsurance: InsuranceType & ClientContract;
-  deathInsurance: InsuranceType & ClientContract;
-  retirementInsurance: InsuranceType & ClientContract;
-  illnessInsurance: InsuranceType & ClientContract;
+  accidentInsurance: InsuranceType & ClientContractDto;
+  disabilityInsurance: InsuranceType & ClientContractDto;
+  homeInsurance: InsuranceType & ClientContractDto & HomeInsuranceType;
+  legalProtectionInsurance: InsuranceType & ClientContractDto;
+  deathInsurance: InsuranceType & ClientContractDto;
+  retirementInsurance: InsuranceType & ClientContractDto;
+  illnessInsurance: InsuranceType & ClientContractDto;
   careRemarks: string;
 }
 

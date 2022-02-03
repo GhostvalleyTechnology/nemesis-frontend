@@ -30,7 +30,7 @@ export async function list(): Promise<TemplateFacade[]> {
     return result;
 }
 
-function handleResult(response: import("../../gen").Template[]): TemplateFacade[] {
+function handleResult(response: import("../../gen").TemplateDto[]): TemplateFacade[] {
     return response.map(template => { return {
         name: template.fileName,
         id: template.id,

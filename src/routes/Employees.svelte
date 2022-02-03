@@ -2,10 +2,10 @@
   import { navigate } from "svelte-routing";
   import Icon from "@smui/textfield/icon";
   import DataTable, { Head, Body, Row, Cell, Label } from "@smui/data-table";
-  import { EmployeeService, Employee } from "../gen";
+  import { EmployeeService, EmployeeDto } from "../gen";
   import Searchbar from "../components/Searchbar.svelte";
   import FloatingActionButton from "../components/FloatingActionButton.svelte";
-  var items: Employee[] = [];
+  var items: EmployeeDto[] = [];
   EmployeeService.list().then((data) => (items = data));
 
   $: filterValue = "";

@@ -6,10 +6,10 @@
     import FormField from '@smui/form-field';
     import Paper from '@smui/paper';
     import Fab, { Label, Icon } from '@smui/fab';
-    import { EmployeeService, Employee } from "../gen";
+    import { EmployeeService, EmployeeDto } from "../gen";
 
     export let id: string;
-    let employee: Employee = {name: "", email: "", admin: false};
+    let employee: EmployeeDto = {name: "", email: "", admin: false};
     if(isNumeric(id)) {
         EmployeeService.get(+id).then(data => employee = data);
     }

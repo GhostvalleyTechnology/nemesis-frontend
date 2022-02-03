@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Employee } from '../models/Employee';
+import type { EmployeeDto } from '../models/EmployeeDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -13,7 +13,7 @@ export class EmployeeService {
      * @throws ApiError
      */
     public static add(
-requestBody?: Employee,
+requestBody?: EmployeeDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',
@@ -25,12 +25,12 @@ requestBody?: Employee,
 
     /**
      * @param id 
-     * @returns Employee OK
+     * @returns EmployeeDto OK
      * @throws ApiError
      */
     public static get(
 id: number,
-): CancelablePromise<Employee> {
+): CancelablePromise<EmployeeDto> {
         return __request({
             method: 'GET',
             path: `/api/employee/get/${id}`,
@@ -38,10 +38,10 @@ id: number,
     }
 
     /**
-     * @returns Employee OK
+     * @returns EmployeeDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<Employee>> {
+    public static list(): CancelablePromise<Array<EmployeeDto>> {
         return __request({
             method: 'GET',
             path: `/api/employee/list`,
@@ -54,7 +54,7 @@ id: number,
      * @throws ApiError
      */
     public static update(
-requestBody?: Employee,
+requestBody?: EmployeeDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',

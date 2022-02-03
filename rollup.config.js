@@ -9,7 +9,6 @@ import css from 'rollup-plugin-css-only';
 import {config} from 'dotenv';
 import replace from '@rollup/plugin-replace';
 
-config({ path: __dirname+'/.env' })
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -42,6 +41,9 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+			app_run_mode_production: production
+		}),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {

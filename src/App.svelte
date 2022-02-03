@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { OpenAPI, UserService } from "./gen"
-	OpenAPI.BASE = "http://localhost:8080"
+	// @ts-ignore
+	let production: boolean = app_run_mode_production;
+	OpenAPI.BASE = production ? "/" : "http://localhost:8080"
 	OpenAPI.HEADERS = {
 		'Accept': '*/*'
 	}
@@ -13,11 +15,13 @@
 	import Templates from "./routes/Templates.svelte";
 	import Template from "./routes/Template.svelte";
 	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
+	import PartnerServiceTypes from "./routes/PartnerServiceTypes.svelte";
+	import Partners from "./routes/Partners.svelte";
+	import Partner from "./routes/Partner.svelte";
 	import Employees from "./routes/Employees.svelte";
 	import Employee from "./routes/Employee.svelte";
 	import Button, { Label } from '@smui/button';
-	import { createEventDispatcher } from "svelte";
-	import IconButton, { Icon } from "@smui/icon-button";
+	import IconButton from "@smui/icon-button";
 	import { Router, links, Route } from "svelte-routing";
 	import Drawer, {
 		AppContent,
@@ -32,7 +36,6 @@
 
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
-	const dispatch = createEventDispatcher();
 	function logout() {
 		alert("logout");
 	}
@@ -74,7 +77,6 @@
 	let touchStartX: number;
 	let propablyWantsToMenu = false;
 	function touchStart(x: number) {
-		console.log('%d of max %d', x, screen.width);
 		propablyWantsToMenu = x < (screen.width / 4) || x > (screen.width - (screen.width / 4));
 		touchStartX = x;
 	}
@@ -110,7 +112,7 @@
 							<Graphic class="material-icons" aria-hidden="true">file_copy</Graphic>
 							<Text>{$l.menu.templates}</Text>
 						</Item>
-						<Item href="/partner" on:click={() => setActive("partner")} activated={active === "partner"}>
+						<Item href="/partners" on:click={() => setActive("partner")} activated={active === "partner"}>
 							<Graphic class="material-icons" aria-hidden="true">apartment</Graphic>
 							<Text>{$l.menu.partner}</Text>
 						</Item>
@@ -164,10 +166,12 @@
 					<Route path="/templates" component={Templates} />
 					<Route path="/template/new" component={Template} />
 					<Route path="/needs_assessment" component={NeedsAssessment} />
+					<Route path="/partners" component={Partners} />
+					<Route path="/partner_service_types" component={PartnerServiceTypes} />
+					<Route path="/partner/:id" component={Partner} />
 					<Route path="/employees" component={Employees} />
 					<Route path="employee/:id" component={Employee} />
 				</div>
-				
 				
 			</AppContent>
 		</Router>

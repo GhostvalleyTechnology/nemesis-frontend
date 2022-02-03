@@ -2,10 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Employee = {
+export type PartnerReferenceDto = {
     id?: number;
     createdAt?: string;
     name?: string;
-    email?: string;
-    admin?: boolean;
 }

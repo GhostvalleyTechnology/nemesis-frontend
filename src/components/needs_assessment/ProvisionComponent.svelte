@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { ClientContract } from "../../gen";
+    import { ClientContractDto } from "../../gen";
     import SelectLegacyContract from "../SelectLegacyContract.svelte";
     import StylizedCheckbox from "../StylizedCheckbox.svelte";
     import { InsuranceType } from './NeedsAssessmentType';
 
-    export let insurance: InsuranceType & ClientContract;
+    export let insurance: InsuranceType & ClientContractDto;
     export let label = "";
 
 </script>

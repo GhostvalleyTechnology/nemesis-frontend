@@ -1,6 +1,6 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
-    import { ClientContract } from "../../gen";
+    import { ClientContractDto } from "../../gen";
     import HelpToggleButton from "../HelpToggleButton.svelte";
     import NeedsAssessmentCard from "../NeedsAssessmentCard.svelte";
     import SelectLegacyContract from "../SelectLegacyContract.svelte";
@@ -8,7 +8,7 @@
     import { InsuranceType } from './NeedsAssessmentType';
 
     let helpToggle = false;
-    export let insurance: InsuranceType & ClientContract;
+    export let insurance: InsuranceType & ClientContractDto;
     export let label = "";
     export let helpSubtitle = "";
     export let helpText = "";

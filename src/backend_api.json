@@ -120,7 +120,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Client"
+                "$ref" : "#/components/schemas/ClientDto"
               }
             }
           }
@@ -132,19 +132,19 @@
         }
       }
     },
-    "/api/client/delete" : {
-      "post" : {
+    "/api/client/delete/{clientId}" : {
+      "delete" : {
         "tags" : [ "Client Service" ],
         "operationId" : "delete",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Client"
-              }
-            }
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
           }
-        },
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -171,7 +171,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Client"
+                  "$ref" : "#/components/schemas/ClientDto"
                 }
               }
             }
@@ -191,7 +191,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Client"
+                    "$ref" : "#/components/schemas/ClientDto"
                   }
                 }
               }
@@ -212,7 +212,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Client"
+                    "$ref" : "#/components/schemas/ClientDto"
                   }
                 }
               }
@@ -229,7 +229,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Client"
+                "$ref" : "#/components/schemas/ClientDto"
               }
             }
           }
@@ -249,7 +249,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Employee"
+                "$ref" : "#/components/schemas/EmployeeDto"
               }
             }
           }
@@ -280,7 +280,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Employee"
+                  "$ref" : "#/components/schemas/EmployeeDto"
                 }
               }
             }
@@ -300,7 +300,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Employee"
+                    "$ref" : "#/components/schemas/EmployeeDto"
                   }
                 }
               }
@@ -317,7 +317,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Employee"
+                "$ref" : "#/components/schemas/EmployeeDto"
               }
             }
           }
@@ -368,7 +368,68 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Employee"
+                  "$ref" : "#/components/schemas/EmployeeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/partner-service-type/add" : {
+      "post" : {
+        "tags" : [ "Partner Service Type Service" ],
+        "operationId" : "add",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/partner-service-type/delete/{id}" : {
+      "delete" : {
+        "tags" : [ "Partner Service Type Service" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/partner-service-type/list" : {
+      "get" : {
+        "tags" : [ "Partner Service Type Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+                  }
                 }
               }
             }
@@ -384,7 +445,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Partner"
+                "$ref" : "#/components/schemas/PartnerDto"
               }
             }
           }
@@ -392,6 +453,33 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/partner/get/{partnerId}" : {
+      "get" : {
+        "tags" : [ "Partner Service" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "partnerId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerDto"
+                }
+              }
+            }
           }
         }
       }
@@ -408,7 +496,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Partner"
+                    "$ref" : "#/components/schemas/PartnerDto"
                   }
                 }
               }
@@ -425,7 +513,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Partner"
+                "$ref" : "#/components/schemas/PartnerDto"
               }
             }
           }
@@ -480,6 +568,26 @@
         }
       }
     },
+    "/api/template/delete/{templateId}" : {
+      "delete" : {
+        "tags" : [ "Template Service" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "templateId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/api/template/get/{templateId}" : {
       "get" : {
         "tags" : [ "Template Service" ],
@@ -512,7 +620,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Template"
+                    "$ref" : "#/components/schemas/TemplateDto"
                   }
                 }
               }
@@ -524,7 +632,39 @@
   },
   "components" : {
     "schemas" : {
-      "Client" : {
+      "ClientContractDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "legacy" : {
+            "type" : "boolean"
+          },
+          "contractNumber" : {
+            "type" : "string"
+          },
+          "paymentValue" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "paymentFrequency" : {
+            "$ref" : "#/components/schemas/PaymentFrequency"
+          },
+          "contractor" : {
+            "$ref" : "#/components/schemas/PartnerReferenceDto"
+          },
+          "serviceType" : {
+            "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+          }
+        }
+      },
+      "ClientDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -588,7 +728,7 @@
             "type" : "string"
           },
           "supervisor" : {
-            "$ref" : "#/components/schemas/Employee"
+            "type" : "string"
           },
           "deleted" : {
             "type" : "boolean"
@@ -608,26 +748,8 @@
           "maritalStatus" : {
             "$ref" : "#/components/schemas/MaritalStatus"
           },
-          "partner" : {
-            "$ref" : "#/components/schemas/GenericPerson"
-          },
-          "children" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/GenericPerson"
-            }
-          },
-          "clientContracts" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/ClientContract"
-            }
-          },
-          "proofOfIdentities" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/ProofOfIdentity"
-            }
+          "homeRemarks" : {
+            "type" : "string"
           },
           "bank" : {
             "type" : "string"
@@ -637,42 +759,27 @@
           },
           "bic" : {
             "type" : "string"
-          }
-        }
-      },
-      "ClientContract" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "format" : "int64",
-            "type" : "integer"
           },
-          "createdAt" : {
-            "format" : "date-time",
-            "type" : "string"
+          "partner" : {
+            "$ref" : "#/components/schemas/GenericPersonDto"
           },
-          "fileName" : {
-            "type" : "string"
+          "children" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GenericPersonDto"
+            }
           },
-          "fileId" : {
-            "format" : "int64",
-            "type" : "integer"
+          "contracts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClientContractDto"
+            }
           },
-          "legacy" : {
-            "type" : "boolean"
-          },
-          "contractNumber" : {
-            "type" : "string"
-          },
-          "paymentValue" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "paymentFrequency" : {
-            "$ref" : "#/components/schemas/PaymentFrequency"
-          },
-          "contractor" : {
-            "$ref" : "#/components/schemas/Partner"
+          "proofOfIdentities" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProofOfIdentityDto"
+            }
           }
         }
       },
@@ -680,7 +787,7 @@
         "enum" : [ "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS", "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CW", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK", "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", "SX", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW" ],
         "type" : "string"
       },
-      "Employee" : {
+      "EmployeeDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -706,7 +813,7 @@
         "enum" : [ "f", "m", "x" ],
         "type" : "string"
       },
-      "GenericPerson" : {
+      "GenericPersonDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -775,7 +882,32 @@
         "enum" : [ "divorced", "married", "single" ],
         "type" : "string"
       },
-      "Partner" : {
+      "PartnerContactDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PartnerDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -801,52 +933,27 @@
           "bic" : {
             "type" : "string"
           },
-          "contacts" : {
+          "services" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/PartnerContact"
+              "$ref" : "#/components/schemas/PartnerServiceTypeDto"
             }
           },
           "logins" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/PartnerLogin"
+              "$ref" : "#/components/schemas/PartnerLoginDto"
             }
           },
-          "services" : {
+          "contacts" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/PartnerServiceType"
+              "$ref" : "#/components/schemas/PartnerContactDto"
             }
           }
         }
       },
-      "PartnerContact" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "createdAt" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
-          },
-          "phone" : {
-            "type" : "string"
-          },
-          "remarks" : {
-            "type" : "string"
-          }
-        }
-      },
-      "PartnerLogin" : {
+      "PartnerLoginDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -871,7 +978,23 @@
           }
         }
       },
-      "PartnerServiceType" : {
+      "PartnerReferenceDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PartnerServiceTypeDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -891,7 +1014,7 @@
         "enum" : [ "monthly", "quarterly", "yearly" ],
         "type" : "string"
       },
-      "ProofOfIdentity" : {
+      "ProofOfIdentityDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -901,13 +1024,6 @@
           "createdAt" : {
             "format" : "date-time",
             "type" : "string"
-          },
-          "fileName" : {
-            "type" : "string"
-          },
-          "fileId" : {
-            "format" : "int64",
-            "type" : "integer"
           },
           "type" : {
             "$ref" : "#/components/schemas/ProofOfIdentityType"
@@ -918,7 +1034,7 @@
         "enum" : [ "driversLicence", "identityCard", "passport" ],
         "type" : "string"
       },
-      "Template" : {
+      "TemplateDto" : {
         "type" : "object",
         "properties" : {
           "id" : {
@@ -929,15 +1045,11 @@
             "format" : "date-time",
             "type" : "string"
           },
-          "fileName" : {
-            "type" : "string"
-          },
-          "fileId" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
           "adminOnly" : {
             "type" : "boolean"
+          },
+          "fileName" : {
+            "type" : "string"
           }
         }
       }

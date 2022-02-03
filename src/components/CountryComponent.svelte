@@ -6,7 +6,8 @@
 
     export let country: Country;
     export let label = $l.personal.country;
-    export let style = '';
+    export let style = 'width: 100%;';
+    export let edit: boolean;
 
     let countryData = getCountryData();
     let maybeInit = countryData.find(item => country == Country[item.code]);
@@ -21,4 +22,4 @@
     }
     
 </script>
-<Autocomplete bind:value={value} {options} {style} {label} textfield$style={style}/>
+<Autocomplete bind:value={value} {options} {style} {label} textfield$style={style} disabled={!edit}/>

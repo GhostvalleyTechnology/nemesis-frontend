@@ -17,7 +17,7 @@
 <div class="form-container">
         <h1 class="mdc-typography--headline2">{$l.needsAssessment.title}</h1>
         <OpenCloseToggle label={$l.needsAssessment.subtitles.personal} labelStyle="mdc-typography--headline4">
-            <PersonalComponent bind:client={assessment.client}/>
+            <PersonalComponent bind:client={assessment.client} edit={true}/>
         </OpenCloseToggle>
 
         <OpenCloseToggle label={$l.needsAssessment.subtitles.insurance} labelStyle="mdc-typography--headline4">

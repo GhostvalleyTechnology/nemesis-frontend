@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Template } from '../models/Template';
+import type { TemplateDto } from '../models/TemplateDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -32,6 +32,20 @@ adminOnly?: boolean;
      * @returns any OK
      * @throws ApiError
      */
+    public static delete(
+templateId: number,
+): CancelablePromise<any> {
+        return __request({
+            method: 'DELETE',
+            path: `/api/template/delete/${templateId}`,
+        });
+    }
+
+    /**
+     * @param templateId 
+     * @returns any OK
+     * @throws ApiError
+     */
     public static get(
 templateId: number,
 ): CancelablePromise<any> {
@@ -42,10 +56,10 @@ templateId: number,
     }
 
     /**
-     * @returns Template OK
+     * @returns TemplateDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<Template>> {
+    public static list(): CancelablePromise<Array<TemplateDto>> {
         return __request({
             method: 'GET',
             path: `/api/template/list`,

@@ -9,11 +9,11 @@
     import Client_Legal from "../components/Client_Legal.svelte";
     import Client_Documents from "../components/Client_Documents.svelte";
 
-    import { Client, ClientService } from "../gen";
+    import { ClientDto, ClientService } from "../gen";
     import isNumeric from "../isNumeric";
     import PersonalComponent from "../components/client/PersonalComponent.svelte";
     export let id: string;
-    let client: Client = {};
+    let client: ClientDto = {};
     let newClient = !isNumeric(id);
     if (isNumeric(id)) {
         ClientService.get(+id).then((response) => (client = response));
@@ -44,6 +44,7 @@
             ClientService.update(client);
         }
     }
+    let edit = false;
 </script>
 
 <div class="form-container">
@@ -57,7 +58,7 @@
 
         <div class="tab-container">
             {#if active.label == "Personal"}
-                <PersonalComponent bind:client={client} />
+                <PersonalComponent bind:client={client} bind:edit={edit}/>
             {:else if active.label == "Bank"}
                 <!-- <Client_Legal {client} /> -->
             {:else if active.label == "Documents"}

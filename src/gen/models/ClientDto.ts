@@ -2,15 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { ClientContract } from './ClientContract';
+import type { ClientContractDto } from './ClientContractDto';
 import type { Country } from './Country';
-import type { Employee } from './Employee';
 import type { Gender } from './Gender';
-import type { GenericPerson } from './GenericPerson';
+import type { GenericPersonDto } from './GenericPersonDto';
 import type { MaritalStatus } from './MaritalStatus';
-import type { ProofOfIdentity } from './ProofOfIdentity';
+import type { ProofOfIdentityDto } from './ProofOfIdentityDto';
 
-export type Client = {
+export type ClientDto = {
     id?: number;
     createdAt?: string;
     gender?: Gender;
@@ -30,18 +29,19 @@ export type Client = {
     zipCode?: string;
     city?: string;
     address?: string;
-    supervisor?: Employee;
+    supervisor?: string;
     deleted?: boolean;
     militaryServiceDone?: boolean;
     smoker?: boolean;
     pets?: boolean;
     petsRemarks?: string;
     maritalStatus?: MaritalStatus;
-    partner?: GenericPerson;
-    children?: Array<GenericPerson>;
-    clientContracts?: Array<ClientContract>;
-    proofOfIdentities?: Array<ProofOfIdentity>;
+    homeRemarks?: string;
     bank?: string;
     iban?: string;
     bic?: string;
+    partner?: GenericPersonDto;
+    children?: Array<GenericPersonDto>;
+    contracts?: Array<ClientContractDto>;
+    proofOfIdentities?: Array<ProofOfIdentityDto>;
 }

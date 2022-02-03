@@ -1,11 +1,11 @@
 <script lang="ts">
     import l from '../localisation';
     import Autocomplete from '@smui-extra/autocomplete';
-    import { Partner, PartnerService } from '../gen'
+    import { PartnerDto, PartnerService } from '../gen'
 
-    export let partner: Partner;
+    export let partner: PartnerDto;
     export let style = '';
-    let partnerList: Partner[] = []
+    let partnerList: PartnerDto[] = []
     let value = '';
     let options: string[];
 

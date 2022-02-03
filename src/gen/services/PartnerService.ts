@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Partner } from '../models/Partner';
+import type { PartnerDto } from '../models/PartnerDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -13,7 +13,7 @@ export class PartnerService {
      * @throws ApiError
      */
     public static add(
-requestBody?: Partner,
+requestBody?: PartnerDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',
@@ -24,10 +24,24 @@ requestBody?: Partner,
     }
 
     /**
-     * @returns Partner OK
+     * @param partnerId 
+     * @returns PartnerDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<Partner>> {
+    public static get(
+partnerId: number,
+): CancelablePromise<PartnerDto> {
+        return __request({
+            method: 'GET',
+            path: `/api/partner/get/${partnerId}`,
+        });
+    }
+
+    /**
+     * @returns PartnerDto OK
+     * @throws ApiError
+     */
+    public static list(): CancelablePromise<Array<PartnerDto>> {
         return __request({
             method: 'GET',
             path: `/api/partner/list`,
@@ -40,7 +54,7 @@ requestBody?: Partner,
      * @throws ApiError
      */
     public static update(
-requestBody?: Partner,
+requestBody?: PartnerDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',

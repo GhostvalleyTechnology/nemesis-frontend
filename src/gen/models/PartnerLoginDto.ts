@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PartnerLogin = {
+export type PartnerLoginDto = {
     id?: number;
     createdAt?: string;
     link?: string;

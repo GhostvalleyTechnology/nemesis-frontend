@@ -4,10 +4,8 @@
 
 import type { ProofOfIdentityType } from './ProofOfIdentityType';
 
-export type ProofOfIdentity = {
+export type ProofOfIdentityDto = {
     id?: number;
     createdAt?: string;
-    fileName?: string;
-    fileId?: number;
     type?: ProofOfIdentityType;
 }

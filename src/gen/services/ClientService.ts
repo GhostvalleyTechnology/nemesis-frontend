@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Client } from '../models/Client';
+import type { ClientDto } from '../models/ClientDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -13,7 +13,7 @@ export class ClientService {
      * @throws ApiError
      */
     public static add(
-requestBody?: Client,
+requestBody?: ClientDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',
@@ -24,29 +24,27 @@ requestBody?: Client,
     }
 
     /**
-     * @param requestBody 
+     * @param clientId 
      * @returns any OK
      * @throws ApiError
      */
     public static delete(
-requestBody?: Client,
+clientId: number,
 ): CancelablePromise<any> {
         return __request({
-            method: 'POST',
-            path: `/api/client/delete`,
-            body: requestBody,
-            mediaType: 'application/json',
+            method: 'DELETE',
+            path: `/api/client/delete/${clientId}`,
         });
     }
 
     /**
      * @param id 
-     * @returns Client OK
+     * @returns ClientDto OK
      * @throws ApiError
      */
     public static get(
 id: number,
-): CancelablePromise<Client> {
+): CancelablePromise<ClientDto> {
         return __request({
             method: 'GET',
             path: `/api/client/get/${id}`,
@@ -54,10 +52,10 @@ id: number,
     }
 
     /**
-     * @returns Client OK
+     * @returns ClientDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<Client>> {
+    public static list(): CancelablePromise<Array<ClientDto>> {
         return __request({
             method: 'GET',
             path: `/api/client/list`,
@@ -65,10 +63,10 @@ id: number,
     }
 
     /**
-     * @returns Client OK
+     * @returns ClientDto OK
      * @throws ApiError
      */
-    public static listAll(): CancelablePromise<Array<Client>> {
+    public static listAll(): CancelablePromise<Array<ClientDto>> {
         return __request({
             method: 'GET',
             path: `/api/client/list-all`,
@@ -81,7 +79,7 @@ id: number,
      * @throws ApiError
      */
     public static update(
-requestBody?: Client,
+requestBody?: ClientDto,
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',

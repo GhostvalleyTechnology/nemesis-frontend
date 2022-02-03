@@ -2,8 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PartnerServiceType = {
+export type TemplateDto = {
     id?: number;
     createdAt?: string;
-    service?: string;
+    adminOnly?: boolean;
+    fileName?: string;
 }

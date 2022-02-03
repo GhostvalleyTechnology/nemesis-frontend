@@ -1,66 +1,67 @@
 <script lang="ts">
     import l from '../../localisation';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import Textfield from '@smui/textfield';
     import Radio from '@smui/radio';
     import FormField from '@smui/form-field';
-    import { Client, GenericPerson } from '../../gen';
+    import { ClientDto, GenericPersonDto } from '../../gen';
     import CountryComponent from '../CountryComponent.svelte';
     import SocialInsuranceInstitutionComponent from '../SocialInsuranceInstitutionComponent.svelte';
+    import LabelTextfieldToggle from '../LabelTextfieldToggle.svelte';
 
-    export let person: GenericPerson | Client;
+    export let person: GenericPersonDto | ClientDto;
     export let childMode = false;
+    export let edit: boolean;
 </script>
 
 <LayoutGrid style="padding-bottom: 3rem;">
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.firstName} label={$l.personal.firstName}/>
+        <LabelTextfieldToggle {edit} bind:value={person.firstName} label={$l.personal.firstName} />
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.lastName} label={$l.personal.lastName}/>
+        <LabelTextfieldToggle {edit} bind:value={person.lastName} label={$l.personal.lastName}/>
     </Cell>
     {#if !childMode}
         <Cell span={12}>
-            <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.email} label={$l.personal.email}/>
+            <LabelTextfieldToggle {edit} bind:value={person.email} label={$l.personal.email}/>
         </Cell>
     {/if}
     <Cell span={6}>
         <div class="radio-container">
             <FormField>
-                <Radio bind:group={person.gender} value="m" touch />
+                <Radio bind:group={person.gender} value="m" touch disabled={!edit}/>
                 <span slot="label">{$l.personal.gender.male}</span>
             </FormField>
             <FormField>
-                <Radio bind:group={person.gender} value="f" touch />
+                <Radio bind:group={person.gender} value="f" touch disabled={!edit}/>
                 <span slot="label">{$l.personal.gender.female}</span>
             </FormField>
             <FormField>
-                <Radio bind:group={person.gender} value="x" touch />
+                <Radio bind:group={person.gender} value="x" touch disabled={!edit}/>
                 <span slot="label">{$l.personal.gender.divers}</span>
             </FormField>
         </div>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.birthday} label={$l.personal.birthday} type="date"/>
+        <LabelTextfieldToggle {edit} bind:value={person.birthday} label={$l.personal.birthday} type="date"/>
     </Cell>
     {#if !childMode}
     <Cell span={6}>
-        <CountryComponent style="width: 100%;" bind:country={person.nationality} label={$l.personal.nationality}/>
+        <CountryComponent {edit} bind:country={person.nationality} label={$l.personal.nationality}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.birthPlace} label={$l.personal.birthPlace}/>
+        <LabelTextfieldToggle {edit} bind:value={person.birthPlace} label={$l.personal.birthPlace}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.occupation} label={$l.personal.occupation}/>
+        <LabelTextfieldToggle {edit} bind:value={person.occupation} label={$l.personal.occupation}/>
     </Cell>
     <Cell span={6}>
-        <SocialInsuranceInstitutionComponent style="width: 100%;" bind:socialInsuranceInstitution={person.socialInsuranceInstitution}/>
+        <SocialInsuranceInstitutionComponent {edit} bind:socialInsuranceInstitution={person.socialInsuranceInstitution}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.title} label={$l.personal.title}/>
+        <LabelTextfieldToggle {edit} bind:value={person.title} label={$l.personal.title}/>
     </Cell>
     <Cell span={6}>
-        <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} style="width: 100%;" bind:value={person.academicDegree} label={$l.personal.degree}/>
+        <LabelTextfieldToggle {edit} bind:value={person.academicDegree} label={$l.personal.degree}/>
     </Cell>
     {/if}
 </LayoutGrid>

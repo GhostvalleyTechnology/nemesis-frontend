@@ -2,17 +2,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Partner } from './Partner';
+import type { PartnerReferenceDto } from './PartnerReferenceDto';
+import type { PartnerServiceTypeDto } from './PartnerServiceTypeDto';
 import type { PaymentFrequency } from './PaymentFrequency';
 
-export type ClientContract = {
+export type ClientContractDto = {
     id?: number;
     createdAt?: string;
-    fileName?: string;
-    fileId?: number;
     legacy?: boolean;
     contractNumber?: string;
     paymentValue?: number;
     paymentFrequency?: PaymentFrequency;
-    contractor?: Partner;
+    contractor?: PartnerReferenceDto;
+    serviceType?: PartnerServiceTypeDto;
 }

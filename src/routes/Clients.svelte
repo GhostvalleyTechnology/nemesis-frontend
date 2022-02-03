@@ -11,11 +11,11 @@
     SortValue,
   } from "@smui/data-table";
   import IconButton from "@smui/icon-button";
-  import { Client, ClientService } from "../gen";
+  import { ClientDto, ClientService } from "../gen";
 
-  let sort: keyof Client = "id";
+  let sort: keyof ClientDto = "id";
   let sortDirection: Lowercase<keyof typeof SortValue> = "ascending";
-  let items: Client[] = [];
+  let items: ClientDto[] = [];
   ClientService.list().then((clients) => (items = clients));
 
   $: filterValue = "";
