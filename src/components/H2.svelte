@@ -2,6 +2,6 @@
 <style lang="scss">
   @use "@material/typography/index" as typography;
   h2 {
-    @include typography.typography("headline4");
+    @include typography.typography("headline5");
   }
 </style>

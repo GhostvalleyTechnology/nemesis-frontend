@@ -5,25 +5,25 @@
   export let label: string;
   export let edit = false;
   export let type = "";
+  export let prefix="";
+  export let checkPattern=".*";
 </script>
 
-{#if edit}
-  <Textfield
-    input$emptyValueUndefined={true}
-    input$emptyValueNull={true}
-    {style}
-    bind:value
-    {label}
-    {type}
-  />
-{:else}
-  <Textfield
-    input$emptyValueUndefined={true}
-    input$emptyValueNull={true}
-    disabled
-    {style}
-    input$class="font-color"
-    bind:value
-    {label}
-  />
-{/if}
+<Textfield
+  bind:value
+  input$emptyValueUndefined={true}
+  input$emptyValueNull={true}
+  {prefix}
+  {style}
+  {label}
+  {type}
+  input$class={edit ? '' : 'font-color'}
+  disabled={!edit}
+  input$pattern={checkPattern}
+/>
+
+<style lang="scss">
+  /* :global(.show > .mdc-line-ripple::before) {
+    border-bottom-color: rgba(0, 0, 0, 0) !important;
+  } */
+</style>

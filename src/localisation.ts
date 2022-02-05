@@ -8,6 +8,7 @@ export type Localisation = {
     slogan: string;
     menu: Menu;
     personal: Personal;
+    contract: Contract;
     needsAssessment: NeedsAssessment;
     home: Home;
     remarks: string;
@@ -15,6 +16,18 @@ export type Localisation = {
     search: string;
     yes: string;
     no: string;
+    save: string;
+    add: string;
+    createdAt: string;
+    file: string;
+}
+
+type Contract = {
+    newContractTitle: string;
+    contractNumber: string;
+    serviceType: string;
+    legacy: string;
+
 }
 
 type GeneralPayment = {
@@ -415,7 +428,17 @@ export const en: Localisation = {
     },
     yes: 'yes',
     no: 'no',
-    search: 'Search'
+    search: 'Search',
+    save: 'Save',
+    add: 'Add',
+    contract: {
+        newContractTitle: 'New Contract',
+        contractNumber: 'Contract No.',
+        serviceType: 'Service',
+        legacy: 'Legacy Contract'
+    },
+    createdAt: 'Created at',
+    file: 'File'
 }
 
 export const de: Localisation = {
@@ -613,7 +636,17 @@ export const de: Localisation = {
     },
     yes: 'ja',
     no: 'nein',
-    search: 'Suche'
+    search: 'Suche',
+    save: 'Speichern',
+    add: 'Hinzufügen',
+    contract: {
+        newContractTitle: 'Neuer Vertrag',
+        contractNumber: 'Polizzen Nr.',
+        serviceType: 'Versicherungsgegenstand',
+        legacy: 'Altvertrag'
+    },
+    createdAt: 'Erstellungsdatum',
+    file: 'Datei'
 }
 export const l = writable(de);
 export default l;

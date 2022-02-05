@@ -19,7 +19,7 @@
   <Fab color="primary" on:click={doDispatch} {extended}>
     <Icon class="material-icons">{icon}</Icon>
     {#if extended}
-    <Label>Save</Label>
+    <Label>{label}</Label>
     {/if}
   </Fab>
 </div>

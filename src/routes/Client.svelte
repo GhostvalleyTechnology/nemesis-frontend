@@ -9,6 +9,11 @@
     import PersonalComponent from "../components/client/PersonalComponent.svelte";
     import FormContainer from "../components/FormContainer.svelte";
     import Legal from "../components/client/Legal.svelte";
+    import Contracts from "../components/client/Contracts.svelte";
+    import FloatingActionButton from "../components/FloatingActionButton.svelte";
+    import l from "../localisation";
+    import Contract from "../components/client/Contract.svelte";
+    import { ContractRoute } from "../components/client/ContractRouteType";
     export let id: string;
     let client: ClientDto = {proofOfIdentities:[]};
     let newClient = !isNumeric(id);
@@ -18,23 +23,23 @@
 
     let tabs = [
         {
+            id: "personal",
             icon: "person",
             label: "Personal",
         },
         {
+            id: "legal",
             icon: "account_balance",
             label: "Legal",
         },
         {
+            id: "contracts",
             icon: "file_present",
-            label: "Documents",
+            label: "Verträge",
         },
     ];
     let active = tabs[0];
 
-    function uploadDocument() {
-        alert("upload");
-    }
     function save() {
         if (newClient) {
             ClientService.add(client);
@@ -42,11 +47,14 @@
             ClientService.update(client);
         }
     }
-    let edit = true;
+    let edit = false;
+    let selectedContract: ContractRoute;
+    $: if (active.id !== 'contracts') {
+        selectedContract = {
+        id: 0, edit: false, add: false
+        }
+    }
 </script>
-
-<pre>{JSON.stringify(client)}</pre>
-
 <FormContainer>
     <TabBar {tabs} let:tab bind:active>
         <Tab {tab}>
@@ -56,30 +64,19 @@
     </TabBar>
 
     <div class="container">
-        {#if active.label == "Personal"}
+        {#if active.id == "personal"}
             <PersonalComponent bind:client bind:edit />
-        {:else if active.label == "Legal"}
+            <FloatingActionButton on:click={save} icon='save' label={$l.save} />
+        {:else if active.id == "legal"}
             <Legal bind:client bind:edit />
-        {:else if active.label == "Documents"}
-            <!-- <Client_Documents {client} /> -->
-        {/if}
-    </div>
-
-    <div class="button-container">
-        {#if active.label == "Personal" || active.label == "Legal"}
-            <Fab color="primary" on:click={() => save()} extended>
-                <Icon class="material-icons">save</Icon>
-                <Label>Save</Label>
-            </Fab>
-        {:else if active.label == "Documents"}
-            <Fab
-                color="primary"
-                on:click={() => navigate("/documents/add/" + client.id)}
-                extended
-            >
-                <Icon class="material-icons">add</Icon>
-                <Label>Add</Label>
-            </Fab>
+            <FloatingActionButton on:click={save} icon='save' label={$l.save} />
+        {:else if active.id == "contracts"}
+            {#if !selectedContract.add && !selectedContract.edit }
+            <Contracts bind:client bind:selectedContract/>
+            <FloatingActionButton on:click={() => {selectedContract.add = true; selectedContract.edit = false}} icon='add' label={$l.add}/>
+            {:else}
+            <Contract bind:client edit={true} bind:selectedContract/>
+            {/if}
         {/if}
     </div>
 </FormContainer>
@@ -92,11 +89,6 @@
         white-space: -pre-wrap;      /* Opera 4-6 */
         white-space: -o-pre-wrap;    /* Opera 7 */
         word-wrap: break-word;       /* Internet Explorer 5.5+ */
-    }
-    .button-container {
-        display: flex;
-        justify-content: flex-end;
-        margin: 1rem;
     }
 
     .container {

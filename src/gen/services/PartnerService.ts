@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { PartnerDto } from '../models/PartnerDto';
+import type { PartnerReferenceDto } from '../models/PartnerReferenceDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -38,10 +39,10 @@ partnerId: number,
     }
 
     /**
-     * @returns PartnerDto OK
+     * @returns PartnerReferenceDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<PartnerDto>> {
+    public static list(): CancelablePromise<Array<PartnerReferenceDto>> {
         return __request({
             method: 'GET',
             path: `/api/partner/list`,

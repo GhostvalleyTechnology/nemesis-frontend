@@ -14,9 +14,9 @@
 
 <div class="container">
   <div class="content">
-    <Paper elevation={6}>
+    <!-- <Paper elevation={6}> -->
       <slot/>
-    </Paper>
+    <!-- </Paper> -->
   </div>
   {#if showIcon}
     <div class="icon-button">

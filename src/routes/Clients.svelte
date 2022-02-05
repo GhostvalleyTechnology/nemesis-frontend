@@ -12,11 +12,20 @@
   } from "@smui/data-table";
   import IconButton from "@smui/icon-button";
   import { ClientDto, ClientService } from "../gen";
+  import { admin } from "../stores";
 
   let sort: keyof ClientDto = "id";
   let sortDirection: Lowercase<keyof typeof SortValue> = "ascending";
   let items: ClientDto[] = [];
-  ClientService.list().then((clients) => (items = clients));
+
+  let adminMode = false;
+  admin.subscribe(value => adminMode = value);
+  
+  $: if(adminMode) {
+    ClientService.listAll().then((clients) => (items = clients));
+  } else {
+    ClientService.list().then((clients) => (items = clients));
+  }
 
   $: filterValue = "";
   $: filtered = items.filter(
@@ -59,6 +68,12 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
         <Label>ID</Label>
       </Cell>
+      {#if adminMode}
+      <Cell columnId="supervisor">
+        <Label>Mitarbeiter</Label>
+        <IconButton class="material-icons">arrow_upward</IconButton>
+      </Cell>
+      {/if}
       <Cell columnId="fullName" style="width: 100%;">
         <Label>Name</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
@@ -81,6 +96,9 @@
     {#each filtered as item (item.id)}
       <Row on:click={() => navigate("client/" + item.id)}>
         <Cell numeric>{item.id}</Cell>
+        {#if adminMode}
+        <Cell>{item.supervisor}</Cell>
+        {/if}
         <Cell>{item.firstName} {item.lastName}</Cell>
         <Cell>{item.email}</Cell>
         <Cell>{item.zipCode}</Cell>

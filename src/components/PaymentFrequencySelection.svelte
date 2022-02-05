@@ -2,9 +2,8 @@
     import l from '../localisation';
     import Select, { Option } from '@smui/select';
     import { PaymentFrequency } from '../gen'
-
     export let paymentFrequency: PaymentFrequency;
-    export let style = "";
+    export let style = "width: 100%";
 </script>
 <Select bind:value={paymentFrequency} {style} label={$l.payment.paymentFrequency}>
     <Option value=""></Option>

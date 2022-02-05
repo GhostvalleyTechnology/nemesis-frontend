@@ -22,75 +22,40 @@
         "operationId" : "add",
         "requestBody" : {
           "content" : {
-            "multipart/form-data" : {
+            "application/json" : {
               "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "file" : {
-                    "format" : "binary",
-                    "type" : "string"
-                  },
-                  "fileName" : {
-                    "type" : "string"
-                  },
-                  "fileExtension" : {
-                    "type" : "string"
-                  },
-                  "clientId" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  },
-                  "legacy" : {
-                    "type" : "boolean"
-                  },
-                  "contractNumber" : {
-                    "type" : "string"
-                  },
-                  "paymentValue" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  },
-                  "paymentFrequency" : {
-                    "$ref" : "#/components/schemas/PaymentFrequency"
-                  },
-                  "contractorId" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  }
-                }
-              },
-              "encoding" : {
-                "fileName" : {
-                  "contentType" : "text/plain"
-                },
-                "paymentValue" : {
-                  "contentType" : "text/plain"
-                },
-                "file" : {
-                  "contentType" : "application/octet-stream"
-                },
-                "clientId" : {
-                  "contentType" : "text/plain"
-                },
-                "legacy" : {
-                  "contentType" : "text/plain"
-                },
-                "fileExtension" : {
-                  "contentType" : "text/plain"
-                },
-                "contractorId" : {
-                  "contentType" : "text/plain"
-                },
-                "contractNumber" : {
-                  "contentType" : "text/plain"
-                },
-                "paymentFrequency" : {
-                  "contentType" : "text/plain"
-                }
+                "$ref" : "#/components/schemas/ClientContractDto"
               }
             }
           }
         },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClientContractDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/client-contract/delete/{id}" : {
+      "delete" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
@@ -121,6 +86,76 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/client-contract/update" : {
+      "post" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "update",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ClientContractDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client-contract/upload" : {
+      "post" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "upload",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  },
+                  "fileName" : {
+                    "type" : "string"
+                  },
+                  "fileExtension" : {
+                    "type" : "string"
+                  },
+                  "clientContractId" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  }
+                }
+              },
+              "encoding" : {
+                "fileName" : {
+                  "contentType" : "text/plain"
+                },
+                "file" : {
+                  "contentType" : "application/octet-stream"
+                },
+                "fileExtension" : {
+                  "contentType" : "text/plain"
+                },
+                "clientContractId" : {
+                  "contentType" : "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
           }
         }
       }
@@ -509,7 +544,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/PartnerDto"
+                    "$ref" : "#/components/schemas/PartnerReferenceDto"
                   }
                 }
               }
@@ -779,6 +814,10 @@
             "format" : "date-time",
             "type" : "string"
           },
+          "clientId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
           "legacy" : {
             "type" : "boolean"
           },
@@ -797,6 +836,10 @@
           },
           "serviceType" : {
             "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+          },
+          "fileId" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         }
       },
@@ -1141,6 +1184,12 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "services" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+            }
           }
         }
       },

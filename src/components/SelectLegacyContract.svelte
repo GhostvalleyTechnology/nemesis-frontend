@@ -1,15 +1,15 @@
 <script lang="ts">
     import { ClientContractDto } from '../gen'
     import ContractorSelection from './ContractorSelection.svelte';
-    import PaymentFrequencyComponent from './PaymentFrequencyComponent.svelte';
+    import PaymentFrequencyComponent from './PaymentFrequencySelection.svelte';
     import EuroTextfield from './EuroTextfield.svelte';
 
     export let contract: ClientContractDto;
 </script>
 <div class="container">
-    <EuroTextfield bind:integer={contract.paymentValue} style="width: 100%"/>
-    <PaymentFrequencyComponent bind:paymentFrequency={contract.paymentFrequency} style="width: 100%"/>
-    <ContractorSelection bind:partner={contract.contractor} style="width: 100%"/>
+    <EuroTextfield bind:integer={contract.paymentValue} edit={true}/>
+    <PaymentFrequencyComponent bind:paymentFrequency={contract.paymentFrequency}/>
+    <ContractorSelection bind:partner={contract.contractor} edit={true}/>
 </div>
 
 <style lang="scss">

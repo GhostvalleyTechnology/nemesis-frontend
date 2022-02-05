@@ -11,6 +11,7 @@
   import PartnerContact from "../components/partner/PartnerContact.svelte";
   import PartnerLogin from "../components/partner/PartnerLogin.svelte";
   import PartnerServiceComponent from "../components/partner/PartnerService.svelte";
+import Group from "../components/Group.svelte";
 
   export let id: string;
   let edit = false;
@@ -55,13 +56,19 @@
       <LabelTextfieldToggle bind:value={partner.bic} label="BIC" {edit}/>
     </Cell>
     <Cell span={12}>
-      <PartnerContact bind:dtos={partner.contacts} {edit}/>
+      <Group>
+        <PartnerContact bind:dtos={partner.contacts} {edit}/>
+      </Group>
     </Cell>
     <Cell span={12}>
-      <PartnerLogin bind:dtos={partner.logins} {edit}/>
+      <Group>
+        <PartnerLogin bind:dtos={partner.logins} {edit}/>
+      </Group>
     </Cell>
     <Cell span={12}>
-      <PartnerServiceComponent bind:dtos={partner.services} {edit}/>
+      <Group>
+        <PartnerServiceComponent bind:dtos={partner.services} {edit}/>
+      </Group>
     </Cell>
   </LayoutGrid>
  
