@@ -35,8 +35,6 @@
         }
     }
 </script>
-
-<pre>{value} / {integer}</pre>
 <LabelTextfieldToggle
     prefix="€"
     bind:value
