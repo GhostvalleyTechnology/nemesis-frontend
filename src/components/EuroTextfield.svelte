@@ -5,7 +5,12 @@
     export let style = "width:100%";
     export let edit: boolean;
     export let integer: number;
-    let value = integer ? integer.toString() : "";
+    let value = "";
+    if(integer) {
+        let temp = integer.toString()
+        temp = temp.substring(0, temp.length-2) + ',' + temp.substring(temp.length-2, temp.length)
+        value = temp;
+    }
 
     $: if (value) {
         integer = parse(value);
@@ -31,6 +36,7 @@
     }
 </script>
 
+<pre>{value} / {integer}</pre>
 <LabelTextfieldToggle
     prefix="€"
     bind:value
