@@ -14,9 +14,17 @@
     import l from "../localisation";
     import Contract from "../components/client/Contract.svelte";
     import { ContractRoute } from "../components/client/ContractRouteType";
-import Documents from "../components/client/Documents.svelte";
+    import Documents from "../components/client/Documents.svelte";
     export let id: string;
-    let client: ClientDto = {proofOfIdentities:[]};
+    let client: ClientDto = {
+        partner: {},
+        pets: false,
+        smoker: false,
+        militaryServiceDone: false,
+        proofOfIdentities:[], 
+        documents:[], 
+        contracts:[]
+    };
     let newClient = !isNumeric(id);
     if(!newClient) {
         ClientService.get(+id).then((response) => (client = response));
