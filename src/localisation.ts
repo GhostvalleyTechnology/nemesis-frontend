@@ -17,6 +17,7 @@ export type Localisation = {
     yes: string;
     no: string;
     save: string;
+    edit: string;
     add: string;
     createdAt: string;
     file: string;
@@ -430,6 +431,7 @@ export const en: Localisation = {
     no: 'no',
     search: 'Search',
     save: 'Save',
+    edit: 'Edit',
     add: 'Add',
     contract: {
         newContractTitle: 'New Contract',
@@ -638,6 +640,7 @@ export const de: Localisation = {
     no: 'nein',
     search: 'Suche',
     save: 'Speichern',
+    edit: 'Ändern',
     add: 'Hinzufügen',
     contract: {
         newContractTitle: 'Neuer Vertrag',

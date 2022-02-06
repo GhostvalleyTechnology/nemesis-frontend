@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import type { ClientContractDto } from './ClientContractDto';
+import type { ClientDocumentDto } from './ClientDocumentDto';
 import type { Country } from './Country';
 import type { Gender } from './Gender';
 import type { GenericPersonDto } from './GenericPersonDto';
@@ -43,5 +44,6 @@ export type ClientDto = {
     partner?: GenericPersonDto;
     children?: Array<GenericPersonDto>;
     contracts?: Array<ClientContractDto>;
+    documents?: Array<ClientDocumentDto>;
     proofOfIdentities?: Array<ProofOfIdentityDto>;
 }

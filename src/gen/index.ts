@@ -6,6 +6,7 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 
 export type { ClientContractDto } from './models/ClientContractDto';
+export type { ClientDocumentDto } from './models/ClientDocumentDto';
 export type { ClientDto } from './models/ClientDto';
 export { Country } from './models/Country';
 export type { EmployeeDto } from './models/EmployeeDto';
@@ -25,6 +26,7 @@ export type { TemplateDto } from './models/TemplateDto';
 
 export { AdminService } from './services/AdminService';
 export { ClientContractService } from './services/ClientContractService';
+export { ClientDocumentService } from './services/ClientDocumentService';
 export { ClientService } from './services/ClientService';
 export { EmployeeService } from './services/EmployeeService';
 export { ExampleResource } from './services/ExampleResource';

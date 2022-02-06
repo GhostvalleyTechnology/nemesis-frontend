@@ -2,7 +2,7 @@
 	import { OpenAPI, UserService } from "./gen"
 	// @ts-ignore
 	let production: boolean = app_run_mode_production;
-	OpenAPI.BASE = production ? "/" : "http://localhost:8080"
+	OpenAPI.BASE = production ? window.location.origin : "http://localhost:8080"
 	OpenAPI.HEADERS = {
 		'Accept': '*/*'
 	}
@@ -22,7 +22,7 @@
 	import Employee from "./routes/Employee.svelte";
 	import Button, { Label } from '@smui/button';
 	import IconButton from "@smui/icon-button";
-	import { Router, links, Route } from "svelte-routing";
+	import { Router, links, Route, navigate } from "svelte-routing";
 	import Drawer, {
 		AppContent,
 		Content,
@@ -37,7 +37,7 @@
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
 	function logout() {
-		alert("logout");
+		navigate("/logout");
 	}
 
 	let language: string = getLanguageButtonText();

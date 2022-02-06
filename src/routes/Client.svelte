@@ -14,6 +14,7 @@
     import l from "../localisation";
     import Contract from "../components/client/Contract.svelte";
     import { ContractRoute } from "../components/client/ContractRouteType";
+import Documents from "../components/client/Documents.svelte";
     export let id: string;
     let client: ClientDto = {proofOfIdentities:[]};
     let newClient = !isNumeric(id);
@@ -37,6 +38,11 @@
             icon: "file_present",
             label: "Verträge",
         },
+        {
+            id: "documents",
+            icon: "article",
+            label: "Dokumente",
+        },
     ];
     let active = tabs[0];
 
@@ -46,6 +52,7 @@
         } else {
             ClientService.update(client);
         }
+        edit = !edit;
     }
     let edit = false;
     let selectedContract: ContractRoute;
@@ -66,10 +73,8 @@
     <div class="container">
         {#if active.id == "personal"}
             <PersonalComponent bind:client bind:edit />
-            <FloatingActionButton on:click={save} icon='save' label={$l.save} />
         {:else if active.id == "legal"}
             <Legal bind:client bind:edit />
-            <FloatingActionButton on:click={save} icon='save' label={$l.save} />
         {:else if active.id == "contracts"}
             {#if !selectedContract.add && !selectedContract.edit }
             <Contracts bind:client bind:selectedContract/>
@@ -77,8 +82,17 @@
             {:else}
             <Contract bind:client edit={true} bind:selectedContract/>
             {/if}
+        {:else if active.id == "documents"}
+            <Documents bind:client />
         {/if}
     </div>
+    {#if active.id != "contracts" && active.id != "documents"}
+        {#if !edit } 
+        <FloatingActionButton on:click={() => edit = !edit} icon='edit' label={$l.edit} />
+        {:else}
+        <FloatingActionButton on:click={save} icon='save' label={$l.save} />
+        {/if}
+    {/if}
 </FormContainer>
 
 <style>

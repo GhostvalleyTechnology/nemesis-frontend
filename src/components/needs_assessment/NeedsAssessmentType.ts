@@ -50,7 +50,6 @@ type HomeOwnershipType = {
 
 export type InsuranceType = {
   clientHas: boolean;
-  
 }
 
 type LegalType = {
@@ -69,12 +68,15 @@ const newNeedsAssessment: NeedsAssessmentType = {
   insurances: {
     accidentInsurance: {
       clientHas: false,
+      contractor: {},
     },
     disabilityInsurance: {
       clientHas: false,
+      contractor: {},
     },
     homeInsurance: {
       clientHas: false,
+      contractor: {},
       homeOwnership: false,
       home: {
         builtArea: '',
@@ -91,15 +93,19 @@ const newNeedsAssessment: NeedsAssessmentType = {
     },
     legalProtectionInsurance: {
       clientHas: false,
+      contractor: {},
     },
     deathInsurance: {
       clientHas: false,
+      contractor: {},
     },
     illnessInsurance: {
       clientHas: false,
+      contractor: {},
     },
     retirementInsurance: {
       clientHas: false,
+      contractor: {},
     },
     careRemarks: '',
   },
