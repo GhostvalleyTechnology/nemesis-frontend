@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CloudFileDto } from './CloudFileDto';
+
 export type TemplateDto = {
     id?: number;
     createdAt?: string;
     adminOnly?: boolean;
-    fileName?: string;
+    file?: CloudFileDto;
 }

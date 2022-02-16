@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ClientContractDto } from '../models/ClientContractDto';
-import type { FileDto } from '../models/FileDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -40,15 +39,29 @@ id: number,
 
     /**
      * @param contractId 
-     * @returns FileDto OK
+     * @returns any OK
      * @throws ApiError
      */
-    public static get(
+    public static getPolicyRequest(
 contractId: number,
-): CancelablePromise<FileDto> {
+): CancelablePromise<any> {
         return __request({
             method: 'GET',
-            path: `/api/client-contract/get/${contractId}`,
+            path: `/api/client-contract/get-policy-request/${contractId}`,
+        });
+    }
+
+    /**
+     * @param contractId 
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static getPolicy(
+contractId: number,
+): CancelablePromise<any> {
+        return __request({
+            method: 'GET',
+            path: `/api/client-contract/get-policy/${contractId}`,
         });
     }
 
@@ -73,7 +86,7 @@ requestBody?: ClientContractDto,
      * @returns any OK
      * @throws ApiError
      */
-    public static upload(
+    public static uploadPolicy(
 formData?: {
 file?: Blob;
 fileName?: string;
@@ -83,7 +96,28 @@ clientContractId?: number;
 ): CancelablePromise<any> {
         return __request({
             method: 'POST',
-            path: `/api/client-contract/upload`,
+            path: `/api/client-contract/upload-policy`,
+            formData: formData,
+            mediaType: 'multipart/form-data',
+        });
+    }
+
+    /**
+     * @param formData 
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static uploadPolicyRequest(
+formData?: {
+file?: Blob;
+fileName?: string;
+fileExtension?: string;
+clientContractId?: number;
+},
+): CancelablePromise<any> {
+        return __request({
+            method: 'POST',
+            path: `/api/client-contract/upload-policy-request`,
             formData: formData,
             mediaType: 'multipart/form-data',
         });

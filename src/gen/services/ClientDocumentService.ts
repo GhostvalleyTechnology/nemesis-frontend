@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ClientDocumentDto } from '../models/ClientDocumentDto';
-import type { FileDto } from '../models/FileDto';
+import type { ClientDocumentType } from '../models/ClientDocumentType';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -24,12 +24,12 @@ id: number,
 
     /**
      * @param id 
-     * @returns FileDto OK
+     * @returns any OK
      * @throws ApiError
      */
     public static get(
 id: number,
-): CancelablePromise<FileDto> {
+): CancelablePromise<any> {
         return __request({
             method: 'GET',
             path: `/api/client-document/get/${id}`,
@@ -47,6 +47,7 @@ file?: Blob;
 fileName?: string;
 fileExtension?: string;
 clientId?: number;
+type?: ClientDocumentType;
 },
 ): CancelablePromise<ClientDocumentDto> {
         return __request({

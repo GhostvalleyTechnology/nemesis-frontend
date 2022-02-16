@@ -16,28 +16,20 @@
   import LabelTextfieldToggle from "../LabelTextfieldToggle.svelte";
   import Group from "../Group.svelte";
   import Searchbar from "../Searchbar.svelte";
-  import {open} from "../OpenFile";
+  import { open } from "../OpenFile";
+  import { sortFunction } from "../../routes/sort";
+  import FileUpload from "../FileUpload.svelte";
 
   export let client: ClientDto;
+  let fileUpload: FileUpload;
+
   let valueTypeFiles: FileList | null = null;
   let fileName = "";
 
-  let sort: keyof ClientDocumentDto = 'fileName';
+  let sort: keyof ClientDocumentDto = 'id';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
   $: filterValue = "";
-  $: filtered = client.documents.filter((s) => s.fileName.includes(filterValue));
-  function handleSort() {
-    client.documents.sort((a, b) => {
-      const [aVal, bVal] = [a[sort], b[sort]][
-        sortDirection === 'ascending' ? 'slice' : 'reverse'
-      ]();
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return aVal.localeCompare(bVal);
-      }
-      return Number(aVal) - Number(bVal);
-    });
-    client.documents = client.documents;
-  }
+  $: filtered = client.documents.filter((s) => s.file.fileName.includes(filterValue));
 
   function removeDocument(doc: ClientDocumentDto) {
     let id = doc.id;
@@ -48,30 +40,34 @@
     });
   }
 
-  function addDocument() {
-    if(fileName !== undefined && fileName !== null && fileName.length > 0 &&
-      valueTypeFiles !== undefined && valueTypeFiles !== null && valueTypeFiles.length > 0) {
-        ClientDocumentService.upload({
-          clientId: client.id,
-          file: valueTypeFiles.item(0),
-          fileExtension: valueTypeFiles.item(0).type,
-          fileName: fileName,
-        }).then(response => {
-          let doc: ClientDocumentDto = {
-            id: response.id,
-            fileName: response.fileName,
-            createdAt: 'gerade eben'
-          }
-          let temp = client.documents;
-          temp.push(doc);
-          client.documents = temp;
-        });
-    }
+  function addDocument(e: CustomEvent<{file: File}>) {
+    ClientDocumentService.upload({
+      clientId: client.id,
+      file: e.detail.file,
+      fileExtension: e.detail.file.type,
+      fileName: e.detail.file.name,
+    }).then(response => {
+      let doc: ClientDocumentDto = {
+        id: response.id,
+        createdAt: 'gerade eben',
+        file: {
+          fileName: response.file.fileName,
+          objectName: response.file.objectName,
+          fileExtension: response.file.fileExtension
+        }
+      }
+      let temp = client.documents;
+      temp.push(doc);
+      client.documents = temp;
+    });
   }
 
   function openDocument(doc: ClientDocumentDto) {
     ClientDocumentService.get(doc.id).then(response => open(response));
   }
+
+  
+  
 </script>
 
 <Searchbar bind:value={filterValue} />
@@ -80,7 +76,7 @@
   sortable
   bind:sort
   bind:sortDirection
-  on:MDCDataTable:sorted={handleSort}
+  on:MDCDataTable:sorted={() => sortFunction(client.documents, sort, sortDirection)}
   table$aria-label="Template list"
   style="width: 100%;"
 >
@@ -102,7 +98,7 @@
   <Body>
     {#each filtered as doc}
       <Row>
-        <Cell on:click={() => openDocument(doc)}>{doc.fileName}</Cell>
+        <Cell on:click={() => openDocument(doc)}>{doc.file.fileName}</Cell>
         <Cell on:click={() => openDocument(doc)}>{doc.createdAt}</Cell>
         <Cell on:click={() => removeDocument(doc)}>
             <Icon class="material-icons">close</Icon>
@@ -115,9 +111,7 @@
 <div class="footer">
   <Group>
   <div class="input-container">
-    <Textfield bind:files={valueTypeFiles} label={$l.file} type="file"/>
-    <LabelTextfieldToggle bind:value={fileName} edit={true} label="Name"/>
-    <FloatingActionButton on:click={addDocument} icon='add' label={$l.add} float={false}/>
+    <FileUpload bind:this={fileUpload} on:submit={addDocument} />
   </div>
   </Group>
 </div>

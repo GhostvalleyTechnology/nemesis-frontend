@@ -63,10 +63,10 @@
         }
       }
     },
-    "/api/client-contract/get/{contractId}" : {
+    "/api/client-contract/get-policy-request/{contractId}" : {
       "get" : {
         "tags" : [ "Client Contract Service" ],
-        "operationId" : "get",
+        "operationId" : "getPolicyRequest",
         "parameters" : [ {
           "name" : "contractId",
           "in" : "path",
@@ -78,14 +78,27 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/FileDto"
-                }
-              }
-            }
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client-contract/get-policy/{contractId}" : {
+      "get" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "getPolicy",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
           }
         }
       }
@@ -110,10 +123,60 @@
         }
       }
     },
-    "/api/client-contract/upload" : {
+    "/api/client-contract/upload-policy" : {
       "post" : {
         "tags" : [ "Client Contract Service" ],
-        "operationId" : "upload",
+        "operationId" : "uploadPolicy",
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  },
+                  "fileName" : {
+                    "type" : "string"
+                  },
+                  "fileExtension" : {
+                    "type" : "string"
+                  },
+                  "clientContractId" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  }
+                }
+              },
+              "encoding" : {
+                "fileName" : {
+                  "contentType" : "text/plain"
+                },
+                "file" : {
+                  "contentType" : "application/octet-stream"
+                },
+                "fileExtension" : {
+                  "contentType" : "text/plain"
+                },
+                "clientContractId" : {
+                  "contentType" : "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/client-contract/upload-policy-request" : {
+      "post" : {
+        "tags" : [ "Client Contract Service" ],
+        "operationId" : "uploadPolicyRequest",
         "requestBody" : {
           "content" : {
             "multipart/form-data" : {
@@ -195,14 +258,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/FileDto"
-                }
-              }
-            }
+            "description" : "OK"
           }
         }
       }
@@ -230,6 +286,9 @@
                   "clientId" : {
                     "format" : "int64",
                     "type" : "integer"
+                  },
+                  "type" : {
+                    "$ref" : "#/components/schemas/ClientDocumentType"
                   }
                 }
               },
@@ -244,6 +303,9 @@
                   "contentType" : "text/plain"
                 },
                 "fileExtension" : {
+                  "contentType" : "text/plain"
+                },
+                "type" : {
                   "contentType" : "text/plain"
                 }
               }
@@ -775,14 +837,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/FileDto"
-                }
-              }
-            }
+            "description" : "OK"
           }
         }
       }
@@ -871,14 +926,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/FileDto"
-                }
-              }
-            }
+            "description" : "OK"
           }
         }
       }
@@ -900,6 +948,26 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/template/update" : {
+      "post" : {
+        "tags" : [ "Template Service" ],
+        "operationId" : "update",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TemplateDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
           }
         }
       }
@@ -941,9 +1009,11 @@
           "serviceType" : {
             "$ref" : "#/components/schemas/PartnerServiceTypeDto"
           },
-          "fileId" : {
-            "format" : "int64",
-            "type" : "integer"
+          "policyRequest" : {
+            "$ref" : "#/components/schemas/CloudFileDto"
+          },
+          "policy" : {
+            "$ref" : "#/components/schemas/CloudFileDto"
           }
         }
       },
@@ -958,10 +1028,17 @@
             "format" : "date-time",
             "type" : "string"
           },
-          "fileName" : {
-            "type" : "string"
+          "type" : {
+            "$ref" : "#/components/schemas/ClientDocumentType"
+          },
+          "file" : {
+            "$ref" : "#/components/schemas/CloudFileDto"
           }
         }
+      },
+      "ClientDocumentType" : {
+        "enum" : [ "annualService", "generic", "policyService" ],
+        "type" : "string"
       },
       "ClientDto" : {
         "type" : "object",
@@ -1088,6 +1165,20 @@
           }
         }
       },
+      "CloudFileDto" : {
+        "type" : "object",
+        "properties" : {
+          "objectName" : {
+            "type" : "string"
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "fileExtension" : {
+            "type" : "string"
+          }
+        }
+      },
       "Country" : {
         "enum" : [ "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS", "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CW", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK", "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", "SX", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW" ],
         "type" : "string"
@@ -1111,20 +1202,6 @@
           },
           "admin" : {
             "type" : "boolean"
-          }
-        }
-      },
-      "FileDto" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "extension" : {
-            "type" : "string"
-          },
-          "data" : {
-            "type" : "string"
           }
         }
       },
@@ -1240,6 +1317,12 @@
           "name" : {
             "type" : "string"
           },
+          "services" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerServiceTypeDto"
+            }
+          },
           "website" : {
             "type" : "string"
           },
@@ -1251,12 +1334,6 @@
           },
           "bic" : {
             "type" : "string"
-          },
-          "services" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/PartnerServiceTypeDto"
-            }
           },
           "logins" : {
             "type" : "array",
@@ -1353,8 +1430,8 @@
           "type" : {
             "$ref" : "#/components/schemas/ProofOfIdentityType"
           },
-          "fileName" : {
-            "type" : "string"
+          "file" : {
+            "$ref" : "#/components/schemas/CloudFileDto"
           }
         }
       },
@@ -1376,8 +1453,8 @@
           "adminOnly" : {
             "type" : "boolean"
           },
-          "fileName" : {
-            "type" : "string"
+          "file" : {
+            "$ref" : "#/components/schemas/CloudFileDto"
           }
         }
       }

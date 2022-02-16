@@ -1,40 +1,33 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import Textfield from '@smui/textfield';
   import Checkbox from '@smui/checkbox';
   import FormField from '@smui/form-field';
   import Paper from '@smui/paper';
   import Fab, { Label, Icon } from '@smui/fab';
   import { TemplateService } from '../gen';
-
-  let file: Blob;
-  let fileName: string = '';
+  import H1 from '../components/H1.svelte'
+  import FileUpload from "../components/FileUpload.svelte";
+  let fileUpload: FileUpload;
   let adminOnly: boolean = false;
 
-  function save() {
+  function save(e: CustomEvent<{file: File}>) {
     TemplateService.add({
-      file,
-      fileName,
+      file: e.detail.file,
+      fileName: e.detail.file.name,
+      fileExtension: e.detail.file.type,
       adminOnly
     }).then(() => navigate('/templates')).catch();
   }
 
-  let valueTypeFiles: FileList | null = null;
-  $: if (valueTypeFiles != null && valueTypeFiles.length) {
-    file = valueTypeFiles.item(0);
-  }
 </script>
 
 <div class="form-container">
   <Paper elevation={6}>
-      <h1>Template Upload</h1>
+      <H1>Template Upload</H1>
       <LayoutGrid style="padding-bottom: 3rem;">
           <Cell span={12}>
-              <Textfield style="width: 100%;" bind:value={fileName} label="Name"/>
-          </Cell>
-          <Cell span={12}>
-            <Textfield bind:files={valueTypeFiles} label="File" type="file"/>
+            <FileUpload bind:this={fileUpload} on:submit={save}/>
           </Cell>
           <Cell span={12} align="middle">
               <FormField>
@@ -44,7 +37,7 @@
           </Cell>
       </LayoutGrid>
       <div class="button-container">
-          <Fab color="primary" on:click={() => save()} extended>
+          <Fab color="primary" on:click={() => fileUpload.trigger()} extended>
               <Icon class="material-icons">save</Icon>
               <Label>Save</Label>
           </Fab>
@@ -53,11 +46,6 @@
   </Paper>
   </div>
   <style lang="scss">
-      @use '@material/typography/index' as typography;
-      h1 {
-          @include typography.typography('headline3');
-          text-align: center;
-      }
   
       .form-container {
           max-width: 1000px;

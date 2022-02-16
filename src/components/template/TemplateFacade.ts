@@ -33,7 +33,7 @@ export async function list(): Promise<TemplateFacade[]> {
 
 function handleResult(response: import("../../gen").TemplateDto[]): TemplateFacade[] {
     return response.map(template => { return {
-        name: template.fileName,
+        name: template.file.fileName,
         id: template.id,
         type: TemplateType.file,
         adminOnly: template.adminOnly

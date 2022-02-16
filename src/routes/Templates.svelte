@@ -14,33 +14,23 @@
   import AdminGuard from '../components/AdminGuard.svelte';
   import Searchbar from "../components/Searchbar.svelte";
   import FloatingActionButton from "../components/FloatingActionButton.svelte";
+import { sortFunction } from "./sort";
+import { TemplateService } from "../gen";
 
   let sort: keyof TemplateFacade = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
 
   let items: TemplateFacade[] = [];
-  listTemplates().then(result => {items = result; handleSort()});
+  listTemplates().then(result => {items = result; sortFunction(items, sort, sortDirection)});
   $: filterValue = "";
   $: filtered = items.filter((s) => s.name.includes(filterValue));
-
-  function handleSort() {
-    items.sort((a, b) => {
-      const [aVal, bVal] = [a[sort], b[sort]][
-        sortDirection === 'ascending' ? 'slice' : 'reverse'
-      ]();
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return aVal.localeCompare(bVal);
-      }
-      return Number(aVal) - Number(bVal);
-    });
-    items = items;
-  }
 
   function openTemplate(item: TemplateFacade) {
     if(item.type == TemplateType.page) {
       navigate(item.path)
     } else {
-      openFile(item);
+      TemplateService.get(item.id)
+        .then(response => window.open(response));
     }
   }
 </script>
@@ -54,7 +44,7 @@
   sortable
   bind:sort
   bind:sortDirection
-  on:MDCDataTable:sorted={handleSort}
+  on:MDCDataTable:sorted={() => sortFunction(items, sort, sortDirection)}
   table$aria-label="Template list"
   style="width: 100%;"
 >

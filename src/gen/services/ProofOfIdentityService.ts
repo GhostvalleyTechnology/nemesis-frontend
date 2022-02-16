@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FileDto } from '../models/FileDto';
 import type { ProofOfIdentityDto } from '../models/ProofOfIdentityDto';
 import type { ProofOfIdentityType } from '../models/ProofOfIdentityType';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -47,12 +46,12 @@ id: number,
 
     /**
      * @param id 
-     * @returns FileDto OK
+     * @returns any OK
      * @throws ApiError
      */
     public static get(
 id: number,
-): CancelablePromise<FileDto> {
+): CancelablePromise<any> {
         return __request({
             method: 'GET',
             path: `/api/proof-of-identity/get/${id}`,

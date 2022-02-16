@@ -7,10 +7,11 @@ export { OpenAPI } from './core/OpenAPI';
 
 export type { ClientContractDto } from './models/ClientContractDto';
 export type { ClientDocumentDto } from './models/ClientDocumentDto';
+export { ClientDocumentType } from './models/ClientDocumentType';
 export type { ClientDto } from './models/ClientDto';
+export type { CloudFileDto } from './models/CloudFileDto';
 export { Country } from './models/Country';
 export type { EmployeeDto } from './models/EmployeeDto';
-export type { FileDto } from './models/FileDto';
 export { Gender } from './models/Gender';
 export type { GenericPersonDto } from './models/GenericPersonDto';
 export { MaritalStatus } from './models/MaritalStatus';

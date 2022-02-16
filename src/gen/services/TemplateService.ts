@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FileDto } from '../models/FileDto';
 import type { TemplateDto } from '../models/TemplateDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -45,12 +44,12 @@ templateId: number,
 
     /**
      * @param templateId 
-     * @returns FileDto OK
+     * @returns any OK
      * @throws ApiError
      */
     public static get(
 templateId: number,
-): CancelablePromise<FileDto> {
+): CancelablePromise<any> {
         return __request({
             method: 'GET',
             path: `/api/template/get/${templateId}`,
@@ -65,6 +64,22 @@ templateId: number,
         return __request({
             method: 'GET',
             path: `/api/template/list`,
+        });
+    }
+
+    /**
+     * @param requestBody 
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static update(
+requestBody?: TemplateDto,
+): CancelablePromise<any> {
+        return __request({
+            method: 'POST',
+            path: `/api/template/update`,
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

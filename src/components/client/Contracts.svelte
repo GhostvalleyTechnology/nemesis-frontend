@@ -20,12 +20,13 @@
   import { open } from "../OpenFile";
   import l from "../../localisation";
   import { ContractRoute } from "./ContractRouteType";
+  import { sortFunction } from "../../routes/sort";
 
   export let client: ClientDto;
   export let selectedContract: ContractRoute;
   $: filterValue = "";
 
-  let sort: keyof ClientContractDto = "createdAt";
+  let sort: keyof ClientContractDto = "id";
   let sortDirection: Lowercase<keyof typeof SortValue> = "ascending";
 
   $: filtered = client.contracts.filter(
@@ -35,19 +36,6 @@
       s.createdAt.includes(filterValue) ||
       s.serviceType.service.includes(filterValue)
   );
-
-  function handleSort() {
-    client.contracts.sort((a, b) => {
-      const [aVal, bVal] = [a[sort], b[sort]][
-        sortDirection === "ascending" ? "slice" : "reverse"
-      ]();
-      if (typeof aVal === "string" && typeof bVal === "string") {
-        return aVal.localeCompare(bVal);
-      }
-      return Number(aVal) - Number(bVal);
-    });
-    client.contracts = client.contracts;
-  }
 
   function hasDocument(dto: ClientContractDto): boolean {
     return dto.fileId !== undefined && dto.fileId !== null && dto.fileId > 0;
@@ -74,7 +62,7 @@
     sortable
     bind:sort
     bind:sortDirection
-    on:MDCDataTable:sorted={handleSort}
+    on:MDCDataTable:sorted={() => sortFunction(client.contracts, sort, sortDirection)}
     table$aria-label="Contract list"
     style="width: 100%;"
   >

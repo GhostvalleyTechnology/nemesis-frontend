@@ -10,11 +10,11 @@ export type PartnerDto = {
     id?: number;
     createdAt?: string;
     name?: string;
+    services?: Array<PartnerServiceTypeDto>;
     website?: string;
     bank?: string;
     iban?: string;
     bic?: string;
-    services?: Array<PartnerServiceTypeDto>;
     logins?: Array<PartnerLoginDto>;
     contacts?: Array<PartnerContactDto>;
 }

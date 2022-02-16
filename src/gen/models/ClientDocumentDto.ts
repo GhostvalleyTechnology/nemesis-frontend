@@ -2,8 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ClientDocumentType } from './ClientDocumentType';
+import type { CloudFileDto } from './CloudFileDto';
+
 export type ClientDocumentDto = {
     id?: number;
     createdAt?: string;
-    fileName?: string;
+    type?: ClientDocumentType;
+    file?: CloudFileDto;
 }

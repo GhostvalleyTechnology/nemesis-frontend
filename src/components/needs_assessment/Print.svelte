@@ -77,8 +77,8 @@
     var a = window.open('', '', 'height=500, width=500');
     a.document.write(template);
     a.document.close();
-    // a.print();
-    // a.close();
+    a.print();
+    a.close();
   }
 
   function getGender(gender?: Gender): string {

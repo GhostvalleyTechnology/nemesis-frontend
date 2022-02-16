@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CloudFileDto } from './CloudFileDto';
 import type { PartnerReferenceDto } from './PartnerReferenceDto';
 import type { PartnerServiceTypeDto } from './PartnerServiceTypeDto';
 import type { PaymentFrequency } from './PaymentFrequency';
@@ -16,5 +17,6 @@ export type ClientContractDto = {
     paymentFrequency?: PaymentFrequency;
     contractor?: PartnerReferenceDto;
     serviceType?: PartnerServiceTypeDto;
-    fileId?: number;
+    policyRequest?: CloudFileDto;
+    policy?: CloudFileDto;
 }

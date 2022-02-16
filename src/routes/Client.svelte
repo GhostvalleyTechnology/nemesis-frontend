@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { navigate } from "svelte-routing";
+    import { navigate, Route } from "svelte-routing";
     import Fab, { Label, Icon } from "@smui/fab";
     import Tab, { Icon as TabIcon, Label as TabLabel } from "@smui/tab";
     import TabBar from "@smui/tab-bar";
 
     import { ClientDto, ClientService } from "../gen";
-    import isNumeric from "../isNumeric";
     import PersonalComponent from "../components/client/PersonalComponent.svelte";
     import FormContainer from "../components/FormContainer.svelte";
     import Legal from "../components/client/Legal.svelte";
@@ -15,17 +14,11 @@
     import Contract from "../components/client/Contract.svelte";
     import { ContractRoute } from "../components/client/ContractRouteType";
     import Documents from "../components/client/Documents.svelte";
+    import { emptyClientDto } from "../service/defaults";
+
     export let id: string;
-    let client: ClientDto = {
-        partner: {},
-        pets: false,
-        smoker: false,
-        militaryServiceDone: false,
-        proofOfIdentities:[], 
-        documents:[], 
-        contracts:[]
-    };
-    let newClient = !isNumeric(id);
+    let client: ClientDto = emptyClientDto;
+    let newClient = id === 'new';
     if(!newClient) {
         ClientService.get(+id).then((response) => (client = response));
     }
