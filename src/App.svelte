@@ -1,7 +1,6 @@
 <script lang="ts">
+	import { admin, production } from "./stores";
 	import { OpenAPI, UserService } from "./gen"
-	// @ts-ignore
-	let production: boolean = app_run_mode_production;
 	OpenAPI.BASE = production ? window.location.origin : "http://localhost:8080"
 	OpenAPI.HEADERS = {
 		'Accept': '*/*'
@@ -31,8 +30,7 @@
 		Subtitle,
 	} from "@smui/drawer";
 	import List, { Item, Graphic, Separator, Text } from "@smui/list";
-	
-	import { admin } from "./stores";
+import Snackbar from "./components/Snackbar.svelte";
 
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
@@ -176,6 +174,7 @@
 			</AppContent>
 		</Router>
 	</div>
+	<Snackbar/>
 </main>
 
 <style lang="scss">

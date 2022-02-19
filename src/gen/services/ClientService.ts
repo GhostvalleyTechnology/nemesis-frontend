@@ -9,17 +9,18 @@ export class ClientService {
 
     /**
      * @param requestBody 
-     * @returns any OK
+     * @returns string 
      * @throws ApiError
      */
     public static add(
 requestBody?: ClientDto,
-): CancelablePromise<any> {
+): CancelablePromise<string> {
         return __request({
             method: 'POST',
             path: `/api/client/add`,
             body: requestBody,
             mediaType: 'application/json',
+            responseHeader: 'location',
         });
     }
 

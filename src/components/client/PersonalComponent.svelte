@@ -4,12 +4,16 @@
     import LayoutGrid, { Cell } from '@smui/layout-grid';
     import Radio from '@smui/radio';
     import FormField from '@smui/form-field';
-    import Checkbox from '@smui/checkbox';
     import Button, { Label, Icon } from '@smui/button';
     import { ClientDto, MaritalStatus, GenericPersonDto } from '../../gen';
     import GenericPersonComponent from './GenericPersonComponent.svelte';
     import CountryComponent from '../CountryComponent.svelte';
     import LabelTextfieldToggle from '../LabelTextfieldToggle.svelte';
+    import Divider from '../Divider.svelte';
+    import H2 from '../H2.svelte';
+    import H3 from '../H3.svelte';
+    import StylizedCheckbox from '../StylizedCheckbox.svelte';
+    import { createEmptyGenericPersonDto } from '../../service/defaults';
 
     export let client: ClientDto;
     export let edit: boolean;
@@ -19,43 +23,67 @@
             client.children = []
         }
         let children = client.children;
-        let child: GenericPersonDto = {};
+        let child = createEmptyGenericPersonDto();
         children.push(child)
         client.children = children;
     }
 
-    function removeChild(child: GenericPersonDto) {
+    const removeChild = (child: GenericPersonDto) => {
         let children = client.children;
         client.children = children.filter(item => item !== child);
     }
+
+    $: if(client.maritalStatus == MaritalStatus.MARRIED) {
+        client.partner = client.partner || createEmptyGenericPersonDto();
+    } else {
+        client.partner = undefined;
+    }
+
 </script>
 
 <GenericPersonComponent bind:person={client} {edit}/>
 
 <LayoutGrid style="padding-bottom: 3rem;">
-    <Cell span={12} align="middle">
-        <FormField>
-            <Checkbox bind:checked={client.militaryServiceDone} touch  disabled={!edit}/>
-            <span slot="label">{$l.personal.militaryServiceDone}</span>
-        </FormField>
+    <Cell span={6}>
+        <StylizedCheckbox bind:value={client.militaryServiceDone} disabled={!edit} label={$l.personal.militaryServiceDone}/>
     </Cell>
-    <Cell span={12} align="middle">
-        <FormField>
-            <Checkbox bind:checked={client.smoker} touch  disabled={!edit}/>
-            <span slot="label">{$l.personal.smoker}</span>
-        </FormField>
+    <Cell span={6}>
+        <StylizedCheckbox bind:value={client.smoker} disabled={!edit} label={$l.personal.smoker}/>
     </Cell>
-    <Cell span={3} align="middle">
-        <FormField>
-            <Checkbox bind:checked={client.pets} touch  disabled={!edit}/>
-            <span slot="label">{$l.personal.pets}</span>
-        </FormField>
+    <Cell span={6}>
+        <StylizedCheckbox bind:value={client.pets} disabled={!edit} label={$l.personal.pets}/>
     </Cell>
     {#if client.pets && client.pets == true}
-    <Cell span={9}><div transition:slide|local>
+    <Cell span={6}><div transition:slide|local>
         <LabelTextfieldToggle {edit} bind:value={client.petsRemarks} label={$l.personal.petsRemarks}/></div>
     </Cell>
     {/if}
+    <Cell span={12}>
+        <Divider/>
+        <H2>Anschrift</H2>
+    </Cell>
+    <Cell span={12}>
+        <LabelTextfieldToggle {edit} bind:value={client.address} label={$l.personal.address}/>
+    </Cell>
+    <Cell span={4}>
+        <CountryComponent {edit} bind:country={client.country} label={$l.personal.country}/>
+    </Cell>
+    <Cell span={4}>
+        <LabelTextfieldToggle {edit} bind:value={client.zipCode} label={$l.personal.zipCode}/>
+    </Cell>
+    <Cell span={4}>
+        <LabelTextfieldToggle {edit} bind:value={client.city} label={$l.personal.city}/>
+    </Cell>
+    <Cell span={6}>
+        <LabelTextfieldToggle {edit} bind:value={client.phone} label={$l.personal.phone}/>
+    </Cell>
+    <Cell span={6}>
+        <LabelTextfieldToggle {edit} bind:value={client.mobile} label={$l.personal.mobile}/>
+    </Cell>
+    <Cell span={12}>
+        <Divider/>
+        <H2>Familienstand</H2>
+    </Cell>
     <Cell span={12}>
         <div class="radio-container">
             <FormField>
@@ -73,12 +101,21 @@
         </div>
     </Cell>
     {#if client.maritalStatus == MaritalStatus.MARRIED}
-    <Cell span={12}><div transition:slide>
-        <GenericPersonComponent bind:person={client.partner} {edit}/></div>
+    <Cell span={12}>
+        <div transition:slide>
+            <H3>Partner:in</H3>
+            <GenericPersonComponent bind:person={client.partner} {edit}/>
+        </div>
     </Cell>
     {/if}
 
-    {#each client.children || [] as child}
+    {#if client.children.length > 0}
+    <Cell span={12}>
+        <Divider/>
+        <H3>{client.children.length == 1 ? 'Kind' : 'Kinder'}</H3>
+    </Cell>
+    {/if}
+    {#each client.children as child}
     <Cell span={11}><div transition:slide>
         <GenericPersonComponent bind:person={child} childMode={true} {edit}/>
     </div></Cell>
@@ -98,27 +135,6 @@
         </Button>
     </Cell>
     {/if}
-</LayoutGrid>
-
-<LayoutGrid style="padding-bottom: 3rem;">
-    <Cell span={12}>
-        <LabelTextfieldToggle {edit} bind:value={client.address} label={$l.personal.address}/>
-    </Cell>
-    <Cell span={4}>
-        <CountryComponent {edit} bind:country={client.country} label={$l.personal.country}/>
-    </Cell>
-    <Cell span={4}>
-        <LabelTextfieldToggle {edit} bind:value={client.zipCode} label={$l.personal.zipCode}/>
-    </Cell>
-    <Cell span={4}>
-        <LabelTextfieldToggle {edit} bind:value={client.city} label={$l.personal.city}/>
-    </Cell>
-    <Cell span={6}>
-        <LabelTextfieldToggle {edit} bind:value={client.phone} label={$l.personal.phone}/>
-    </Cell>
-    <Cell span={6}>
-        <LabelTextfieldToggle {edit} bind:value={client.mobile} label={$l.personal.mobile}/>
-    </Cell>
 </LayoutGrid>
 
 <style lang="scss">

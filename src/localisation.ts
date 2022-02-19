@@ -9,6 +9,7 @@ export type Localisation = {
     menu: Menu;
     personal: Personal;
     contract: Contract;
+    document: ClientDocument;
     needsAssessment: NeedsAssessment;
     home: Home;
     remarks: string;
@@ -21,6 +22,12 @@ export type Localisation = {
     add: string;
     createdAt: string;
     file: string;
+}
+
+type ClientDocument = {
+    general: string;
+    annualService: string;
+    policyService: string;
 }
 
 type Contract = {
@@ -440,7 +447,12 @@ export const en: Localisation = {
         legacy: 'Legacy Contract'
     },
     createdAt: 'Created at',
-    file: 'File'
+    file: 'File',
+    document: {
+        general: 'Generic',
+        annualService: 'Annual Service',
+        policyService: 'PolicyService'
+    }
 }
 
 export const de: Localisation = {
@@ -649,7 +661,12 @@ export const de: Localisation = {
         legacy: 'Altvertrag'
     },
     createdAt: 'Erstellungsdatum',
-    file: 'Datei'
+    file: 'Datei',
+    document: {
+        general: 'Allgemein',
+        annualService: 'Jahresservice',
+        policyService: 'Polizzenservice'
+    }
 }
 export const l = writable(de);
 export default l;

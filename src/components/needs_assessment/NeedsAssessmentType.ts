@@ -3,6 +3,7 @@ import { ClientDto, ClientContractDto } from "../../gen";
 import { ExperienceType } from "./ExperienceType";
 import { WealthBuildingType } from './WealthBuildingType';
 import { CarType } from '../client/CarType';
+import { createEmptyClientDto } from "../../service/defaults";
 
 export type NeedsAssessmentType = {
   client: ClientDto;
@@ -58,13 +59,8 @@ type LegalType = {
   signature?: string;
 }
 
-const newNeedsAssessment: NeedsAssessmentType = {
-  client: {
-    partner: {},
-    pets: false,
-    smoker: false,
-    militaryServiceDone: false
-  },
+export const createNeedsAssessment = () : NeedsAssessmentType => { return {
+  client: createEmptyClientDto(),
   insurances: {
     accidentInsurance: {
       clientHas: false,
@@ -137,7 +133,7 @@ const newNeedsAssessment: NeedsAssessmentType = {
   legalNotice: {
     date: today()
   }
-}
+}}
 
 function today(): string {
   let yourDate = new Date();
@@ -145,5 +141,3 @@ function today(): string {
   yourDate = new Date(yourDate.getTime() - (offset*60*1000));
   return yourDate.toISOString().split('T')[0];
 }
-
-export default newNeedsAssessment;

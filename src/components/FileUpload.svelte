@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition';
-
   const dispatch = createEventDispatcher<{submit:{file:File}}>();
+  export let autoSubmit = false;
   // checks if drag&drop is supported by the browser
   const isAdvancedUpload = () => {
     let div = document.createElement("div");
@@ -31,6 +31,9 @@
   const drop = (e: DragEvent) => {
     removeDragOver(e);
     droppedFiles = e.dataTransfer.files;
+    if(autoSubmit) {
+      trigger();
+    }
   };
 
   export const trigger = async () => {
@@ -105,6 +108,7 @@
     text-align: center;
     width: 100%;
     max-width: 480px;
+    margin: auto;
   }
   .box.has-advanced-upload {
     outline: 2px dashed #92b0b3;
@@ -116,7 +120,7 @@
   }
   .box.is-dragover {
     outline-offset: -20px;
-    outline-color: #c8dadf;
+    outline-color: constants.$primary;
   }
   .box.is-dragover .material-icons {
     color: constants.$primary

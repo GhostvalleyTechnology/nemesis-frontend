@@ -1,13 +1,13 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import Checkbox from '@smui/checkbox';
-  import FormField from '@smui/form-field';
-  import Paper from '@smui/paper';
-  import Fab, { Label, Icon } from '@smui/fab';
   import { TemplateService } from '../gen';
   import H1 from '../components/H1.svelte'
   import FileUpload from "../components/FileUpload.svelte";
+  import FormContainer from "../components/FormContainer.svelte";
+  import Group from "../components/Group.svelte";
+  import StylizedCheckbox from "../components/StylizedCheckbox.svelte";
+  import FloatingActionButton from "../components/FloatingActionButton.svelte";
   let fileUpload: FileUpload;
   let adminOnly: boolean = false;
 
@@ -22,39 +22,27 @@
 
 </script>
 
-<div class="form-container">
-  <Paper elevation={6}>
-      <H1>Template Upload</H1>
-      <LayoutGrid style="padding-bottom: 3rem;">
-          <Cell span={12}>
-            <FileUpload bind:this={fileUpload} on:submit={save}/>
-          </Cell>
-          <Cell span={12} align="middle">
-              <FormField>
-                  <Checkbox bind:checked={adminOnly} touch />
-                  <span slot="label">Admin</span>
-              </FormField>
-          </Cell>
-      </LayoutGrid>
-      <div class="button-container">
-          <Fab color="primary" on:click={() => fileUpload.trigger()} extended>
-              <Icon class="material-icons">save</Icon>
-              <Label>Save</Label>
-          </Fab>
-      </div>
-      
-  </Paper>
-  </div>
-  <style lang="scss">
-  
-      .form-container {
-          max-width: 1000px;
-          margin: auto;
-      }
-  
-      .button-container {
-          display: flex;
-          justify-content: flex-end;
-          margin: 1rem;
-      }
-  </style>
+<FormContainer>
+  <Group>
+    <H1 description="Vorlagen können für Mitarbeiter oder nur für Admins zur Verfügung gestellt werden. Einfach das Häckchen setzen, wenn die hochgeladene Datei nur für Admins ist.">Vorlage hochladen</H1>
+    <LayoutGrid style="padding-bottom: 3rem;">
+        <Cell span={12}>
+          <StylizedCheckbox bind:value={adminOnly} label="Nur für Admins?"/>
+        </Cell>
+        <Cell span={12}>
+          <FileUpload bind:this={fileUpload} on:submit={save}/>
+        </Cell>
+        <Cell span={12}>
+          <div class="right">
+            <FloatingActionButton on:click={() => fileUpload.trigger()} icon="save" float={false} label="Speichern"/>
+          </div>
+        </Cell>
+    </LayoutGrid>
+  </Group> 
+</FormContainer>
+
+<style lang="scss">
+  .right {
+    text-align: end;
+  }
+</style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import l from "../../localisation";
-  import { ClientDocumentDto, ClientDocumentService, ClientDto } from "../../gen";
+  import { ClientDocumentDto, ClientDocumentService, ClientDocumentType, ClientDto } from "../../gen";
   import DataTable, {
     Head,
     Body,
@@ -10,6 +10,8 @@
     SortValue,
   } from '@smui/data-table';
   import IconButton from '@smui/icon-button';
+  import Radio from '@smui/radio';
+  import FormField from '@smui/form-field';
   import Textfield from '@smui/textfield';
   import { Icon } from '@smui/button';
   import FloatingActionButton from "../FloatingActionButton.svelte";
@@ -19,6 +21,8 @@
   import { open } from "../OpenFile";
   import { sortFunction } from "../../routes/sort";
   import FileUpload from "../FileUpload.svelte";
+import H3 from "../H3.svelte";
+import Divider from "../Divider.svelte";
 
   export let client: ClientDto;
   let fileUpload: FileUpload;
@@ -66,8 +70,7 @@
     ClientDocumentService.get(doc.id).then(response => open(response));
   }
 
-  
-  
+  let newDocumentType = ClientDocumentType.GENERIC;
 </script>
 
 <Searchbar bind:value={filterValue} />
@@ -109,18 +112,53 @@
 </DataTable>
 
 <div class="footer">
-  <Group>
+  <Divider/>
+    <H3>Neues Dokument hinzufügen</H3>
   <div class="input-container">
-    <FileUpload bind:this={fileUpload} on:submit={addDocument} />
+    <div class="upload-container">
+      <FileUpload bind:this={fileUpload} on:submit={addDocument} />
+    </div>
+    <div class="radio-container">
+      <FormField>
+          <Radio bind:group={newDocumentType} value={ClientDocumentType.GENERIC} touch/>
+          <span slot="label">{$l.document.general}</span>
+      </FormField>
+      <FormField>
+          <Radio bind:group={newDocumentType} value={ClientDocumentType.ANNUAL_SERVICE} touch/>
+          <span slot="label">{$l.document.annualService}</span>
+      </FormField>
+      <FormField>
+          <Radio bind:group={newDocumentType} value={ClientDocumentType.POLICY_SERVICE} touch/>
+          <span slot="label">{$l.document.policyService}</span>
+      </FormField>
+    </div>
+    <div class="action-container">
+      <FloatingActionButton float={false} label={$l.add}/>
+    </div>
   </div>
-  </Group>
 </div>
 
 <style lang="scss">
   .input-container {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 
+    "upload types"
+    "upload action";
     gap: 40px
+  }
+  .upload-container {
+    grid-area: upload;
+  }
+  .radio-container {
+    grid-area: types;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 50px;
+  }
+  .action-container {
+    grid-area: action;
+    justify-self: end;
   }
   .footer {
     padding-top: 50px;

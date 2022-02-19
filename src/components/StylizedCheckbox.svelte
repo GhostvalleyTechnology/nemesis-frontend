@@ -4,10 +4,11 @@
     export let value: boolean;
     export let label: string = "";
     export let labelStyle: string = "body1";
+    export let disabled = false;
 </script>
 <div class="container">
     <div class="button">
-        <IconButton toggle bind:pressed={value}>
+        <IconButton toggle bind:pressed={value} {disabled}>
             <Icon class="material-icons">check_box_outline_blank</Icon>
             <Icon class="material-icons" on>check_box</Icon>
         </IconButton>

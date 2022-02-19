@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { navigate, Route } from "svelte-routing";
-    import Fab, { Label, Icon } from "@smui/fab";
+    import { snackbar } from "../stores";
     import Tab, { Icon as TabIcon, Label as TabLabel } from "@smui/tab";
     import TabBar from "@smui/tab-bar";
 
@@ -14,11 +13,14 @@
     import Contract from "../components/client/Contract.svelte";
     import { ContractRoute } from "../components/client/ContractRouteType";
     import Documents from "../components/client/Documents.svelte";
-    import { emptyClientDto } from "../service/defaults";
+    import { createEmptyClientDto } from "../service/defaults";
+    import { navigate } from "svelte-routing";
 
     export let id: string;
-    let client: ClientDto = emptyClientDto;
+    let client: ClientDto = createEmptyClientDto();
     let newClient = id === 'new';
+    console.log(id)
+    console.log(newClient)
     if(!newClient) {
         ClientService.get(+id).then((response) => (client = response));
     }
@@ -49,13 +51,14 @@
 
     function save() {
         if (newClient) {
-            ClientService.add(client);
+            ClientService.add(client).then(_ => {snackbar.set("Kunde angelegt"); navigate("/clients")});
+
         } else {
             ClientService.update(client);
         }
         edit = !edit;
     }
-    let edit = false;
+    let edit = newClient;
     let selectedContract: ContractRoute;
     $: if (active.id !== 'contracts') {
         selectedContract = {
@@ -64,6 +67,7 @@
     }
 </script>
 <FormContainer>
+  <div class="group">
     <TabBar {tabs} let:tab bind:active>
         <Tab {tab}>
             <TabIcon class="material-icons">{tab.icon}</TabIcon>
@@ -94,10 +98,15 @@
         <FloatingActionButton on:click={save} icon='save' label={$l.save} />
         {/if}
     {/if}
+  </div>
 </FormContainer>
-
-<style>
-    .container {
-        padding-top: 2rem;
-    }
+  
+<style lang="scss">
+.group {
+    border: 1px solid #e3e4e6;
+    border-radius: 6px;
+}
+.container {
+    padding: 32px;
+}
 </style>

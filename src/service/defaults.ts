@@ -1,6 +1,6 @@
 import { ClientDto, GenericPersonDto } from "../gen";
 
-export let emptyGenericPersonDto: GenericPersonDto = {
+export const createEmptyGenericPersonDto = () : GenericPersonDto => { return {
   firstName: '',
   lastName: '',
   email: '',
@@ -17,9 +17,9 @@ export let emptyGenericPersonDto: GenericPersonDto = {
   zipCode: '',
   city: '',
   address: '',
-}
+}}
 
-export let emptyClientDto: ClientDto = {
+export const createEmptyClientDto = () : ClientDto => { return {
   firstName: '',
   lastName: '',
   email: '',
@@ -29,10 +29,10 @@ export let emptyClientDto: ClientDto = {
   academicDegree: '',
   birthday: '',
   birthPlace: '',
-  nationality: null,
-  socialInsuranceInstitution: null,
+  nationality: undefined,
+  socialInsuranceInstitution: undefined,
   occupation: '',
-  country: null,
+  country: undefined,
   zipCode: '',
   city: '',
   address: '',
@@ -42,15 +42,15 @@ export let emptyClientDto: ClientDto = {
   smoker: false,
   pets: false,
   petsRemarks: '',
-  maritalStatus: null,
+  maritalStatus: undefined,
   homeRemarks: '',
   bank: '',
   iban: '',
   bic: '',
-  partner: emptyGenericPersonDto,
+  partner: undefined,
   children: [],
   contracts: [],
   documents: [],
   proofOfIdentities: [],
-}
+}}
 

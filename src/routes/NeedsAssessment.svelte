@@ -6,11 +6,11 @@
     import ExperienceComponent from '../components/needs_assessment/ExperienceComponent.svelte';
     import ProvisionsComponent from '../components/needs_assessment/ProvisionsComponent.svelte';
     import OpenCloseToggle from '../components/OpenCloseToggle.svelte';
-    import newNeedsAssessment from '../components/needs_assessment/NeedsAssessmentType';
+    import { createNeedsAssessment } from '../components/needs_assessment/NeedsAssessmentType';
     import LegalComponent from '../components/needs_assessment/LegalComponent.svelte';
     import Print from '../components/needs_assessment/Print.svelte';
 
-    let assessment = newNeedsAssessment;
+    let assessment = createNeedsAssessment();
     let print: Print;
 
 </script>

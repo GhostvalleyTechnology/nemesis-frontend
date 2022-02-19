@@ -1,12 +1,8 @@
 <script lang="ts">
   import l from '../../localisation';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import Textfield from '@smui/textfield';
-  import Checkbox from '@smui/checkbox';
-  import FormField from '@smui/form-field';
   import { ClientContractDto, ClientContractService, ClientDto } from '../../gen';
   import H2 from "../H2.svelte";
-  import Icon from "@smui/textfield/icon";
   import FormContainer from "../FormContainer.svelte";
   import LabelTextfieldToggle from "../LabelTextfieldToggle.svelte";
   import ServiceTypeSelection from '../ServiceTypeSelection.svelte';
@@ -16,48 +12,55 @@
   import FloatingActionButton from '../FloatingActionButton.svelte';
   import { ContractRoute } from './ContractRouteType';
   import { open, hasFile } from '../OpenFile';
+  import StylizedCheckbox from '../StylizedCheckbox.svelte';
+  import FileUpload from '../FileUpload.svelte';
+  import H3 from '../H3.svelte';
+import Divider from '../Divider.svelte';
 
-  let valueTypeFiles: FileList | null = null;
   export let client: ClientDto;
   export let edit: boolean;
   export let selectedContract: ContractRoute;
+  let policyRequestFileUpload: FileUpload;
+  let policyFileUpload: FileUpload;
 
   let contract: ClientContractDto = { clientId: client.id };
   if(selectedContract.edit) {
     contract = client.contracts.find(item => item.id == selectedContract.id);
   }
-  
-  function save() {
+  const addNewContract = (dto: ClientContractDto) => {
+    contract = dto;
+    client.contracts.push(contract);
+  }
+  const save = () => {
     if (selectedContract.add) {
-      ClientContractService.add(contract).then(response => upload(response));
+      ClientContractService.add(contract).then(response => {addNewContract(response); upload()});
     } else {
-      ClientContractService.update(contract).then(_ => upload(contract));
+      ClientContractService.update(contract).then(_ => upload());
     }
   }
 
-  function upload(dto: ClientContractDto) {
-    if(valueTypeFiles !== undefined && valueTypeFiles !== null && valueTypeFiles.length > 0) {
-      ClientContractService.upload({
-        clientContractId: dto.id,
-        file: valueTypeFiles.item(0),
-        fileExtension: valueTypeFiles.item(0).type,
-        fileName: valueTypeFiles.item(0).name,
-      }).then(_ => back());
-    } else {
-      back();
-    }
+  function upload() {
+    policyRequestFileUpload.trigger();
+    policyFileUpload.trigger();
   }
 
-  function back() {
-    selectedContract.add = false;
-    selectedContract.edit = false;
-  }
 
-  function openContract() {
-    if(hasFile(contract.fileId)) {
-      ClientContractService.get(contract.id).then(response => open(response))
-    }
-  }
+const policyRequestSubmit = (e: CustomEvent<{ file: File; }>) => {
+  ClientContractService.uploadPolicyRequest({
+    clientContractId: contract.id,
+    file: e.detail.file,
+    fileExtension: e.detail.file.type,
+    fileName: e.detail.file.name
+  });
+}
+const policySubmit = (e: CustomEvent<{ file: File; }>) => {
+  ClientContractService.uploadPolicy({
+    clientContractId: contract.id,
+    file: e.detail.file,
+    fileExtension: e.detail.file.type,
+    fileName: e.detail.file.name
+  });
+}
 </script>
 
 <FormContainer>
@@ -69,11 +72,8 @@
           <Cell span={6}>
             <ServiceTypeSelection {edit} bind:service={contract.serviceType}/>
           </Cell>
-          <Cell span={6} align="middle">
-              <FormField>
-                  <Checkbox bind:checked={contract.legacy} touch />
-                  <span slot="label">{$l.contract.legacy}</span>
-              </FormField>
+          <Cell span={6}>
+            <StylizedCheckbox bind:value={contract.legacy} label={$l.contract.legacy}/>
           </Cell>
           <Cell span={6}>
             <ContractorSelection bind:partner={contract.contractor} {edit}/>
@@ -84,12 +84,14 @@
           <Cell span={6}>
             <PaymentFrequencySelection bind:paymentFrequency={contract.paymentFrequency} />
           </Cell>
-          <Cell span={6}>
-            {#if hasFile(contract.fileId)}
-              <FloatingActionButton on:click={openContract} float={false} icon='description' label='Datei öffnen'/>
-            {:else}
-              <Textfield bind:files={valueTypeFiles} label={$l.file} type="file"/>
-            {/if}
+          <Cell span={12}>
+            <H3>Polizzenanfrage</H3>
+            <FileUpload bind:this={policyRequestFileUpload} on:submit={policyRequestSubmit} />
+          </Cell>
+          <Cell span={12}>
+            <Divider/>
+            <H3>Polizze</H3>
+            <FileUpload bind:this={policyFileUpload} on:submit={policySubmit} />
           </Cell>
 
       </LayoutGrid>

@@ -14,8 +14,8 @@
   import AdminGuard from '../components/AdminGuard.svelte';
   import Searchbar from "../components/Searchbar.svelte";
   import FloatingActionButton from "../components/FloatingActionButton.svelte";
-import { sortFunction } from "./sort";
-import { TemplateService } from "../gen";
+  import { sortFunction } from "./sort";
+  import { TemplateService } from "../gen";
 
   let sort: keyof TemplateFacade = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
@@ -25,13 +25,30 @@ import { TemplateService } from "../gen";
   $: filterValue = "";
   $: filtered = items.filter((s) => s.name.includes(filterValue));
 
-  function openTemplate(item: TemplateFacade) {
+  const openTemplate = (item: TemplateFacade) => {
     if(item.type == TemplateType.page) {
       navigate(item.path)
     } else {
       TemplateService.get(item.id)
         .then(response => window.open(response));
     }
+  }
+  const changeVisibility = (item: TemplateFacade) => {
+    if(item.type == TemplateType.page) {
+      return;
+    }
+    TemplateService.update({
+      id: item.id,
+      adminOnly: !item.adminOnly
+    }).then(_ => {item.adminOnly = !item.adminOnly; items = items})
+  }
+  const deleteTemplate = (item: TemplateFacade) => {
+    if(item.type == TemplateType.page) {
+      return;
+    }
+    TemplateService.delete(item.id).then(_ => {
+      items = items.filter(i => i.id != item.id)
+    })
   }
 </script>
 
@@ -59,15 +76,19 @@ import { TemplateService } from "../gen";
           <Label>Visible for Employees</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
+        <Cell columnId="delete">
+          <Label>Delete</Label>
+        </Cell>
       </AdminGuard>
     </Row>
   </Head>
   <Body>
-    {#each filtered as item (item.name)}
+    {#each filtered as item }
       <Row>
-        <Cell on:click={() => openTemplate(item)}>{item.name}</Cell>
+        <Cell style="cursor:pointer;" on:click={() => openTemplate(item)}>{item.name}</Cell>
         <AdminGuard>
-          <Cell>
+          <Cell style="{item.type == TemplateType.page ? 'cursor:not-allowed;' : 'cursor:pointer;'}" 
+            on:click={() => changeVisibility(item)} >
             <Icon class="material-icons">
               {#if item.adminOnly}
               radio_button_unchecked
@@ -75,6 +96,11 @@ import { TemplateService } from "../gen";
               task_alt
               {/if}
             </Icon>
+          </Cell>
+          <Cell style="{item.type == TemplateType.page ? '' : 'cursor:pointer;'}" on:click={() => deleteTemplate(item)}>
+            {#if item.type == TemplateType.file}
+              <Icon class="material-icons">close</Icon>
+            {/if}
           </Cell>
         </AdminGuard>
       </Row>
