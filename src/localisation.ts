@@ -22,6 +22,7 @@ export type Localisation = {
     add: string;
     createdAt: string;
     file: string;
+    unknown: string;
 }
 
 type ClientDocument = {
@@ -452,7 +453,8 @@ export const en: Localisation = {
         general: 'Generic',
         annualService: 'Annual Service',
         policyService: 'PolicyService'
-    }
+    },
+    unknown: 'Unknown'
 }
 
 export const de: Localisation = {
@@ -666,7 +668,8 @@ export const de: Localisation = {
         general: 'Allgemein',
         annualService: 'Jahresservice',
         policyService: 'Polizzenservice'
-    }
+    },
+    unknown: 'Unbekannt'
 }
 export const l = writable(de);
 export default l;

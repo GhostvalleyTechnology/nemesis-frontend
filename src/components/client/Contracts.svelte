@@ -31,15 +31,11 @@
 
   $: filtered = client.contracts.filter(
     (s) =>
-      s.contractNumber.includes(filterValue) ||
-      s.contractor.name.includes(filterValue) ||
-      s.createdAt.includes(filterValue) ||
-      s.serviceType.service.includes(filterValue)
+      (s.contractNumber && s.contractNumber.includes(filterValue)) ||
+      (s.contractor && s.contractor.name.includes(filterValue)) ||
+      (s.createdAt && s.createdAt.includes(filterValue)) ||
+      (s.serviceType && s.serviceType.service.includes(filterValue))
   );
-
-  function hasDocument(dto: ClientContractDto): boolean {
-    return dto.fileId !== undefined && dto.fileId !== null && dto.fileId > 0;
-  }
 
   function editContract(item: ClientContractDto) {
     selectedContract = {
@@ -49,9 +45,7 @@
     }
   }
   function openContract(item: ClientContractDto) {
-    if(hasDocument(item)) {
-      ClientContractService.get(item.id).then(response => open(response))
-    }
+
   }
 </script>
 
@@ -99,7 +93,7 @@
         <Row>
           <Cell on:click={() => editContract(item)}>{item.contractNumber}</Cell>
           <Cell on:click={() => editContract(item)}>{item.serviceType.service}</Cell>
-          <Cell on:click={() => editContract(item)}>{item.contractor.name}</Cell>
+          <Cell on:click={() => editContract(item)}>{#if item.contractor}{item.contractor.name}{:else}{$l.unknown}{/if}</Cell>
           <Cell on:click={() => editContract(item)}>{item.createdAt}</Cell>
           <Cell on:click={() => editContract(item)}>
             <Icon class="material-icons">
@@ -113,7 +107,7 @@
 
           <Cell on:click={() => openContract(item)}>
             <Icon class="material-icons">
-              {#if hasDocument(item)}
+              {#if item.policyRequest}
                 description
               {:else}
                 priority_high

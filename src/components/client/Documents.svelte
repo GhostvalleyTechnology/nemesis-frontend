@@ -133,7 +133,7 @@ import Divider from "../Divider.svelte";
       </FormField>
     </div>
     <div class="action-container">
-      <FloatingActionButton float={false} label={$l.add}/>
+      <FloatingActionButton float={false} label={$l.add} on:click={() => fileUpload.trigger()}/>
     </div>
   </div>
 </div>

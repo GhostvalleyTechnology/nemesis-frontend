@@ -1,7 +1,7 @@
 <script lang="ts">
   import l from '../../localisation';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import { ClientContractDto, ClientContractService, ClientDto } from '../../gen';
+  import { ClientContractDto, ClientContractService, ClientDto, PaymentFrequency } from '../../gen';
   import H2 from "../H2.svelte";
   import FormContainer from "../FormContainer.svelte";
   import LabelTextfieldToggle from "../LabelTextfieldToggle.svelte";
@@ -23,7 +23,7 @@ import Divider from '../Divider.svelte';
   let policyRequestFileUpload: FileUpload;
   let policyFileUpload: FileUpload;
 
-  let contract: ClientContractDto = { clientId: client.id };
+  let contract: ClientContractDto = { clientId: client.id, paymentFrequency: PaymentFrequency.UNKNOWN };
   if(selectedContract.edit) {
     contract = client.contracts.find(item => item.id == selectedContract.id);
   }

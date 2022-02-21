@@ -1417,7 +1417,7 @@
         }
       },
       "PaymentFrequency" : {
-        "enum" : [ "monthly", "quarterly", "yearly" ],
+        "enum" : [ "monthly", "quarterly", "unknown", "yearly" ],
         "type" : "string"
       },
       "ProofOfIdentityDto" : {

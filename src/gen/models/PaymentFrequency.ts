@@ -5,5 +5,6 @@
 export enum PaymentFrequency {
     MONTHLY = 'monthly',
     QUARTERLY = 'quarterly',
+    UNKNOWN = 'unknown',
     YEARLY = 'yearly',
 }
