@@ -9,4 +9,4 @@ export type PartnerReferenceDto = {
     createdAt?: string;
     name?: string;
     services?: Array<PartnerServiceTypeDto>;
-}
+};

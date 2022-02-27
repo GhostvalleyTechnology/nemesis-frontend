@@ -10,4 +10,4 @@ export type ProofOfIdentityDto = {
     createdAt?: string;
     type?: ProofOfIdentityType;
     file?: CloudFileDto;
-}
+};

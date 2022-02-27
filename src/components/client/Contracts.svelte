@@ -91,10 +91,10 @@
     <Body>
       {#each filtered as item (item.id)}
         <Row>
-          <Cell on:click={() => editContract(item)}>{item.contractNumber}</Cell>
+          <Cell on:click={() => editContract(item)}>{#if item.contractNumber}{item.contractNumber}{:else}{$l.unknown}{/if}</Cell>
           <Cell on:click={() => editContract(item)}>{item.serviceType.service}</Cell>
           <Cell on:click={() => editContract(item)}>{#if item.contractor}{item.contractor.name}{:else}{$l.unknown}{/if}</Cell>
-          <Cell on:click={() => editContract(item)}>{item.createdAt}</Cell>
+          <Cell on:click={() => editContract(item)}>{item.contractDate}</Cell>
           <Cell on:click={() => editContract(item)}>
             <Icon class="material-icons">
               {#if item.legacy}

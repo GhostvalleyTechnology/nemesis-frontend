@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { EmployeeDto } from '../models/EmployeeDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class UserService {
@@ -12,9 +14,9 @@ export class UserService {
      * @throws ApiError
      */
     public static get(): CancelablePromise<EmployeeDto> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/me`,
+            url: '/api/me',
         });
     }
 

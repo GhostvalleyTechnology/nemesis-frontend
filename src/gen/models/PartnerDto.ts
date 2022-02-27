@@ -17,4 +17,4 @@ export type PartnerDto = {
     bic?: string;
     logins?: Array<PartnerLoginDto>;
     contacts?: Array<PartnerContactDto>;
-}
+};

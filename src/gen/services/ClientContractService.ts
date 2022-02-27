@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ClientContractDto } from '../models/ClientContractDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class ClientContractService {
@@ -15,9 +17,9 @@ export class ClientContractService {
     public static add(
 requestBody?: ClientContractDto,
 ): CancelablePromise<ClientContractDto> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/client-contract/add`,
+            url: '/api/client-contract/add',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -31,9 +33,12 @@ requestBody?: ClientContractDto,
     public static delete(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/client-contract/delete/${id}`,
+            url: '/api/client-contract/delete/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -45,9 +50,12 @@ id: number,
     public static getPolicyRequest(
 contractId: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/client-contract/get-policy-request/${contractId}`,
+            url: '/api/client-contract/get-policy-request/{contractId}',
+            path: {
+                'contractId': contractId,
+            },
         });
     }
 
@@ -59,9 +67,12 @@ contractId: number,
     public static getPolicy(
 contractId: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/client-contract/get-policy/${contractId}`,
+            url: '/api/client-contract/get-policy/{contractId}',
+            path: {
+                'contractId': contractId,
+            },
         });
     }
 
@@ -73,9 +84,9 @@ contractId: number,
     public static update(
 requestBody?: ClientContractDto,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/client-contract/update`,
+            url: '/api/client-contract/update',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -94,9 +105,9 @@ fileExtension?: string;
 clientContractId?: number;
 },
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/client-contract/upload-policy`,
+            url: '/api/client-contract/upload-policy',
             formData: formData,
             mediaType: 'multipart/form-data',
         });
@@ -115,9 +126,9 @@ fileExtension?: string;
 clientContractId?: number;
 },
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/client-contract/upload-policy-request`,
+            url: '/api/client-contract/upload-policy-request',
             formData: formData,
             mediaType: 'multipart/form-data',
         });

@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { TemplateDto } from '../models/TemplateDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class TemplateService {
@@ -20,9 +22,9 @@ fileExtension?: string;
 adminOnly?: boolean;
 },
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/template/add`,
+            url: '/api/template/add',
             formData: formData,
             mediaType: 'multipart/form-data',
         });
@@ -36,9 +38,12 @@ adminOnly?: boolean;
     public static delete(
 templateId: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/template/delete/${templateId}`,
+            url: '/api/template/delete/{templateId}',
+            path: {
+                'templateId': templateId,
+            },
         });
     }
 
@@ -50,9 +55,12 @@ templateId: number,
     public static get(
 templateId: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/template/get/${templateId}`,
+            url: '/api/template/get/{templateId}',
+            path: {
+                'templateId': templateId,
+            },
         });
     }
 
@@ -61,9 +69,9 @@ templateId: number,
      * @throws ApiError
      */
     public static list(): CancelablePromise<Array<TemplateDto>> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/template/list`,
+            url: '/api/template/list',
         });
     }
 
@@ -75,9 +83,9 @@ templateId: number,
     public static update(
 requestBody?: TemplateDto,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/template/update`,
+            url: '/api/template/update',
             body: requestBody,
             mediaType: 'application/json',
         });

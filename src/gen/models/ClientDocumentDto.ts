@@ -10,4 +10,4 @@ export type ClientDocumentDto = {
     createdAt?: string;
     type?: ClientDocumentType;
     file?: CloudFileDto;
-}
+};

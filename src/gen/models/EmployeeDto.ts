@@ -8,4 +8,4 @@ export type EmployeeDto = {
     name?: string;
     email?: string;
     admin?: boolean;
-}
+};

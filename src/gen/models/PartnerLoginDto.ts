@@ -9,4 +9,4 @@ export type PartnerLoginDto = {
     username?: string;
     password?: string;
     adminOnly?: boolean;
-}
+};

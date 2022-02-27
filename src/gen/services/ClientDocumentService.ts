@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type { ClientDocumentDto } from '../models/ClientDocumentDto';
 import type { ClientDocumentType } from '../models/ClientDocumentType';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class ClientDocumentService {
@@ -16,9 +18,12 @@ export class ClientDocumentService {
     public static delete(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/client-document/delete/${id}`,
+            url: '/api/client-document/delete/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -30,9 +35,12 @@ id: number,
     public static get(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/client-document/get/${id}`,
+            url: '/api/client-document/get/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -50,9 +58,9 @@ clientId?: number;
 type?: ClientDocumentType;
 },
 ): CancelablePromise<ClientDocumentDto> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/client-document/upload`,
+            url: '/api/client-document/upload',
             formData: formData,
             mediaType: 'multipart/form-data',
         });

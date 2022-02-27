@@ -4,8 +4,10 @@
 export { ApiError } from './core/ApiError';
 export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
+export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { ClientContractDto } from './models/ClientContractDto';
+export type { ClientContractWithPersonalInformationDto } from './models/ClientContractWithPersonalInformationDto';
 export type { ClientDocumentDto } from './models/ClientDocumentDto';
 export { ClientDocumentType } from './models/ClientDocumentType';
 export type { ClientDto } from './models/ClientDto';

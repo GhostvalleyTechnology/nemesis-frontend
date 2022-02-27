@@ -19,11 +19,6 @@
     export let id: string;
     let client: ClientDto = createEmptyClientDto();
     let newClient = id === 'new';
-    console.log(id)
-    console.log(newClient)
-    if(!newClient) {
-        ClientService.get(+id).then((response) => (client = response));
-    }
 
     let tabs = [
         {
@@ -36,17 +31,22 @@
             icon: "account_balance",
             label: "Legal",
         },
-        {
+    ];
+
+    if(!newClient) {
+        ClientService.get(+id).then((response) => (client = response));
+        tabs.push({
             id: "contracts",
             icon: "file_present",
             label: "Verträge",
-        },
-        {
+        });
+        tabs.push({
             id: "documents",
             icon: "article",
             label: "Dokumente",
-        },
-    ];
+        });
+    }
+    
     let active = tabs[0];
 
     function save() {

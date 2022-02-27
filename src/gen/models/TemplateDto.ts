@@ -9,4 +9,4 @@ export type TemplateDto = {
     createdAt?: string;
     adminOnly?: boolean;
     file?: CloudFileDto;
-}
+};

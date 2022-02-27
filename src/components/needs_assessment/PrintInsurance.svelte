@@ -16,4 +16,8 @@
     <KV k={$l.payment.paymentFrequency} kc='payment-key key' v={getFrequency(insurance.paymentFrequency)}/>
     <KV k={$l.payment.euroTextfieldLabel} kc='payment-key key' v={getEuro(insurance.paymentValue)}/>
     <slot />
+  {:else}
+    {#if insurance.clientWishes}
+      <KC k={$l.needsAssessment.wishesOffer} kc='payment-key key' v={insurance.clientWishes}/>
+    {/if}
   {/if}

@@ -13,10 +13,11 @@ export type ClientContractDto = {
     clientId?: number;
     legacy?: boolean;
     contractNumber?: string;
+    contractDate?: string;
     paymentValue?: number;
     paymentFrequency?: PaymentFrequency;
     contractor?: PartnerReferenceDto;
     serviceType?: PartnerServiceTypeDto;
     policyRequest?: CloudFileDto;
     policy?: CloudFileDto;
-}
+};

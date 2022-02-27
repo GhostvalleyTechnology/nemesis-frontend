@@ -479,6 +479,27 @@
         }
       }
     },
+    "/api/employee/contracts" : {
+      "get" : {
+        "tags" : [ "Employee Service" ],
+        "operationId" : "contracts",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ClientContractWithPersonalInformationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/employee/get/{id}" : {
       "get" : {
         "tags" : [ "Employee Service" ],
@@ -1000,6 +1021,10 @@
           "contractNumber" : {
             "type" : "string"
           },
+          "contractDate" : {
+            "format" : "date",
+            "type" : "string"
+          },
           "paymentValue" : {
             "format" : "int64",
             "type" : "integer"
@@ -1018,6 +1043,17 @@
           },
           "policy" : {
             "$ref" : "#/components/schemas/CloudFileDto"
+          }
+        }
+      },
+      "ClientContractWithPersonalInformationDto" : {
+        "type" : "object",
+        "properties" : {
+          "contractDto" : {
+            "$ref" : "#/components/schemas/ClientContractDto"
+          },
+          "clientDto" : {
+            "$ref" : "#/components/schemas/GenericPersonDto"
           }
         }
       },

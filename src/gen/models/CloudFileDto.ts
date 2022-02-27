@@ -6,4 +6,4 @@ export type CloudFileDto = {
     objectName?: string;
     fileName?: string;
     fileExtension?: string;
-}
+};

@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { PartnerServiceTypeDto } from '../models/PartnerServiceTypeDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class PartnerServiceTypeService {
@@ -15,9 +17,9 @@ export class PartnerServiceTypeService {
     public static add(
 requestBody?: PartnerServiceTypeDto,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/partner-service-type/add`,
+            url: '/api/partner-service-type/add',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -31,9 +33,12 @@ requestBody?: PartnerServiceTypeDto,
     public static delete(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/partner-service-type/delete/${id}`,
+            url: '/api/partner-service-type/delete/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -42,9 +47,9 @@ id: number,
      * @throws ApiError
      */
     public static list(): CancelablePromise<Array<PartnerServiceTypeDto>> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/partner-service-type/list`,
+            url: '/api/partner-service-type/list',
         });
     }
 

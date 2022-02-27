@@ -46,4 +46,4 @@ export type ClientDto = {
     contracts?: Array<ClientContractDto>;
     documents?: Array<ClientDocumentDto>;
     proofOfIdentities?: Array<ProofOfIdentityDto>;
-}
+};

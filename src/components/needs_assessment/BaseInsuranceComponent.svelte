@@ -1,4 +1,5 @@
 <script lang="ts">
+    import l from '../../localisation';
     import { slide } from 'svelte/transition';
     import { ClientContractDto } from "../../gen";
     import HelpToggleButton from "../HelpToggleButton.svelte";
@@ -6,6 +7,7 @@
     import SelectLegacyContract from "../SelectLegacyContract.svelte";
     import StylizedCheckbox from "../StylizedCheckbox.svelte";
     import { InsuranceType } from './NeedsAssessmentType';
+import Divider from '../Divider.svelte';
 
     let helpToggle = false;
     export let insurance: InsuranceType & ClientContractDto;
@@ -30,6 +32,10 @@
     <div transition:slide|local class="contract">
         <SelectLegacyContract bind:contract={insurance}/>
         <slot name="additionalInput"></slot>
+    </div>
+    {:else}
+    <div transition:slide|local>
+        <StylizedCheckbox bind:value={insurance.clientWishes} label={$l.needsAssessment.wishesOffer}/>
     </div>
     {/if}
 </div>

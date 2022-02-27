@@ -9,4 +9,4 @@ export type PartnerContactDto = {
     email?: string;
     phone?: string;
     remarks?: string;
-}
+};

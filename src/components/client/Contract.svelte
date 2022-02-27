@@ -1,12 +1,13 @@
 <script lang="ts">
   import l from '../../localisation';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import { ClientContractDto, ClientContractService, ClientDto, PaymentFrequency } from '../../gen';
+  import { ClientContractDto, ClientContractService, ClientDto, CloudFileDto, PaymentFrequency } from '../../gen';
   import H2 from "../H2.svelte";
   import FormContainer from "../FormContainer.svelte";
   import LabelTextfieldToggle from "../LabelTextfieldToggle.svelte";
   import ServiceTypeSelection from '../ServiceTypeSelection.svelte';
   import EuroTextfield from '../EuroTextfield.svelte';
+  import Button, { Label, Icon } from '@smui/button';
   import PaymentFrequencySelection from '../PaymentFrequencySelection.svelte';
   import ContractorSelection from '../ContractorSelection.svelte';
   import FloatingActionButton from '../FloatingActionButton.svelte';
@@ -15,7 +16,7 @@
   import StylizedCheckbox from '../StylizedCheckbox.svelte';
   import FileUpload from '../FileUpload.svelte';
   import H3 from '../H3.svelte';
-import Divider from '../Divider.svelte';
+  import Divider from '../Divider.svelte';
 
   export let client: ClientDto;
   export let edit: boolean;
@@ -61,6 +62,13 @@ const policySubmit = (e: CustomEvent<{ file: File; }>) => {
     fileName: e.detail.file.name
   });
 }
+
+const openPolicy = (dto: ClientContractDto) => {
+  ClientContractService.getPolicy(dto.id).then(response => window.open(response));
+}
+const openPolicyRequest = (dto: ClientContractDto) => {
+  ClientContractService.getPolicyRequest(dto.id).then(response => window.open(response));
+}
 </script>
 
 <FormContainer>
@@ -84,16 +92,52 @@ const policySubmit = (e: CustomEvent<{ file: File; }>) => {
           <Cell span={6}>
             <PaymentFrequencySelection bind:paymentFrequency={contract.paymentFrequency} />
           </Cell>
+          <Cell span={6}>
+            <LabelTextfieldToggle {edit} bind:value={contract.contractDate} label="Vertragsdatum" type="date"/>
+          </Cell>
           <Cell span={12}>
             <H3>Polizzenanfrage</H3>
+            {#if contract.policyRequest && contract.policyRequest.fileName}
+            <div class="file-button-container">
+              <Button on:click={() => { openPolicyRequest(contract) }}>
+                <Icon class="material-icons">description</Icon>
+                <Label>Dokument öffnen</Label>
+              </Button>
+              <Button on:click={() => { contract.policyRequest = undefined}}>
+                <Icon class="material-icons">close</Icon>
+                <Label>Dokument löschen</Label>
+              </Button>
+            </div>
+            {:else}
             <FileUpload bind:this={policyRequestFileUpload} on:submit={policyRequestSubmit} />
+            {/if}
           </Cell>
           <Cell span={12}>
             <Divider/>
             <H3>Polizze</H3>
+            {#if contract.policy && contract.policy.fileName}
+            <div class="file-button-container">
+              <Button on:click={() => { openPolicy(contract) }}>
+                <Icon class="material-icons">description</Icon>
+                <Label>Dokument öffnen</Label>
+              </Button>
+              <Button on:click={() => { contract.policy = undefined}}>
+                <Icon class="material-icons">close</Icon>
+                <Label>Dokument löschen</Label>
+              </Button>
+            </div>
+            {:else}
             <FileUpload bind:this={policyFileUpload} on:submit={policySubmit} />
+            {/if}
           </Cell>
 
       </LayoutGrid>
       <FloatingActionButton on:click={save} icon='save' label={$l.save}/>
     </FormContainer>
+
+<style lang="scss">
+.file-button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+</style>

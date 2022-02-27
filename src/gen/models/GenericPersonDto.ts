@@ -25,4 +25,4 @@ export type GenericPersonDto = {
     zipCode?: string;
     city?: string;
     address?: string;
-}
+};

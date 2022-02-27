@@ -29,8 +29,6 @@
 
 <style lang="scss">
   .container {
-    max-width: 1000px;
-    margin: auto;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;

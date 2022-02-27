@@ -35,7 +35,7 @@ import Snackbar from "./components/Snackbar.svelte";
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
 	function logout() {
-		navigate("/logout");
+		window.location.href = '/logout';
 	}
 
 	let language: string = getLanguageButtonText();
@@ -71,21 +71,7 @@ import Snackbar from "./components/Snackbar.svelte";
 	function toggleAdminMode() {
 		admin.set(!isAdminMode);
 	}
-
-	let touchStartX: number;
-	let propablyWantsToMenu = false;
-	function touchStart(x: number) {
-		propablyWantsToMenu = x < (screen.width / 4) || x > (screen.width - (screen.width / 4));
-		touchStartX = x;
-	}
-	function touchEnd(touchEndX: number) {
-		if (!propablyWantsToMenu) return;
-		if (touchEndX < (touchStartX-20)) drawerOpen = !drawerOpen;
-  		if (touchEndX > (touchStartX+20)) drawerOpen = !drawerOpen;
-	}
 </script>
-
-<svelte:window on:touchstart={(e) => touchStart(e.changedTouches[0].screenX)} on:touchend={(e) => touchEnd(e.changedTouches[0].screenX)}/>
 
 <main>
 	<div use:links>
@@ -198,7 +184,9 @@ import Snackbar from "./components/Snackbar.svelte";
 		z-index: 100;
 	}
 	.content {
-		padding: 3rem 2rem;
+		padding: 3rem 0;
+		width: min(100% - 2em, 1200px);
+		margin: auto;
 	}
 
 	footer {

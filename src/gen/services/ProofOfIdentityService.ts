@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type { ProofOfIdentityDto } from '../models/ProofOfIdentityDto';
 import type { ProofOfIdentityType } from '../models/ProofOfIdentityType';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class ProofOfIdentityService {
@@ -22,9 +24,9 @@ clientId?: number;
 type?: ProofOfIdentityType;
 },
 ): CancelablePromise<ProofOfIdentityDto> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/proof-of-identity/add`,
+            url: '/api/proof-of-identity/add',
             formData: formData,
             mediaType: 'multipart/form-data',
         });
@@ -38,9 +40,12 @@ type?: ProofOfIdentityType;
     public static delete(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/proof-of-identity/delete/${id}`,
+            url: '/api/proof-of-identity/delete/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -52,9 +57,12 @@ id: number,
     public static get(
 id: number,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/proof-of-identity/get/${id}`,
+            url: '/api/proof-of-identity/get/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 

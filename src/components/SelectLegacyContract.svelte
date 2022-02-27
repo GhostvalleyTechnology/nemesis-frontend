@@ -9,7 +9,7 @@
 <div class="container">
     <EuroTextfield bind:integer={contract.paymentValue} edit={true}/>
     <PaymentFrequencyComponent bind:paymentFrequency={contract.paymentFrequency}/>
-    <ContractorSelection bind:partner={contract.contractor} edit={true}/>
+    <ContractorSelection bind:partner={contract.contractor} edit={true} allowUnfound={true}/>
 </div>
 
 <style lang="scss">

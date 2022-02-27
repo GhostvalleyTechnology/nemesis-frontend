@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type { PartnerDto } from '../models/PartnerDto';
 import type { PartnerReferenceDto } from '../models/PartnerReferenceDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class PartnerService {
@@ -16,9 +18,9 @@ export class PartnerService {
     public static add(
 requestBody?: PartnerDto,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/partner/add`,
+            url: '/api/partner/add',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -32,9 +34,12 @@ requestBody?: PartnerDto,
     public static get(
 partnerId: number,
 ): CancelablePromise<PartnerDto> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/partner/get/${partnerId}`,
+            url: '/api/partner/get/{partnerId}',
+            path: {
+                'partnerId': partnerId,
+            },
         });
     }
 
@@ -43,9 +48,9 @@ partnerId: number,
      * @throws ApiError
      */
     public static list(): CancelablePromise<Array<PartnerReferenceDto>> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/partner/list`,
+            url: '/api/partner/list',
         });
     }
 
@@ -57,9 +62,9 @@ partnerId: number,
     public static update(
 requestBody?: PartnerDto,
 ): CancelablePromise<any> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/partner/update`,
+            url: '/api/partner/update',
             body: requestBody,
             mediaType: 'application/json',
         });

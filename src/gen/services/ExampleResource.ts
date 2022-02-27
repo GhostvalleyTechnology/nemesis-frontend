@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class ExampleResource {
@@ -11,9 +12,9 @@ export class ExampleResource {
      * @throws ApiError
      */
     public static hello(): CancelablePromise<string> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/hello`,
+            url: '/api/hello',
         });
     }
 
@@ -22,9 +23,9 @@ export class ExampleResource {
      * @throws ApiError
      */
     public static sendEmail(): CancelablePromise<void> {
-        return __request({
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/hello/mail`,
+            url: '/api/hello/mail',
         });
     }
 

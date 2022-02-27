@@ -4,6 +4,7 @@
     import BaseInsuranceComponent from './BaseInsuranceComponent.svelte';
     import { NeedsAssessmentType } from './NeedsAssessmentType';
     import HomeInsurance from './HomeInsurance.svelte';
+import Divider from '../Divider.svelte';
   
     export let assessment: NeedsAssessmentType;
   
@@ -25,6 +26,8 @@
       label={$l.needsAssessment.insurances.accidentInsurance.name} 
       helpSubtitle={$l.needsAssessment.insurances.accidentInsurance.helpSubtitle} 
       helpText={$l.needsAssessment.insurances.accidentInsurance.helpText} />
+
+      <Divider margin="20px 0"/>
   
     <BaseInsuranceComponent 
       bind:insurance={assessment.insurances.disabilityInsurance} 

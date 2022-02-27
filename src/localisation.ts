@@ -74,6 +74,7 @@ type NeedsAssessment = {
     wealthBuilding: NeedsAssessmentWealthBuilding;
     signing: NeedsAssessmentLegal;
     finishButton: string;
+    wishesOffer: string;
 }
 
 type NeedsAssessmentLegal = {
@@ -421,7 +422,8 @@ export const en: Localisation = {
             noticeTitle: 'Notice',
             noticeText: 'We thank you for your willingness to disclose your personal data to us and are convinced that we can offer you an effective evaluation of this analysis as well as limited to the lines of insurance requested by the customer in the requirements assessment; further protection of interests is not desired and therefore excluded.<br/><br/>"The creation of the coverage concept was created exclusively according to the information provided by the customer. No liability is assumed for incorrect information".<br/><br/>I hereby authorize LiberoLife GmbH to use my personal data in accordance with § 62 WAG 2007 in conjunction with § 107 TKG and under the statutory data protection regulations - in particular the DSGVO. Your data will be treated as strictly confidential and will only be passed on to third parties under the legal requirements (e.g. preparation of an offer, etc.).<br/><br/>I confirm receipt of the information obligations and data protection notices and have been informed in detail about them. '
         },
-        finishButton: 'Finish assessment'
+        finishButton: 'Finish assessment',
+        wishesOffer: 'Wishes offer'
     },
     home: {
         greeting: 'Hello {0}!'
@@ -636,7 +638,8 @@ export const de: Localisation = {
             noticeTitle: 'Hinweise',
             noticeText: 'Wir bedanken uns für die Bereitschaft, uns Deine persönlichen Daten offen zu legen, und sind davon überzeugt, Dir dadurch eine effektive Auswertung dieser Analyse bieten zu können.<br/>Wir weisen darauf hin, dass sich im Versicherungsbereich die Interessenwahrung auf den österreichischen Markt sowie auf die vom Kunden in der Bedarfserfassung gewünschten Versicherungssparten beschränkt; eine darüber hinausgehende Interessenwahrung ist nicht gewünscht und daher ausgeschlossen.<br/><br/>„Die Erstellung des Deckungskonzeptes ist ausschließlich nach Angaben des Kunden passierenden Daten erstellt worden. Für Fehlinformationen wird keine Haftung übernommen“.<br/><br/>Hiermit bevollmächtige ich die LiberoLife GmbH, meine personenbezogenen Daten laut § 62 WAG 2007 iVm § 107 TKG sowie unter den gesetzlichen Datenschutzbestimmungen – insbesondere der DSGVO – zu verwenden. Deine Daten werden streng vertraulich behandelt und nur unter den gesetzlichen Voraussetzungen (zb Angebotserstellung etc.) an Dritte weitergegeben.<br/><br/>Ich bestätige den Erhalt der Informationspflichten und Datenschutzhinweise und wurde darüber ausführlich aufgeklärt.'
         },
-        finishButton: 'Analyse abschließen'
+        finishButton: 'Analyse abschließen',
+        wishesOffer: 'Angebot erwünscht'
     },
     home: {
         greeting: 'Hallo {0}!'
