@@ -3,3 +3,5 @@ export const admin  = writable(false);
 // @ts-ignore
 export const production: boolean = app_run_mode_production;
 export const snackbar = writable('');
+
+export const confirm = writable({ title: '', message: '' , func: () => {}});

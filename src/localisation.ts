@@ -143,6 +143,7 @@ type NeedsAssessmentWealthBuilding = {
     saveEducation: string;
     otherInvestmentGoal: string;
     alreadyInvested: string;
+    plannedInvestmentGoals: string;
     plannedInvestmentPeriod: string;
     investmentPeriodOptions: InvestmentPeriodOptions;
     plannedMethodOfPayment: string;
@@ -386,6 +387,7 @@ export const en: Localisation = {
             saveEducation: 'Save for education',
             otherInvestmentGoal: 'Other investment goals',
             alreadyInvested: 'Do savings forms already exist?',
+            plannedInvestmentGoals: 'Planned investment goals',
             plannedInvestmentPeriod: 'Planned investment period',
             investmentPeriodOptions: {
                 upToFiveYears: 'Up to 5 years',
@@ -602,6 +604,7 @@ export const de: Localisation = {
             saveEducation: 'Sparen für Ausbildung Kinder/Partner ',
             otherInvestmentGoal: 'Andere Anlageziel',
             alreadyInvested: 'Bestehen bereits Sparformen?',
+            plannedInvestmentGoals: 'Geplante Anlageziele',
             plannedInvestmentPeriod: 'Geplante Anlagedauer',
             investmentPeriodOptions: {
                 upToFiveYears: 'Bis 5.Jahre',

@@ -4,7 +4,6 @@
     import Textfield from '@smui/textfield';
     import OpenCloseToggle from "../OpenCloseToggle.svelte";
     import ProvisionComponent from "./ProvisionComponent.svelte";
-    import WealthBuilding from "./WealthBuilding.svelte";
     import { CarType } from '../client/CarType';
     import CarComponent from '../client/CarComponent.svelte';
     import { NeedsAssessmentType } from './NeedsAssessmentType';
@@ -31,9 +30,6 @@
     <a slot="additional-content" class="retirement-link" href="https://www.pensionskontorechner.at/#/start" target="_blank" rel="noopener noreferrer">pensionskontorechner.at</a>
 </ProvisionComponent>
 
-<OpenCloseToggle label={$l.needsAssessment.provisions.wealthBuilding}>
-    <WealthBuilding bind:wealthBuilder={assessment.wealthBuilding}/>
-</OpenCloseToggle>
 <ProvisionComponent bind:insurance={assessment.insurances.illnessInsurance} label={$l.needsAssessment.provisions.illness}/>
 <StylizedCheckbox bind:value={care} label={$l.needsAssessment.provisions.care}>
     <Textfield input$emptyValueUndefined={true} input$emptyValueNull={true} bind:value={assessment.insurances.careRemarks} label={$l.remarks} style="width:100%"/>

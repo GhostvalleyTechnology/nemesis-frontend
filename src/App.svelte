@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { admin, production } from "./stores";
+	import { admin, production, confirm } from "./stores";
 	import { OpenAPI, UserService } from "./gen"
 	OpenAPI.BASE = production ? window.location.origin : "http://localhost:8080"
 	OpenAPI.HEADERS = {
@@ -30,12 +30,13 @@
 		Subtitle,
 	} from "@smui/drawer";
 	import List, { Item, Graphic, Separator, Text } from "@smui/list";
-import Snackbar from "./components/Snackbar.svelte";
+	import Snackbar from "./components/Snackbar.svelte";
+	import ConfirmDialog from "./components/ConfirmDialog.svelte";
 
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
-	function logout() {
-		window.location.href = '/logout';
+	const logout = () => {
+		confirm.set({title:'Logout', message:'Wirklich ausloggen?', func: () => {window.location.href = '/logout';}});
 	}
 
 	let language: string = getLanguageButtonText();
@@ -160,6 +161,7 @@ import Snackbar from "./components/Snackbar.svelte";
 			</AppContent>
 		</Router>
 	</div>
+	<ConfirmDialog/>
 	<Snackbar/>
 </main>
 

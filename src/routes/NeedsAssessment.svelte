@@ -9,6 +9,7 @@
     import { createNeedsAssessment } from '../components/needs_assessment/NeedsAssessmentType';
     import LegalComponent from '../components/needs_assessment/LegalComponent.svelte';
     import Print from '../components/needs_assessment/Print.svelte';
+import WealthBuilding from '../components/needs_assessment/WealthBuilding.svelte';
 
     let assessment = createNeedsAssessment();
     let print: Print;
@@ -27,11 +28,9 @@
         <OpenCloseToggle label={$l.needsAssessment.subtitles.provision} labelStyle="mdc-typography--headline4">
             <ProvisionsComponent bind:assessment={assessment} />
         </OpenCloseToggle>
-
-        <OpenCloseToggle label={$l.needsAssessment.subtitles.experiences} labelStyle="mdc-typography--headline4">
-            {#each assessment.experiences as experience}
-                <ExperienceComponent {experience}/>
-            {/each}
+        
+        <OpenCloseToggle label={$l.needsAssessment.provisions.wealthBuilding} labelStyle="mdc-typography--headline4">
+            <WealthBuilding bind:assessment={assessment}/>
         </OpenCloseToggle>
         <OpenCloseToggle label={$l.needsAssessment.subtitles.legal} labelStyle="mdc-typography--headline4">
             <LegalComponent bind:assessment={assessment}/>

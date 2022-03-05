@@ -9,3 +9,10 @@ export const createdRedirect = (location: string) => {
     navigate(location.replace("8080", "5000"));
   }
 }
+
+export const formatCreatedAt = (createdAt: string) => {
+  if(createdAt.includes("T")) {
+    return createdAt.split("T")[0];
+  }
+  return createdAt;
+}

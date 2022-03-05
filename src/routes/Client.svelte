@@ -15,8 +15,10 @@
     import Documents from "../components/client/Documents.svelte";
     import { createEmptyClientDto } from "../service/defaults";
     import { navigate } from "svelte-routing";
-
     export let id: string;
+
+    export let location;
+
     let client: ClientDto = createEmptyClientDto();
     let newClient = id === 'new';
 
@@ -47,7 +49,21 @@
         });
     }
     
-    let active = tabs[0];
+    const getQueryTab = () => {
+        if(location.search) {
+            let query = location.search.substring(1);
+            let vars = query.split('&');
+            for (let i = 0; i < vars.length; i++) {
+                let pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == 'tab') {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+        }
+        return "personal";
+    }
+
+    let active = tabs.find(tab => tab.id == getQueryTab());
 
     function save() {
         if (newClient) {
@@ -62,7 +78,7 @@
     let selectedContract: ContractRoute;
     $: if (active.id !== 'contracts') {
         selectedContract = {
-        id: 0, edit: false, add: false
+            id: 0, edit: false, add: false
         }
     }
 </script>
