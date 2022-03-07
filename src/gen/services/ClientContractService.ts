@@ -94,7 +94,7 @@ requestBody?: ClientContractDto,
 
     /**
      * @param formData 
-     * @returns any OK
+     * @returns ClientContractDto OK
      * @throws ApiError
      */
     public static uploadPolicy(
@@ -104,7 +104,7 @@ fileName?: string;
 fileExtension?: string;
 clientContractId?: number;
 },
-): CancelablePromise<any> {
+): CancelablePromise<ClientContractDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/client-contract/upload-policy',
@@ -115,7 +115,7 @@ clientContractId?: number;
 
     /**
      * @param formData 
-     * @returns any OK
+     * @returns ClientContractDto OK
      * @throws ApiError
      */
     public static uploadPolicyRequest(
@@ -125,7 +125,7 @@ fileName?: string;
 fileExtension?: string;
 clientContractId?: number;
 },
-): CancelablePromise<any> {
+): CancelablePromise<ClientContractDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/client-contract/upload-policy-request',

@@ -39,7 +39,6 @@
     file = valueTypeFiles.item(0);
   }
 </script>
-
 {#if edit}
   {#if showAdd}
   <Button on:click={selectFile}>
@@ -56,9 +55,3 @@
   </Button>
   {/if}
 {/if}
-
-<style lang="scss">
-  .hidden {
-    display: none;
-  }
-</style>

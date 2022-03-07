@@ -14,14 +14,15 @@
   import AdminGuard from '../components/AdminGuard.svelte';
   import Searchbar from "../components/Searchbar.svelte";
   import FloatingActionButton from "../components/FloatingActionButton.svelte";
-  import { sortFunction } from "./sort";
+  import { sortFunc } from "./sort";
   import { TemplateService } from "../gen";
 
   let sort: keyof TemplateFacade = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
+  const sortFunction = () => filtered = filtered.sort(sortFunc(sort, sortDirection));
 
   let items: TemplateFacade[] = [];
-  listTemplates().then(result => {items = result; sortFunction(items, sort, sortDirection)});
+  listTemplates().then(result => {items = result; sortFunction()});
   $: filterValue = "";
   $: filtered = items.filter((s) => s.name.includes(filterValue));
 
@@ -61,7 +62,7 @@
   sortable
   bind:sort
   bind:sortDirection
-  on:MDCDataTable:sorted={() => sortFunction(items, sort, sortDirection)}
+  on:MDCDataTable:sorted={() => sortFunction()}
   table$aria-label="Template list"
   style="width: 100%;"
 >

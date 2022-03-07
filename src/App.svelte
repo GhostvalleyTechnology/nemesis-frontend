@@ -17,6 +17,7 @@
 	import PartnerServiceTypes from "./routes/PartnerServiceTypes.svelte";
 	import Partners from "./routes/Partners.svelte";
 	import Partner from "./routes/Partner.svelte";
+	import Notes from "./routes/Notes.svelte";
 	import Employees from "./routes/Employees.svelte";
 	import Employee from "./routes/Employee.svelte";
 	import Button, { Label } from '@smui/button';
@@ -32,6 +33,7 @@
 	import List, { Item, Graphic, Separator, Text } from "@smui/list";
 	import Snackbar from "./components/Snackbar.svelte";
 	import ConfirmDialog from "./components/ConfirmDialog.svelte";
+	import EasterEgg from "./routes/EasterEgg.svelte";
 
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
@@ -72,6 +74,7 @@
 	function toggleAdminMode() {
 		admin.set(!isAdminMode);
 	}
+	let easterEgg = false;
 </script>
 
 <main>
@@ -133,7 +136,7 @@
 						<Label>{language}</Label>
 					</Button>
 
-					<footer>{$l.menu.footer}</footer>
+					<footer on:click={() => easterEgg = !easterEgg}>{easterEgg ? $l.menu.footerAlt : $l.menu.footer}</footer>
 				</Content>
 			</Drawer>
 
@@ -141,7 +144,9 @@
 				<div class="drawer-button">
 					<IconButton class="material-icons" on:click={() => (drawerOpen = !drawerOpen)}>menu</IconButton>
 				</div>
-
+				
+					<EasterEgg bind:show={easterEgg}/>
+				
 				<Route path="/">
 					<Home {name} />
 				</Route>
@@ -156,6 +161,7 @@
 					<Route path="/partner/:id" component={Partner} />
 					<Route path="/employees" component={Employees} />
 					<Route path="employee/:id" component={Employee} />
+					<Route path="/notes" component={Notes} />
 				</div>
 				
 			</AppContent>

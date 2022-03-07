@@ -40,6 +40,14 @@ a:visited {
   color: constants.$primary,
 }
 
+.unimportant-row {
+  opacity: 0.5;
+}
+
+.important-row {
+  background: rgb(240, 85, 69, 0.5) !important;
+}
+
 // drawer
 .mdc-drawer__title {
   font-size: 2.6em;

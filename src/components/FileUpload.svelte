@@ -1,3 +1,7 @@
+<script context="module">
+  let counter = 0
+</script>
+
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition';
@@ -35,7 +39,10 @@
       trigger();
     }
   };
-
+  export const clear = () => {
+    droppedFiles = undefined;
+    changeCheckBack();
+  }
   export const trigger = async () => {
     if(droppedFiles == undefined) {
       return;
@@ -53,6 +60,9 @@
   const changeCheckBack = () => {
     droppedFileIcon = "check";
   }
+
+  // needed for uniqueness (lik in contracts as there are two uploads)
+  let inputId = 'input_'+ counter++;
 </script>
 
   <form
@@ -76,15 +86,15 @@
           on:mouseover={changeCheckToDelete}
           on:mouseout={changeCheckBack}
           on:blur={changeCheckBack}
-          on:click={() => {droppedFiles = undefined; changeCheckBack();}}
+          on:click={() => {clear()}}
           >{droppedFileIcon}</span>
         {:else}
         <span class="material-icons" transition:fade={{duration: 100}}>upload</span>
         {/if}
       </div>
       
-      <input type="file" id="file" bind:files={droppedFiles} hidden />
-      <label class="pointer" for="file">
+      <input type="file" id={inputId} bind:files={droppedFiles} hidden />
+      <label class="pointer" for={inputId}>
         {#if droppedFiles}
           {#each droppedFiles as item}
             {item.name}

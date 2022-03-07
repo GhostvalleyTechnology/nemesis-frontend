@@ -168,7 +168,14 @@
         },
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClientContractDto"
+                }
+              }
+            }
           }
         }
       }
@@ -218,7 +225,14 @@
         },
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClientContractDto"
+                }
+              }
+            }
           }
         }
       }
@@ -867,6 +881,27 @@
         }
       }
     },
+    "/api/reminder" : {
+      "get" : {
+        "tags" : [ "Reminder Service" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ReminderDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/template/add" : {
       "post" : {
         "tags" : [ "Template Service" ],
@@ -1205,12 +1240,80 @@
           }
         }
       },
+      "ClientReferenceDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "gender" : {
+            "$ref" : "#/components/schemas/Gender"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "mobile" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "academicDegree" : {
+            "type" : "string"
+          },
+          "birthday" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "birthPlace" : {
+            "type" : "string"
+          },
+          "nationality" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "socialInsuranceInstitution" : {
+            "type" : "string"
+          },
+          "occupation" : {
+            "type" : "string"
+          },
+          "country" : {
+            "$ref" : "#/components/schemas/Country"
+          },
+          "zipCode" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "supervisor" : {
+            "type" : "string"
+          },
+          "deleted" : {
+            "type" : "boolean"
+          }
+        }
+      },
       "CloudFileDto" : {
         "type" : "object",
         "properties" : {
-          "objectName" : {
-            "type" : "string"
-          },
           "fileName" : {
             "type" : "string"
           },
@@ -1477,6 +1580,37 @@
       },
       "ProofOfIdentityType" : {
         "enum" : [ "driversLicence", "identityCard", "passport" ],
+        "type" : "string"
+      },
+      "ReminderDto" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/ReminderType"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "text" : {
+            "type" : "string"
+          },
+          "due" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "done" : {
+            "type" : "boolean"
+          },
+          "sent" : {
+            "type" : "boolean"
+          },
+          "client" : {
+            "$ref" : "#/components/schemas/ClientReferenceDto"
+          }
+        }
+      },
+      "ReminderType" : {
+        "enum" : [ "generic", "service" ],
         "type" : "string"
       },
       "TemplateDto" : {

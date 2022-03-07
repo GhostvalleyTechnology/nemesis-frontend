@@ -40,7 +40,7 @@
         tabs.push({
             id: "contracts",
             icon: "file_present",
-            label: "Verträge",
+            label: "Polizzen",
         });
         tabs.push({
             id: "documents",
@@ -77,6 +77,9 @@
     let edit = newClient;
     let selectedContract: ContractRoute;
     $: if (active.id !== 'contracts') {
+        resetTabs();
+    }
+    const resetTabs = () => {
         selectedContract = {
             id: 0, edit: false, add: false
         }
@@ -85,7 +88,7 @@
 <FormContainer>
   <div class="group">
     <TabBar {tabs} let:tab bind:active>
-        <Tab {tab}>
+        <Tab {tab} on:click={() => resetTabs()}>
             <TabIcon class="material-icons">{tab.icon}</TabIcon>
             <TabLabel>{tab.label}</TabLabel>
         </Tab>

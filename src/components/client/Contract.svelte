@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { confirm, snackbar } from '../../stores';
   import l from '../../localisation';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import { ClientContractDto, ClientContractService, ClientDto, CloudFileDto, PaymentFrequency } from '../../gen';
@@ -12,7 +13,6 @@
   import ContractorSelection from '../ContractorSelection.svelte';
   import FloatingActionButton from '../FloatingActionButton.svelte';
   import { ContractRoute } from './ContractRouteType';
-  import { open, hasFile } from '../OpenFile';
   import StylizedCheckbox from '../StylizedCheckbox.svelte';
   import FileUpload from '../FileUpload.svelte';
   import H3 from '../H3.svelte';
@@ -34,17 +34,18 @@
   }
   const save = () => {
     if (selectedContract.add) {
-      ClientContractService.add(contract).then(response => {addNewContract(response); upload()});
+      ClientContractService.add(contract).then(response => {addNewContract(response); upload(); snackbar.set("Polizze erstellt.");});
     } else {
-      ClientContractService.update(contract).then(_ => upload());
+      ClientContractService.update(contract).then(_ => {upload(); snackbar.set("Polizze geändert.");});
     }
   }
 
   function upload() {
-    policyRequestFileUpload.trigger();
-    policyFileUpload.trigger();
+    if(policyRequestFileUpload) { policyRequestFileUpload.trigger(); }
+    if(policyFileUpload) { policyFileUpload.trigger(); }
+    selectedContract.add = false;
+    selectedContract.edit = false;
   }
-
 
 const policyRequestSubmit = (e: CustomEvent<{ file: File; }>) => {
   ClientContractService.uploadPolicyRequest({
@@ -52,7 +53,7 @@ const policyRequestSubmit = (e: CustomEvent<{ file: File; }>) => {
     file: e.detail.file,
     fileExtension: e.detail.file.type,
     fileName: e.detail.file.name
-  });
+  }).then(response => contract = response);
 }
 const policySubmit = (e: CustomEvent<{ file: File; }>) => {
   ClientContractService.uploadPolicy({
@@ -60,7 +61,7 @@ const policySubmit = (e: CustomEvent<{ file: File; }>) => {
     file: e.detail.file,
     fileExtension: e.detail.file.type,
     fileName: e.detail.file.name
-  });
+  }).then(response => contract = response);
 }
 
 const openPolicy = (dto: ClientContractDto) => {
@@ -69,10 +70,34 @@ const openPolicy = (dto: ClientContractDto) => {
 const openPolicyRequest = (dto: ClientContractDto) => {
   ClientContractService.getPolicyRequest(dto.id).then(response => window.open(response));
 }
+const deleteContract = () => {
+  confirm.set({title: 'Dokument löschen?', message: 'Dokument unwiderruflich löschen?', func: () => {
+    ClientContractService.delete(contract.id).then(_ => {
+      let temp = client.contracts;
+      let index = client.contracts.findIndex(d => d.id == contract.id);
+      temp.splice(index, 1);
+      client.contracts = temp;
+      selectedContract.add = false;
+      selectedContract.edit = false;
+    });
+  }});
+}
 </script>
 
 <FormContainer>
-      <H2>{$l.contract.newContractTitle}</H2>
+      <div class="header-container">
+        <div class="header-item">
+      <H2>{selectedContract.add ? $l.contract.newContractTitle : $l.contract.editContractTitle}</H2>
+    </div>
+    <div class="header-item">
+      {#if selectedContract.edit}
+      <Button on:click={deleteContract}>
+        <Icon class="material-icons">close</Icon>
+        <Label>Polizze löschen</Label>
+      </Button>
+      {/if}
+    </div>
+      </div>
       <LayoutGrid style="padding-bottom: 3rem;">
           <Cell span={6}>
             <LabelTextfieldToggle {edit} label={$l.contract.contractNumber} bind:value={contract.contractNumber}/>
@@ -139,5 +164,12 @@ const openPolicyRequest = (dto: ClientContractDto) => {
 .file-button-container {
   display: flex;
   justify-content: space-evenly;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+.header-item {
+  align-self: center;
 }
 </style>

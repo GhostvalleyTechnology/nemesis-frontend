@@ -1,19 +1,27 @@
 <script lang="ts">
     import l from '../localisation'
+    import { snackbar } from "../stores";
     import Button, { Label } from '@smui/button';
     import PersonalComponent from '../components/client/PersonalComponent.svelte';
     import BaseInsurancesComponent from '../components/needs_assessment/BaseInsurancesComponent.svelte';
-    import ExperienceComponent from '../components/needs_assessment/ExperienceComponent.svelte';
     import ProvisionsComponent from '../components/needs_assessment/ProvisionsComponent.svelte';
     import OpenCloseToggle from '../components/OpenCloseToggle.svelte';
     import { createNeedsAssessment } from '../components/needs_assessment/NeedsAssessmentType';
     import LegalComponent from '../components/needs_assessment/LegalComponent.svelte';
     import Print from '../components/needs_assessment/Print.svelte';
-import WealthBuilding from '../components/needs_assessment/WealthBuilding.svelte';
+    import WealthBuilding from '../components/needs_assessment/WealthBuilding.svelte';
+    import StylizedCheckbox from '../components/StylizedCheckbox.svelte';
+    import { ClientService } from '../gen';
 
     let assessment = createNeedsAssessment();
     let print: Print;
-
+    let saveNewClient = false;
+    const finish = () => {
+        if(saveNewClient) {
+            ClientService.add(assessment.client).then(_ => snackbar.set("Kunde angelegt"));
+        }
+        print.print();
+    }
 </script>
 <div class="form-container">
         <h1 class="mdc-typography--headline2">{$l.needsAssessment.title}</h1>
@@ -36,7 +44,10 @@ import WealthBuilding from '../components/needs_assessment/WealthBuilding.svelte
             <LegalComponent bind:assessment={assessment}/>
         </OpenCloseToggle>
 
-        <Button on:click={() => print.print()} variant="raised" style="margin-top: 50px">
+
+        <StylizedCheckbox label={$l.needsAssessment.saveClient} bind:value={saveNewClient}/>
+
+        <Button on:click={finish} variant="raised">
             <Label>{$l.needsAssessment.finishButton}</Label>
         </Button>
 

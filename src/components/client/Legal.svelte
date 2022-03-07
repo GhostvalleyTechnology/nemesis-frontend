@@ -8,10 +8,9 @@
     export let client: ClientDto;
     export let edit: boolean;
 
-    import { open } from "../OpenFile";
     import LayoutGrid, { Cell } from "@smui/layout-grid";
-    import Textfield from "@smui/textfield";
     import ProofOfIdentity from "./ProofOfIdentity.svelte";
+    import LabelTextfieldToggle from "../LabelTextfieldToggle.svelte";
 
     let hasDriversLicence = false;
     let hasIdentityCard = false;
@@ -49,40 +48,37 @@
         if(!check) {
             return;
         }
-        ProofOfIdentityService.get(item.id).then(response => {
-            open(response)
-        });
+        ProofOfIdentityService.get(item.id).then(response => window.open(response));
     }
 </script>
-
 <LayoutGrid style="padding-bottom: 3rem;">
     <Cell span={6}>
-        <Textfield style="width: 100%;" bind:value={client.bank} label="Bank" />
+        <LabelTextfieldToggle bind:value={client.bank} label="Bank" {edit}/>
     </Cell>
     <Cell span={6}>
-        <Textfield style="width: 100%;" bind:value={client.bic} label="BIC" />
+        <LabelTextfieldToggle bind:value={client.bic} label="BIC" {edit}/>
     </Cell>
     <Cell span={12}>
-        <Textfield style="width: 100%;" bind:value={client.iban} label="IBAN" />
+        <LabelTextfieldToggle bind:value={client.iban} label="IBAN" {edit}/>
     </Cell>
 </LayoutGrid>
 
 <div class="container">
         <div class="thumbnail {hasDriversLicence ? 'available' : 'unavailable'}">
             <img src="/drivers.png" alt="Führerschein" on:click={() => getProof(hasDriversLicence, driversLicence)}/>
-            <div class="label">Führerschein</div>
+            <div class="label" on:click={() => getProof(hasDriversLicence, driversLicence)}>Führerschein</div>
             <ProofOfIdentity clientId={client.id} bind:item={driversLicence} {edit}/>
         </div>
 
         <div class="thumbnail {hasPassport ? 'available' : 'unavailable'}">
             <img src="/passport.png" alt="Reisepass" on:click={() => getProof(hasPassport, passport)}/>
-            <div class="label">Reisepass</div>
+            <div class="label" on:click={() => getProof(hasPassport, passport)}>Reisepass</div>
             <ProofOfIdentity clientId={client.id} bind:item={passport} {edit}/>
         </div>
 
         <div class="thumbnail {hasIdentityCard ? 'available' : 'unavailable'}">
             <img src="/perso.png" alt="Personalausweis" on:click={() => getProof(hasIdentityCard, identityCard)}/>
-            <div class="label">Personalausweis</div>
+            <div class="label" on:click={() => getProof(hasIdentityCard, identityCard)}>Personalausweis</div>
             <ProofOfIdentity clientId={client.id} bind:item={identityCard} {edit}/>
         </div>
 </div>
@@ -94,6 +90,9 @@
     }
     .thumbnail {
         text-align: center;
+    }
+    .available {
+        cursor: pointer;
     }
     img {
         max-width: 80px;

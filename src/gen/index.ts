@@ -11,6 +11,7 @@ export type { ClientContractWithPersonalInformationDto } from './models/ClientCo
 export type { ClientDocumentDto } from './models/ClientDocumentDto';
 export { ClientDocumentType } from './models/ClientDocumentType';
 export type { ClientDto } from './models/ClientDto';
+export type { ClientReferenceDto } from './models/ClientReferenceDto';
 export type { CloudFileDto } from './models/CloudFileDto';
 export { Country } from './models/Country';
 export type { EmployeeDto } from './models/EmployeeDto';
@@ -25,6 +26,8 @@ export type { PartnerServiceTypeDto } from './models/PartnerServiceTypeDto';
 export { PaymentFrequency } from './models/PaymentFrequency';
 export type { ProofOfIdentityDto } from './models/ProofOfIdentityDto';
 export { ProofOfIdentityType } from './models/ProofOfIdentityType';
+export type { ReminderDto } from './models/ReminderDto';
+export { ReminderType } from './models/ReminderType';
 export type { TemplateDto } from './models/TemplateDto';
 
 export { AdminService } from './services/AdminService';
@@ -36,5 +39,6 @@ export { ExampleResource } from './services/ExampleResource';
 export { PartnerService } from './services/PartnerService';
 export { PartnerServiceTypeService } from './services/PartnerServiceTypeService';
 export { ProofOfIdentityService } from './services/ProofOfIdentityService';
+export { ReminderService } from './services/ReminderService';
 export { TemplateService } from './services/TemplateService';
 export { UserService } from './services/UserService';

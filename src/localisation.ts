@@ -33,10 +33,11 @@ type ClientDocument = {
 
 type Contract = {
     newContractTitle: string;
+    editContractTitle: string;
     contractNumber: string;
     serviceType: string;
     legacy: string;
-
+    
 }
 
 type GeneralPayment = {
@@ -59,6 +60,7 @@ type Menu = {
     employees: string;
     logout: string;
     footer: string;
+    footerAlt: string;
 }
 
 type Home = {
@@ -75,6 +77,7 @@ type NeedsAssessment = {
     signing: NeedsAssessmentLegal;
     finishButton: string;
     wishesOffer: string;
+    saveClient: string;
 }
 
 type NeedsAssessmentLegal = {
@@ -256,7 +259,8 @@ export const en: Localisation = {
         admin_mode: 'Admin Mode',
         employees: 'Employees',
         logout: 'Logout',
-        footer: 'created with ♡ by quellkunst.com'
+        footer: 'created with ♡ by quellkunst.com',
+        footerAlt: 'created with ♥ by quellkunst.com',
     },
     personal: {
         firstName: 'First name',
@@ -425,7 +429,8 @@ export const en: Localisation = {
             noticeText: 'We thank you for your willingness to disclose your personal data to us and are convinced that we can offer you an effective evaluation of this analysis as well as limited to the lines of insurance requested by the customer in the requirements assessment; further protection of interests is not desired and therefore excluded.<br/><br/>"The creation of the coverage concept was created exclusively according to the information provided by the customer. No liability is assumed for incorrect information".<br/><br/>I hereby authorize LiberoLife GmbH to use my personal data in accordance with § 62 WAG 2007 in conjunction with § 107 TKG and under the statutory data protection regulations - in particular the DSGVO. Your data will be treated as strictly confidential and will only be passed on to third parties under the legal requirements (e.g. preparation of an offer, etc.).<br/><br/>I confirm receipt of the information obligations and data protection notices and have been informed in detail about them. '
         },
         finishButton: 'Finish assessment',
-        wishesOffer: 'Wishes offer'
+        wishesOffer: 'Wishes offer',
+        saveClient: 'Save as new client'
     },
     home: {
         greeting: 'Hello {0}!'
@@ -447,6 +452,7 @@ export const en: Localisation = {
     add: 'Add',
     contract: {
         newContractTitle: 'New Contract',
+        editContractTitle: 'Edit Contract',
         contractNumber: 'Contract No.',
         serviceType: 'Service',
         legacy: 'Legacy Contract'
@@ -473,7 +479,8 @@ export const de: Localisation = {
         admin_mode: 'Admin Modus',
         employees: 'Mitarbeiter',
         logout: 'Abmelden',
-        footer: 'erstellt mit ♡ von quellkunst.com'
+        footer: 'erstellt mit ♡ von quellkunst.com',
+        footerAlt: 'erstellt mit ♥ von quellkunst.com'
     },
     personal: {
         firstName: 'Vorname',
@@ -642,7 +649,8 @@ export const de: Localisation = {
             noticeText: 'Wir bedanken uns für die Bereitschaft, uns Deine persönlichen Daten offen zu legen, und sind davon überzeugt, Dir dadurch eine effektive Auswertung dieser Analyse bieten zu können.<br/>Wir weisen darauf hin, dass sich im Versicherungsbereich die Interessenwahrung auf den österreichischen Markt sowie auf die vom Kunden in der Bedarfserfassung gewünschten Versicherungssparten beschränkt; eine darüber hinausgehende Interessenwahrung ist nicht gewünscht und daher ausgeschlossen.<br/><br/>„Die Erstellung des Deckungskonzeptes ist ausschließlich nach Angaben des Kunden passierenden Daten erstellt worden. Für Fehlinformationen wird keine Haftung übernommen“.<br/><br/>Hiermit bevollmächtige ich die LiberoLife GmbH, meine personenbezogenen Daten laut § 62 WAG 2007 iVm § 107 TKG sowie unter den gesetzlichen Datenschutzbestimmungen – insbesondere der DSGVO – zu verwenden. Deine Daten werden streng vertraulich behandelt und nur unter den gesetzlichen Voraussetzungen (zb Angebotserstellung etc.) an Dritte weitergegeben.<br/><br/>Ich bestätige den Erhalt der Informationspflichten und Datenschutzhinweise und wurde darüber ausführlich aufgeklärt.'
         },
         finishButton: 'Analyse abschließen',
-        wishesOffer: 'Angebot erwünscht'
+        wishesOffer: 'Angebot erwünscht',
+        saveClient: 'Als Kunde speichern'
     },
     home: {
         greeting: 'Hallo {0}!'
@@ -663,7 +671,8 @@ export const de: Localisation = {
     edit: 'Ändern',
     add: 'Hinzufügen',
     contract: {
-        newContractTitle: 'Neuer Vertrag',
+        newContractTitle: 'Neue Polizze',
+        editContractTitle: 'Polizze bearbeiten',
         contractNumber: 'Polizzen Nr.',
         serviceType: 'Versicherungsgegenstand',
         legacy: 'Altvertrag'

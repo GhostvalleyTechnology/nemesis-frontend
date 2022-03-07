@@ -6,7 +6,7 @@
   import Searchbar from "../components/Searchbar.svelte";
   import FloatingActionButton from "../components/FloatingActionButton.svelte";
   import AdminGuard from "../components/AdminGuard.svelte";
-  import { sortFunction } from "./sort";
+  import { sortFunc } from "./sort";
   import FloatingSettingsButton from "../components/FloatingSettingsButton.svelte";
 
   var items: PartnerDto[] = [];
@@ -14,9 +14,7 @@
 
   let sort: keyof PartnerDto = 'name';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
-  function handleSort() {
-    sortFunction(items, sort, sortDirection);
-  }
+  const sortFunction = () => filtered = filtered.sort(sortFunc(sort, sortDirection));
 
   $: filterValue = "";
   $: filtered = items.filter(
@@ -35,7 +33,7 @@
   sortable
   bind:sort
   bind:sortDirection
-  on:MDCDataTable:sorted={handleSort}
+  on:MDCDataTable:sorted={() => sortFunction()}
   table$aria-label="Partner list"
   style="width: 100%;"
 >

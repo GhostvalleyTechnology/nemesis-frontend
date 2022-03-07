@@ -20,7 +20,7 @@
   import { open } from "../OpenFile";
   import l from "../../localisation";
   import { ContractRoute } from "./ContractRouteType";
-  import { sortFunction } from "../../routes/sort";
+  import { sortFunc } from "../../routes/sort";
 
   export let client: ClientDto;
   export let selectedContract: ContractRoute;
@@ -28,6 +28,7 @@
 
   let sort: keyof ClientContractDto = "id";
   let sortDirection: Lowercase<keyof typeof SortValue> = "ascending";
+  const sortFunction = () => filtered = filtered.sort(sortFunc(sort, sortDirection));
 
   $: filtered = client.contracts.filter(
     (s) =>
@@ -44,8 +45,12 @@
       add: false
     }
   }
-  function openContract(item: ClientContractDto) {
 
+  const openPolicy = (item: ClientContractDto) => {
+    ClientContractService.getPolicy(item.id).then(response => window.open(response));
+  }
+  const openPolicyRequest = (item: ClientContractDto) => {
+    ClientContractService.getPolicyRequest(item.id).then(response => window.open(response));
   }
 </script>
 
@@ -56,7 +61,7 @@
     sortable
     bind:sort
     bind:sortDirection
-    on:MDCDataTable:sorted={() => sortFunction(client.contracts, sort, sortDirection)}
+    on:MDCDataTable:sorted={() => sortFunction()}
     table$aria-label="Contract list"
     style="width: 100%;"
   >
@@ -66,51 +71,38 @@
           <Label>{$l.contract.contractNumber}</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="signed" style="width: 100%;">
+        <Cell columnId="serviceType.service" style="width: 100%;">
           <Label>{$l.contract.serviceType}</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="contractor" style="width: 100%;">
+        <Cell columnId="contractor.name" style="width: 100%;">
           <Label>{$l.menu.partner}</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="createdAt" style="width: 100%;">
+        <Cell columnId="contractDate" style="width: 100%;">
           <Label>{$l.createdAt}</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
-        <Cell columnId="legacy" style="width: 100%;">
-          <Label>{$l.contract.legacy}</Label>
-          <IconButton class="material-icons">arrow_upward</IconButton>
-        </Cell>
-        <Cell columnId="document">
-          <Label>{$l.file}</Label>
+        <Cell columnId="policy.fileName">
+          <Label>Polizze</Label>
           <IconButton class="material-icons">arrow_upward</IconButton>
         </Cell>
       </Row>
     </Head>
     <Body>
       {#each filtered as item (item.id)}
-        <Row>
+        <Row class="{item.legacy ? 'unimportant-row': item.policy ? '' : 'important-row'}">
           <Cell on:click={() => editContract(item)}>{#if item.contractNumber}{item.contractNumber}{:else}{$l.unknown}{/if}</Cell>
-          <Cell on:click={() => editContract(item)}>{item.serviceType.service}</Cell>
+          <Cell on:click={() => editContract(item)}>{#if item.serviceType}{item.serviceType.service}{:else}{$l.unknown}{/if}</Cell>
           <Cell on:click={() => editContract(item)}>{#if item.contractor}{item.contractor.name}{:else}{$l.unknown}{/if}</Cell>
-          <Cell on:click={() => editContract(item)}>{item.contractDate}</Cell>
-          <Cell on:click={() => editContract(item)}>
-            <Icon class="material-icons">
-              {#if item.legacy}
-                task_alt
-              {:else}
-                radio_button_unchecked
-              {/if}
-            </Icon>
-          </Cell>
+          <Cell on:click={() => editContract(item)}>{#if item.contractDate}{item.contractDate}{:else}{$l.unknown}{/if}</Cell>
 
-          <Cell on:click={() => openContract(item)}>
+          <Cell on:click={() => openPolicy(item)}>
             <Icon class="material-icons">
-              {#if item.policyRequest}
+              {#if item.policy}
                 description
               {:else}
-                priority_high
+                question_mark
               {/if}
             </Icon>
           </Cell>
@@ -121,4 +113,5 @@
 </FormContainer>
 
 <style>
+  
 </style>

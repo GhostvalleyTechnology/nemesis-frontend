@@ -2,7 +2,6 @@
     import l, {format} from '../localisation';
     export let name = "";
 </script>
-
 <div class="area background">
     <div class="content">
         <img class="logo" src="../logo.png" alt="LiberoLife Logo" />
@@ -38,12 +37,12 @@
 .content {
     display: grid;
     align-items: center;
-    justify-content: center;
     height: 100%;
+    justify-items: center;
 }
 
 .logo {
-    max-width: 15vw;
+    width: min(100%, 300px);
 }
 
 .area{
@@ -165,7 +164,5 @@
     }
 
 }
-
-
 
 </style>
