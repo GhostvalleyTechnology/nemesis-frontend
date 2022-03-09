@@ -38,7 +38,7 @@
 	let drawerOpen = true;
 	let active = window.location.pathname.substring(1);
 	const logout = () => {
-		confirm.set({title:'Logout', message:'Wirklich ausloggen?', func: () => {window.location.href = '/logout';}});
+		confirm.set({title:'Logout', message:'Wirklich ausloggen?', func: () => {window.location.replace('/logout');}});
 	}
 
 	let language: string = getLanguageButtonText();
