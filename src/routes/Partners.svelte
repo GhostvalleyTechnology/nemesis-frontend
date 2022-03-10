@@ -17,8 +17,9 @@
   const sortFunction = () => filtered = filtered.sort(sortFunc(sort, sortDirection));
 
   $: filterValue = "";
-  $: filtered = items.filter(
-    (s) => s.name.includes(filterValue) || s.services.find(service => service.service.includes(filterValue) )
+  $: filtered = items.filter((s) => 
+    (s.name == null || s.name == undefined || s.name.includes(filterValue)) || 
+    (s.services && s.services.find(service => service.service.includes(filterValue)) )
   );
   
 </script>
