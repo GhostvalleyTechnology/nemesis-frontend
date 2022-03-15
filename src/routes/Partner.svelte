@@ -11,7 +11,8 @@
   import PartnerContact from "../components/partner/PartnerContact.svelte";
   import PartnerLogin from "../components/partner/PartnerLogin.svelte";
   import PartnerServiceComponent from "../components/partner/PartnerService.svelte";
-import Group from "../components/Group.svelte";
+  import Group from "../components/Group.svelte"; 
+  import PartnerIntermediaryNumber from "../components/partner/PartnerIntermediaryNumber.svelte";
 
   export let id: string;
   let edit = false;
@@ -20,6 +21,7 @@ import Group from "../components/Group.svelte";
     contacts: [],
     logins: [],
     services: [],
+    intermediaryNumbers: [],
   };
   if (isNumeric(id)) {
     PartnerService.get(+id).then((data) => (partner = data));
@@ -63,6 +65,11 @@ import Group from "../components/Group.svelte";
     <Cell span={12}>
       <Group>
         <PartnerLogin bind:dtos={partner.logins} {edit}/>
+      </Group>
+    </Cell>
+    <Cell span={12}>
+      <Group>
+        <PartnerIntermediaryNumber bind:dtos={partner.intermediaryNumbers} {edit}/>
       </Group>
     </Cell>
     <Cell span={12}>

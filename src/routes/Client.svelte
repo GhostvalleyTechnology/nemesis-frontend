@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { snackbar } from "../stores";
+    import { snackbar, confirm } from "../stores";
     import Tab, { Icon as TabIcon, Label as TabLabel } from "@smui/tab";
     import TabBar from "@smui/tab-bar";
-
+    import Button, { Label, Icon } from '@smui/button';
     import { ClientDto, ClientService } from "../gen";
     import PersonalComponent from "../components/client/PersonalComponent.svelte";
     import FormContainer from "../components/FormContainer.svelte";
@@ -15,6 +15,8 @@
     import Documents from "../components/client/Documents.svelte";
     import { createEmptyClientDto } from "../service/defaults";
     import { navigate } from "svelte-routing";
+    import H2 from "../components/H2.svelte";
+    import AdminGuard from "../components/AdminGuard.svelte";
     export let id: string;
 
     export let location;
@@ -70,7 +72,7 @@
             ClientService.add(client).then(_ => {snackbar.set("Kunde angelegt"); navigate("/clients")});
 
         } else {
-            ClientService.update(client);
+            ClientService.update(client).then(_ => snackbar.set("Kundenänderungen gespeichert"));
         }
         edit = !edit;
     }
@@ -84,6 +86,11 @@
             id: 0, edit: false, add: false
         }
     }
+    const deleteClient = () => {
+        confirm.set({title: 'Kunde löschen?', message: 'Den Kunden wirklich löschen?', func: () => {
+            ClientService.delete(client.id).then(_ => {snackbar.set("Kunde gelöscht"); navigate("/clients")});
+        }});
+    }
 </script>
 <FormContainer>
   <div class="group">
@@ -96,6 +103,19 @@
 
     <div class="container">
         {#if active.id == "personal"}
+        <div class="personal-header-container">
+            <div class="personal-header-item">
+                <H2>{#if newClient}Neuer Kunde{:else}Kundennummer: {client.clientNumber}{/if}</H2>
+            </div>
+            <div class="personal-header-item">
+            <AdminGuard>{#if edit && !newClient}
+                <Button on:click={deleteClient}>
+                    <Icon class="material-icons">close</Icon>
+                    <Label>Kunde löschen</Label>
+                </Button>{/if}
+            </AdminGuard>
+            </div>
+        </div>
             <PersonalComponent bind:client bind:edit />
         {:else if active.id == "legal"}
             <Legal bind:client bind:edit />
@@ -127,5 +147,12 @@
 }
 .container {
     padding: 32px;
+}
+.personal-header-container {
+  display: flex;
+  justify-content: space-between;
+}
+.personal-header-item {
+  align-self: center;
 }
 </style>

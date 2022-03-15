@@ -134,8 +134,7 @@
 
   type RiskType = { name: string, desc: string }
 
-  function getRiskTolerance(): RiskType {
-    let level = d.wealthBuilding.riskLevel;
+  function getRiskTolerance(level?: RiskLevel): RiskType {
     if(!level) {
       return {name: '', desc: ''}
     }
@@ -274,29 +273,11 @@
   </div>
   </section>
   <section class="kv-container">
-  <PrintInsurance label={$l.needsAssessment.provisions.retirement} insurance={d.insurances.retirementInsurance} />
-    </section>
-<section class="kv-container">
-  <PrintInsurance label={$l.needsAssessment.provisions.illness} insurance={d.insurances.illnessInsurance} />
-</section>
-
-  <section>
-  <h3>{$l.needsAssessment.provisions.wealthBuilding}</h3>
-  <div class="kv-container">
-    <KC k={$l.needsAssessment.wealthBuilding.retirementProvision} v={d.wealthBuilding.retirementProvision.desired} remarks={d.wealthBuilding.retirementProvision.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.saveBig} v={d.wealthBuilding.saveBig.desired} remarks={d.wealthBuilding.saveBig.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.saveEducation} v={d.wealthBuilding.saveEducation.desired} remarks={d.wealthBuilding.saveEducation.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.otherInvestmentGoal} v={d.wealthBuilding.otherInvestmentGoal.desired} remarks={d.wealthBuilding.otherInvestmentGoal.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.alreadyInvested} v={d.wealthBuilding.alreadyInvested.desired} remarks={d.wealthBuilding.alreadyInvested.remarks} />
-    <KV k={$l.needsAssessment.wealthBuilding.plannedInvestmentPeriod} v={getPlannedInvestmentPeriod(d.wealthBuilding.plannedInvestmentPeriod)} />
-    <KC k={$l.needsAssessment.wealthBuilding.paymentOnce} v={d.wealthBuilding.paymentOnce.desired} remarks={d.wealthBuilding.paymentOnce.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.paymentMonthly} v={d.wealthBuilding.paymentMonthly.desired} remarks={d.wealthBuilding.paymentMonthly.remarks} />
-    <KC k={$l.needsAssessment.wealthBuilding.paymentYearly} v={d.wealthBuilding.paymentYearly.desired} remarks={d.wealthBuilding.paymentYearly.remarks} />
-  </div>
-    <h4>{$l.needsAssessment.wealthBuilding.riskTolerance}</h4>
-    <div><span>{getRiskTolerance().name}</span><span>{getRiskTolerance().desc}</span></div>
+    <PrintInsurance label={$l.needsAssessment.provisions.retirement} insurance={d.insurances.retirementInsurance} />
   </section>
-
+  <section class="kv-container">
+    <PrintInsurance label={$l.needsAssessment.provisions.illness} insurance={d.insurances.illnessInsurance} />
+  </section>
   {#if d.cars && d.cars.length > 0}
     <h3>{$l.personal.car.label}</h3>
     {#each d.cars as car}
@@ -321,6 +302,23 @@
     </section>
     {/each}
   {/if}
+
+  <section>
+  <h2>{$l.needsAssessment.provisions.wealthBuilding}</h2>
+  <div class="kv-container">
+    <KC k={$l.needsAssessment.wealthBuilding.retirementProvision} v={d.wealthBuilding.retirementProvision.desired} remarks={d.wealthBuilding.retirementProvision.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.saveBig} v={d.wealthBuilding.saveBig.desired} remarks={d.wealthBuilding.saveBig.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.saveEducation} v={d.wealthBuilding.saveEducation.desired} remarks={d.wealthBuilding.saveEducation.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.otherInvestmentGoal} v={d.wealthBuilding.otherInvestmentGoal.desired} remarks={d.wealthBuilding.otherInvestmentGoal.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.alreadyInvested} v={d.wealthBuilding.alreadyInvested.desired} remarks={d.wealthBuilding.alreadyInvested.remarks} />
+    <KV k={$l.needsAssessment.wealthBuilding.plannedInvestmentPeriod} v={getPlannedInvestmentPeriod(d.wealthBuilding.plannedInvestmentPeriod)} />
+    <KC k={$l.needsAssessment.wealthBuilding.paymentOnce} v={d.wealthBuilding.paymentOnce.desired} remarks={d.wealthBuilding.paymentOnce.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.paymentMonthly} v={d.wealthBuilding.paymentMonthly.desired} remarks={d.wealthBuilding.paymentMonthly.remarks} />
+    <KC k={$l.needsAssessment.wealthBuilding.paymentYearly} v={d.wealthBuilding.paymentYearly.desired} remarks={d.wealthBuilding.paymentYearly.remarks} />
+  </div>
+    <h3>{$l.needsAssessment.wealthBuilding.riskTolerance}</h3>
+    <div><span>{getRiskTolerance(d.wealthBuilding.riskLevel).name}</span><br/><span>{getRiskTolerance(d.wealthBuilding.riskLevel).desc}</span></div>
+  </section>
 
   <section>
     <h2>{$l.needsAssessment.subtitles.experiences}</h2>

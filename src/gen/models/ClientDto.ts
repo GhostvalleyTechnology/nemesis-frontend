@@ -30,6 +30,7 @@ export type ClientDto = {
     zipCode?: string;
     city?: string;
     address?: string;
+    clientNumber?: number;
     supervisor?: string;
     deleted?: boolean;
     militaryServiceDone?: boolean;

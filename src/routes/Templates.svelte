@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { snackbar, confirm } from "../stores";
   import { navigate } from "svelte-routing";
   import Icon from '@smui/textfield/icon';
   import DataTable, {
@@ -47,9 +48,12 @@
     if(item.type == TemplateType.page) {
       return;
     }
-    TemplateService.delete(item.id).then(_ => {
-      items = items.filter(i => i.id != item.id)
-    })
+    confirm.set({title: 'Vorlage löschen?', message: 'Die Vorlage '+item.name+' wirklich löschen?', func: () => {
+      TemplateService.delete(item.id).then(_ => {
+        items = items.filter(i => i.id != item.id);
+        snackbar.set("Vorlage gelöscht");
+      })
+    }});
   }
 </script>
 

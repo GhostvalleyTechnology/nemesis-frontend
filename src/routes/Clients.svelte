@@ -64,7 +64,7 @@
 >
   <Head>
     <Row>
-      <Cell numeric columnId="id">
+      <Cell numeric columnId="clientNumber">
         <IconButton class="material-icons">arrow_upward</IconButton>
         <Label>ID</Label>
       </Cell>
@@ -74,7 +74,7 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       {/if}
-      <Cell columnId="fullName" style="width: 100%;">
+      <Cell columnId="firstName" style="width: 100%;">
         <Label>Name</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
@@ -94,8 +94,8 @@
   </Head>
   <Body>
     {#each filtered as item (item.id)}
-      <Row on:click={() => navigate("client/" + item.id)}>
-        <Cell numeric>{item.id}</Cell>
+      <Row on:click={() => navigate("client/" + item.id)} class="{item.deleted ? 'unimportant-row': ''}">
+        <Cell numeric>{item.clientNumber}</Cell>
         {#if adminMode}
         <Cell>{item.supervisor}</Cell>
         {/if}

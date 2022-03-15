@@ -1178,6 +1178,10 @@
           "address" : {
             "type" : "string"
           },
+          "clientNumber" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
           "supervisor" : {
             "type" : "string"
           },
@@ -1302,6 +1306,10 @@
           },
           "address" : {
             "type" : "string"
+          },
+          "clientNumber" : {
+            "format" : "int64",
+            "type" : "integer"
           },
           "supervisor" : {
             "type" : "string"
@@ -1489,6 +1497,31 @@
             "items" : {
               "$ref" : "#/components/schemas/PartnerContactDto"
             }
+          },
+          "intermediaryNumbers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PartnerIntermediaryNumberDto"
+            }
+          }
+        }
+      },
+      "PartnerIntermediaryNumberDto" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
           }
         }
       },

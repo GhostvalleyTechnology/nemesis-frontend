@@ -20,6 +20,7 @@ export type { GenericPersonDto } from './models/GenericPersonDto';
 export { MaritalStatus } from './models/MaritalStatus';
 export type { PartnerContactDto } from './models/PartnerContactDto';
 export type { PartnerDto } from './models/PartnerDto';
+export type { PartnerIntermediaryNumberDto } from './models/PartnerIntermediaryNumberDto';
 export type { PartnerLoginDto } from './models/PartnerLoginDto';
 export type { PartnerReferenceDto } from './models/PartnerReferenceDto';
 export type { PartnerServiceTypeDto } from './models/PartnerServiceTypeDto';

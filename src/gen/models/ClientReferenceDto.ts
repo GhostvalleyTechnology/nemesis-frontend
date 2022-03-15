@@ -25,6 +25,7 @@ export type ClientReferenceDto = {
     zipCode?: string;
     city?: string;
     address?: string;
+    clientNumber?: number;
     supervisor?: string;
     deleted?: boolean;
 };
