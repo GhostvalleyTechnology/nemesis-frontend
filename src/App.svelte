@@ -148,7 +148,7 @@
 					<EasterEgg bind:show={easterEgg}/>
 				
 				<Route path="/">
-					<Home {name} />
+					<Home name={name} />
 				</Route>
 				<div class="{active !== "" ? 'content' : ''}">
 					<Route path="/clients" component={Clients} />
