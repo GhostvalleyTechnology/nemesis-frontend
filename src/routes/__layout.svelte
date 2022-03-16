@@ -1,28 +1,15 @@
 <script lang="ts">
-	import { admin, production, confirm } from "./stores";
-	import { OpenAPI, UserService } from "./gen"
+	import { page } from '$app/stores';
+	import { admin, production, confirm } from "../stores";
+	import { OpenAPI, UserService } from "../gen"
 	OpenAPI.BASE = production ? window.location.origin : "http://localhost:8080"
 	OpenAPI.HEADERS = {
 		'Accept': '*/*'
 	}
 	import "svelte-material-ui/bare.css";
-	import l, {de, en} from "./localisation";
-	// all possible routes
-	import Home from "./routes/Home.svelte";
-	import Clients from "./routes/Clients.svelte";
-	import Client from "./routes/Client.svelte";
-	import Templates from "./routes/Templates.svelte";
-	import Template from "./routes/Template.svelte";
-	import NeedsAssessment from "./routes/NeedsAssessment.svelte";
-	import PartnerServiceTypes from "./routes/PartnerServiceTypes.svelte";
-	import Partners from "./routes/Partners.svelte";
-	import Partner from "./routes/Partner.svelte";
-	import Notes from "./routes/Notes.svelte";
-	import Employees from "./routes/Employees.svelte";
-	import Employee from "./routes/Employee.svelte";
+	import l, {de, en} from "../localisation";
 	import Button, { Label } from '@smui/button';
 	import IconButton from "@smui/icon-button";
-	import { Router, links, Route, navigate } from "svelte-routing";
 	import Drawer, {
 		AppContent,
 		Content,
@@ -36,7 +23,6 @@
 	import EasterEgg from "./routes/EasterEgg.svelte";
 
 	let drawerOpen = true;
-	let active = window.location.pathname.substring(1);
 	const logout = () => {
 		confirm.set({title:'Logout', message:'Wirklich ausloggen?', func: () => {window.location.replace('/logout');}});
 	}
@@ -55,20 +41,9 @@
 	function getLanguageButtonText(): string {
 		return ($l == de) ? "en" : "de";
 	}
-
-	function setActive(value: string) {
-		if (window.screen.width < 800) {
-			drawerOpen = !drawerOpen;
-		}
-		active = value;
-	}
 	let adminPrivileges = false;
 	
-	let name = "";
-	UserService.get().then(employee => {
-		adminPrivileges = employee.admin;
-		name = employee.name;
-	})
+	UserService.get().then(employee => adminPrivileges = employee.admin);
 	let isAdminMode = false;
 	admin.subscribe( value => { isAdminMode = value; });
 	function toggleAdminMode() {
@@ -78,8 +53,7 @@
 </script>
 
 <main>
-	<div use:links>
-		<Router>
+	<div>
 			<Drawer variant="modal" bind:open={drawerOpen}>
 				<Header>
 					<img src="../logo.png" alt="Logo" width="60px" />
@@ -88,27 +62,27 @@
 				</Header>
 				<Content>
 					<List>
-						<Item href="/" on:click={() => setActive("")} activated={active === ""}>
+						<Item href="/" activated={$page.url.pathname === "/"}>
 							<Graphic class="material-icons" aria-hidden="true">home</Graphic>
 							<Text>{$l.menu.home}</Text>
 						</Item>
-						<Item href="/clients" on:click={() => setActive("clients")} activated={active === "clients"}>
+						<Item href="/clients" activated={$page.url.pathname === "/clients"}>
 							<Graphic class="material-icons" aria-hidden="true">people</Graphic>
 							<Text>{$l.menu.clients}</Text>
 						</Item>
-						<Item href="/templates" on:click={() => setActive("templates")} activated={active === "templates"}>
+						<Item href="/templates" activated={$page.url.pathname === "/templates"}>
 							<Graphic class="material-icons" aria-hidden="true">file_copy</Graphic>
 							<Text>{$l.menu.templates}</Text>
 						</Item>
-						<Item href="/partners" on:click={() => setActive("partner")} activated={active === "partner"}>
+						<Item href="/partners" activated={$page.url.pathname === "/partner"}>
 							<Graphic class="material-icons" aria-hidden="true">apartment</Graphic>
 							<Text>{$l.menu.partner}</Text>
 						</Item>
-						<Item href="/contracts" on:click={() => setActive("contracts")} activated={active === "contracts"}>
+						<Item href="/contracts" activated={$page.url.pathname === "/contracts"}>
 							<Graphic class="material-icons" aria-hidden="true">task</Graphic>
 							<Text>{$l.menu.contracts}</Text>
 						</Item>
-						<Item href="/notes" on:click={() => setActive("notes")} activated={active === "notes"}>
+						<Item href="/notes" activated={$page.url.pathname === "/notes"}>
 							<Graphic class="material-icons" aria-hidden="true">assignment</Graphic>
 							<Text>{$l.menu.notes}</Text>
 						</Item>
@@ -121,7 +95,7 @@
 						</Item>
 						{/if}
 						{#if isAdminMode}
-						<Item href="/employees" on:click={() => setActive("employees")} activated={active === "employees"}>
+						<Item href="/employees" activated={$page.url.pathname === "/employees"}>
 							<Graphic class="material-icons" aria-hidden="true">badge</Graphic>
 							<Text>{$l.menu.employees}</Text>
 						</Item>
@@ -144,28 +118,13 @@
 				<div class="drawer-button">
 					<IconButton class="material-icons" on:click={() => (drawerOpen = !drawerOpen)}>menu</IconButton>
 				</div>
+				<EasterEgg bind:show={easterEgg}/>
 				
-					<EasterEgg bind:show={easterEgg}/>
-				
-				<Route path="/">
-					<Home name={name} />
-				</Route>
-				<div class="{active !== "" ? 'content' : ''}">
-					<Route path="/clients" component={Clients} />
-					<Route path="client/:id" component={Client} />
-					<Route path="/templates" component={Templates} />
-					<Route path="/template/new" component={Template} />
-					<Route path="/needs_assessment" component={NeedsAssessment} />
-					<Route path="/partners" component={Partners} />
-					<Route path="/partner_service_types" component={PartnerServiceTypes} />
-					<Route path="/partner/:id" component={Partner} />
-					<Route path="/employees" component={Employees} />
-					<Route path="employee/:id" component={Employee} />
-					<Route path="/notes" component={Notes} />
+				<div class="{$page.url.pathname === "/" ? '' : 'content'}">
+					<slot/>
 				</div>
 				
 			</AppContent>
-		</Router>
 	</div>
 	<ConfirmDialog/>
 	<Snackbar/>
